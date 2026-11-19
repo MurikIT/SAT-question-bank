@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SAT Prep Workspace — Free Digital SAT Question Bank, Adaptive Modules &amp; Vocab</title>
+  <meta name="description" content="Free Digital SAT preparation platform with Reading &amp; Writing and Math Question Bank, 2-stage Bluebook adaptive practice modules, Desmos calculator, Reference Sheet, and 320 SAT vocabulary words with flashcards and mini-games." />
+  <meta name="keywords" content="Digital SAT, SAT Question Bank, SAT Practice Tests, SAT Math, SAT Reading and Writing, SAT Vocabulary, Bluebook Adaptive Modules, Desmos SAT" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="SAT Prep Workspace — Digital SAT Question Bank &amp; Adaptive Modules" />
+  <meta property="og:description" content="Practice Digital SAT Reading &amp; Writing and Math with Bluebook-style adaptive modules, instant explanations, and interactive vocabulary games." />
+  <meta property="og:image" content="icongb.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" href="icongb.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="dashboard.css" />
+  <link rel="stylesheet" href="vocab-games.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+  <!-- ЭКРАН 1: ОБОЛОЧКА С ЛЕВЫМ МЕНЮ (DASHBOARD / QUESTION BANK / PRACTICE MODULES) -->
+  <div id="menu-screen" class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-logo">SAT</div>
+        <div class="brand-text">
+          <span class="brand-title">SAT Prep</span>
+          <span class="brand-sub">Study Workspace</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Main Navigation">
+        <button type="button" class="nav-tab-btn active" data-tab="dashboard">
+          <span class="nav-icon">📊</span>
+          <span>Dashboard</span>
+        </button>
+        <button type="button" class="nav-tab-btn" data-tab="qbank">
+          <span class="nav-icon">📚</span>
+          <span>Question Bank</span>
+        </button>
+        <button type="button" class="nav-tab-btn" data-tab="modules">
+          <span class="nav-icon">⏱️</span>
+          <span>Practice Modules</span>
+        </button>
+        <button type="button" class="nav-tab-btn" data-tab="vocab">
+          <span class="nav-icon">📖</span>
+          <span>Vocabulary</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button type="button" id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Toggle Dark Mode">
+          <span class="theme-toggle-icon">🌙</span>
+          <span class="theme-toggle-text">Dark Mode</span>
+        </button>
+        <div class="sidebar-stat-pill">
+          <span class="pill-label">Today's time</span>
+          <strong id="sidebar-today-time">0m</strong>
+        </div>
+        <div class="sidebar-stat-pill">
+          <span class="pill-label">Study streak</span>
+          <strong id="sidebar-streak">1 day</strong>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <p id="filter-status" class="filter-status hidden"></p>
+
+      <!-- ВКЛАДКА 1: DASHBOARD -->
+      <section id="tab-dashboard" class="tab-panel active">
+        <header class="page-header">
+          <div>
+            <h1>Dashboard</h1>
+            <p id="dashboard-date-label">Welcome back! Track your daily study plan and overall progress.</p>
+          </div>
+          <button type="button" class="primary-btn quick-go-btn" data-goto-tab="qbank">Go to Question Bank →</button>
+        </header>
+
+        <div class="dashboard-widgets-grid">
+          <!-- Виджет времени посещения и стрика -->
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <h3>Study Activity</h3>
+              <span class="dash-tag" id="dash-streak-badge">🔥 1 day streak</span>
+            </div>
+            <div class="activity-metrics">
+              <div class="activity-box">
+                <span class="activity-val" id="dash-today-time">0 min</span>
+                <span class="activity-lbl">Time today</span>
+              </div>
+              <div class="activity-box">
+                <span class="activity-val" id="dash-total-time">0 min</span>
+                <span class="activity-lbl">Total time</span>
+              </div>
+              <div class="activity-box">
+                <span class="activity-val" id="dash-visits-count">1</span>
+                <span class="activity-lbl">Visits</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Виджет повседневного плана -->
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <h3>Daily Study Plan</h3>
+              <span class="dash-tag" id="plan-progress-label">0 / 3 done</span>
+            </div>
+            <ul id="daily-plan-list" class="daily-plan-list"></ul>
+            <form id="daily-plan-form" class="daily-plan-form">
+              <input
+                type="text"
+                id="daily-plan-input"
+                placeholder="Add a task (e.g. 15 Geometry questions)..."
+                maxlength="80"
+                autocomplete="off"
+              />
+              <button type="submit" class="secondary-btn">Add</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Сюда script.js автоматически вставит карточку All-Time Progress -->
+        <div class="menu-container dashboard-history-wrap"></div>
+
+        <!-- Отдельная карточка статистики Vocabulary на Dashboard -->
+        <div id="dashboard-vocab-card" class="history-menu-card dashboard-vocab-card"></div>
+      </section>
+
+      <!-- ВКЛАДКА 2: QUESTION BANK -->
+      <section id="tab-qbank" class="tab-panel hidden">
+        <header class="page-header qbank-header">
+          <div>
+            <h1>Question Bank</h1>
+            <p>Practice by section, smart sets, or specific SAT domains with instant explanations</p>
+          </div>
+        </header>
+
+        <div class="cards-grid qbank-main-cards">
+          <div class="section-card">
+            <div>
+              <div class="qbank-card-top">
+                <h2>Reading &amp; Writing</h2>
+                <span class="qbank-count-pill rw" id="qbank-rw-stats">Loading...</span>
+              </div>
+              <p>Information and Ideas, Craft and Structure, Expression of Ideas, Standard English Conventions</p>
+            </div>
+            <button class="start-btn" data-section="RW" type="button">Practice R&amp;W</button>
+          </div>
+
+          <div class="section-card">
+            <div>
+              <div class="qbank-card-top">
+                <h2>Math</h2>
+                <span class="qbank-count-pill math" id="qbank-math-stats">Loading...</span>
+              </div>
+              <p>Algebra, Advanced Math, Problem-Solving and Data Analysis, Geometry and Trigonometry</p>
+            </div>
+            <button class="start-btn" data-section="Math" type="button">Practice Math</button>
+          </div>
+        </div>
+
+        <!-- SMART PRACTICE -->
+        <div class="qbank-block-label">Smart Practice</div>
+        <div class="qbank-smart-grid">
+          <button type="button" id="smart-missed-btn" class="smart-card-btn tone-missed">
+            <div class="smart-card-head">
+              <span class="smart-icon">↻</span>
+              <span class="smart-badge" id="smart-missed-count">0 Qs</span>
+            </div>
+            <div class="smart-title">Missed Questions</div>
+            <div class="smart-desc">Retry questions you got wrong before</div>
+          </button>
+
+          <button type="button" id="smart-unsolved-btn" class="smart-card-btn tone-unsolved">
+            <div class="smart-card-head">
+              <span class="smart-icon">✨</span>
+              <span class="smart-badge" id="smart-unsolved-count">0 Qs</span>
+            </div>
+            <div class="smart-title">Unsolved Only</div>
+            <div class="smart-desc">20 fresh questions you haven't seen yet</div>
+          </button>
+
+          <button type="button" id="smart-hard-btn" class="smart-card-btn tone-hard">
+            <div class="smart-card-head">
+              <span class="smart-icon">🔥</span>
+              <span class="smart-badge">15 Hard Qs</span>
+            </div>
+            <div class="smart-title">Hardest Drills</div>
+            <div class="smart-desc">Mixed high-difficulty R&amp;W &amp; Math set</div>
+          </button>
+
+          <button type="button" id="smart-weakest-btn" class="smart-card-btn tone-weak">
+            <div class="smart-card-head">
+              <span class="smart-icon">🎯</span>
+              <span class="smart-badge" id="smart-weakest-label">No data yet</span>
+            </div>
+            <div class="smart-title">Weakest Topic</div>
+            <div class="smart-desc">Target your lowest-accuracy domain</div>
+          </button>
+        </div>
+
+        <!-- BROWSE BY TOPIC (8 DOMAINS) -->
+        <div class="qbank-block-label">Browse by Topic</div>
+        <div class="qbank-topics-columns">
+          <div class="qbank-topic-group">
+            <div class="topic-group-title rw">Reading &amp; Writing Domains</div>
+            <div id="qbank-rw-topics" class="topic-cards-list"></div>
+          </div>
+          <div class="qbank-topic-group">
+            <div class="topic-group-title math">Math Domains</div>
+            <div id="qbank-math-topics" class="topic-cards-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ВКЛАДКА 3: PRACTICE MODULES (АДАПТИВНЫЕ МОДУЛИ БЕЗ ПОШАГОВОЙ ПРОВЕРКИ) -->
+      <section id="tab-modules" class="tab-panel hidden">
+        <header class="page-header">
+          <div>
+            <h1>Practice Modules</h1>
+            <p>All modules are 2-stage adaptive (Bluebook exam mode — answers and explanations are revealed after completing both modules)</p>
+          </div>
+        </header>
+
+        <!-- БЫСТРЫЙ РАНДОМНЫЙ АДАПТИВНЫЙ МОДУЛЬ -->
+        <div class="modules-section-label">Quick Random Adaptive Generator</div>
+        <div class="modules-grid quick-adaptive-grid">
+          <div class="module-card featured-module rw-accent">
+            <div class="module-meta-row">
+              <span class="module-pill rw">Reading &amp; Writing · Adaptive</span>
+              <span class="module-time">⏱ 2 × 32 min · 27 + 27 Qs</span>
+            </div>
+            <h3>Practice R&amp;W Module (Random)</h3>
+            <p>Generates a brand-new random 2-module adaptive Reading &amp; Writing exam. Module 2 automatically adapts to your Module 1 performance.</p>
+            <button
+              type="button"
+              class="primary-btn module-start-btn"
+              data-section="RW"
+              data-count="27"
+              data-timer="1920"
+              data-mode="random"
+              data-title="Random R&amp;W Adaptive Module"
+            >
+              Practice R&amp;W Module →
+            </button>
+          </div>
+
+          <div class="module-card featured-module math-accent">
+            <div class="module-meta-row">
+              <span class="module-pill math">Math · Adaptive</span>
+              <span class="module-time">⏱ 2 × 35 min · 22 + 22 Qs</span>
+            </div>
+            <h3>Practice Math Module (Random)</h3>
+            <p>Generates a brand-new random 2-module adaptive Math exam with Desmos enabled. Module 2 routes to Upper or Lower difficulty based on Module 1.</p>
+            <button
+              type="button"
+              class="primary-btn module-start-btn"
+              data-section="Math"
+              data-count="22"
+              data-timer="2100"
+              data-mode="random"
+              data-title="Random Math Adaptive Module"
+            >
+              Practice Math Module →
+            </button>
+          </div>
+        </div>
+
+        <!-- ФИЛЬТР ГОТОВЫХ АДАПТИВНЫХ МОДУЛЕЙ -->
+        <div class="modules-toolbar">
+          <div class="modules-section-label" style="margin: 0;">Ready-Made Adaptive Modules</div>
+          <div class="modules-filter-pills" id="modules-filter-pills">
+            <button type="button" class="mod-filter-btn active" data-mod-filter="all">All</button>
+            <button type="button" class="mod-filter-btn" data-mod-filter="RW">Reading &amp; Writing</button>
+            <button type="button" class="mod-filter-btn" data-mod-filter="Math">Math</button>
+          </div>
+        </div>
+
+        <div class="modules-grid" id="preset-modules-grid">
+          <!-- Practice Test 1 -->
+          <div class="module-card" data-mod-section="RW">
+            <div class="module-meta-row">
+              <span class="module-pill rw">Practice Test 1 · R&amp;W</span>
+              <span class="module-time">⏱ 2 × 32 min · 27 + 27 Qs</span>
+            </div>
+            <h3>Adaptive Practice Test 1 (R&amp;W)</h3>
+            <p>Structured 2-module adaptive Reading &amp; Writing test across all four SAT domains.</p>
+            <button
+              type="button"
+              class="secondary-btn module-start-btn"
+              data-section="RW"
+              data-count="27"
+              data-timer="1920"
+              data-mode="preset"
+              data-seed="rw-test-1"
+              data-title="Practice Test 1 — R&amp;W"
+            >
+              Start Test 1 (R&amp;W) →
+            </button>
+          </div>
+
+          <div class="module-card" data-mod-section="Math">
+            <div class="module-meta-row">
+              <span class="module-pill math">Practice Test 1 · Math</span>
+              <span class="module-time">⏱ 2 × 35 min · 22 + 22 Qs</span>
+            </div>
+            <h3>Adaptive Practice Test 1 (Math)</h3>
+            <p>Structured 2-module adaptive Math test covering Algebra, Advanced Math, PSD, and Geometry.</p>
+            <button
+              type="button"
+              class="secondary-btn module-start-btn"
+              data-section="Math"
+              data-count="22"
+              data-timer="2100"
+              data-mode="preset"
+              data-seed="math-test-1"
+              data-title="Practice Test 1 — Math"
+            >
+              Start Test 1 (Math) →
+            </button>
+          </div>
+
+          <!-- Practice Test 2 -->
+          <div class="module-card" data-mod-section="RW">
+            <div class="module-meta-row">
+              <span class="module-pill rw">Practice Test 2 · R&amp;W</span>
+              <span class="module-time">⏱ 2 × 32 min · 27 + 27 Qs</span>
+            </div>
+            <h3>Adaptive Practice Test 2 (R&amp;W)</h3>
+            <p>Second distinct 2-module adaptive Reading &amp; Writing set with balanced Module 1 and adaptive Module 2.</p>
+            <button
+              type="button"
+              class="secondary-btn module-start-btn"
+              data-section="RW"
+              data-count="27"
+              data-timer="1920"
+              data-mode="preset"
+              data-seed="rw-test-2"
+              data-title="Practice Test 2 — R&amp;W"
+            >
+              Start Test 2 (R&amp;W) →
+            </button>
+          </div>
+
+          <div class="module-card" data-mod-section="Math">
+            <div class="module-meta-row">
+              <span class="module-pill math">Practice Test 2 · Math</span>
+              <span class="module-time">⏱ 2 × 35 min · 22 + 22 Qs</span>
+            </div>
+            <h3>Adaptive Practice Test 2 (Math)</h3>
+            <p>Second distinct 2-module adaptive Math exam with mixed multiple-choice and student-produced responses.</p>
+            <button
+              type="button"
+              class="secondary-btn module-start-btn"
+              data-section="Math"
+              data-count="22"
+              data-timer="2100"
+              data-mode="preset"
+              data-seed="math-test-2"
+              data-title="Practice Test 2 — Math"
+            >
+              Start Test 2 (Math) →
+            </button>
+          </div>
+
+          <!-- Practice Test 3 -->
+          <div class="module-card" data-mod-section="RW">
+            <div class="module-meta-row">
+              <span class="module-pill rw">Practice Test 3 · R&amp;W</span>
+              <span class="module-time">⏱ 2 × 32 min · 27 + 27 Qs</span>
+            </div>
+            <h3>Adaptive Practice Test 3 (R&amp;W)</h3>
+            <p>Third full-length adaptive Reading &amp; Writing exam for building test-day stamina and pacing.</p>
+            <button
+              type="button"
+              class="secondary-btn module-start-btn"
+              data-section="RW"
+              data-count="27"
+              data-timer="1920"
+              data-mode="preset"
+              data-seed="rw-test-3"
+              data-title="Practice Test 3 — R&amp;W"
+            >
+              Start Test 3 (R&amp;W) →
+            </button>
+          </div>
+
+          <div class="module-card" data-mod-section="Math">
+            <div class="module-meta-row">
+              <span class="module-pill math">Practice Test 3 · Math</span>
+              <span class="module-time">⏱ 2 × 35 min · 22 + 22 Qs</span>
+            </div>
+            <h3>Adaptive Practice Test 3 (Math)</h3>
+            <p>Third full-length adaptive Math exam designed to test accuracy and speed under Bluebook conditions.</p>
+            <button
+              type="button"
+              class="secondary-btn module-start-btn"
+              data-section="Math"
+              data-count="22"
+              data-timer="2100"
+              data-mode="preset"
+              data-seed="math-test-3"
+              data-title="Practice Test 3 — Math"
+            >
+              Start Test 3 (Math) →
+            </button>
+          </div>
+
+          <!-- Express Adaptive Sprints -->
+          <div class="module-card" data-mod-section="RW">
+            <div class="module-meta-row">
+              <span class="module-pill sprint">Express Adaptive · R&amp;W</span>
+              <span class="module-time">⏱ 2 × 14 min · 12 + 12 Qs</span>
+            </div>
+            <h3>Express R&amp;W Adaptive Sprint</h3>
+            <p>Compact 2-stage adaptive R&amp;W sprint when you want full adaptive routing in under 30 minutes.</p>
+            <button
+              type="button"
+              class="secondary-btn module-start-btn"
+              data-section="RW"
+              data-count="12"
+              data-timer="840"
+              data-mode="random"
+              data-title="Express R&amp;W Adaptive Sprint"
+            >
+              Start R&amp;W Sprint →
+            </button>
+          </div>
+
+          <div class="module-card" data-mod-section="Math">
+            <div class="module-meta-row">
+              <span class="module-pill sprint">Express Adaptive · Math</span>
+              <span class="module-time">⏱ 2 × 16 min · 10 + 10 Qs</span>
+            </div>
+            <h3>Express Math Adaptive Sprint</h3>
+            <p>Compact 2-stage adaptive Math sprint with Desmos and full Module 1 → Module 2 difficulty routing.</p>
+            <button
+              type="button"
+              class="secondary-btn module-start-btn"
+              data-section="Math"
+              data-count="10"
+              data-timer="960"
+              data-mode="random"
+              data-title="Express Math Adaptive Sprint"
+            >
+              Start Math Sprint →
+            </button>
+          </div>
+
+          <!-- Domain-Focused Adaptive Modules -->
+          <div class="module-card" data-mod-section="RW">
+            <div class="module-meta-row">
+              <span class="module-pill focus">Focused Adaptive · R&amp;W</span>
+              <span class="module-time">⏱ 2 × 16 min · 14 + 14 Qs</span>
+            </div>
+            <h3>Grammar &amp; Expression Adaptive</h3>
+            <p>2-stage adaptive module focused strictly on Standard English Conventions &amp; Expression of Ideas.</p>
+            <button
+              type="button"
+              class="secondary-btn module-start-btn"
+              data-section="RW"
+              data-domains="SEC,EOI"
+              data-count="14"
+              data-timer="960"
+              data-mode="random"
+              data-title="Grammar &amp; Expression Adaptive"
+            >
+              Start Focused Module →
+            </button>
+          </div>
+
+          <div class="module-card" data-mod-section="RW">
+            <div class="module-meta-row">
+              <span class="module-pill focus">Focused Adaptive · R&amp;W</span>
+              <span class="module-time">⏱ 2 × 18 min · 14 + 14 Qs</span>
+            </div>
+            <h3>Reading &amp; Structure Adaptive</h3>
+            <p>2-stage adaptive module focused on Information and Ideas &amp; Craft and Structure passages.</p>
+            <button
+              type="button"
+              class="secondary-btn module-start-btn"
+              data-section="RW"
+              data-domains="INI,CAS"
+              data-count="14"
+              data-timer="1080"
+              data-mode="random"
+              data-title="Reading &amp; Structure Adaptive"
+            >
+              Start Focused Module →
+            </button>
+          </div>
+
+          <div class="module-card" data-mod-section="Math">
+            <div class="module-meta-row">
+              <span class="module-pill focus">Focused Adaptive · Math</span>
+              <span class="module-time">⏱ 2 × 18 min · 12 + 12 Qs</span>
+            </div>
+            <h3>Algebra &amp; Advanced Math Adaptive</h3>
+            <p>2-stage adaptive module targeting linear equations, quadratics, functions, and nonlinear graphs.</p>
+            <button
+              type="button"
+              class="secondary-btn module-start-btn"
+              data-section="Math"
+              data-domains="ALG,ADV"
+              data-count="12"
+              data-timer="1080"
+              data-mode="random"
+              data-title="Algebra &amp; Advanced Math Adaptive"
+            >
+              Start Focused Module →
+            </button>
+          </div>
+
+          <div class="module-card" data-mod-section="Math">
+            <div class="module-meta-row">
+              <span class="module-pill focus">Focused Adaptive · Math</span>
+              <span class="module-time">⏱ 2 × 18 min · 12 + 12 Qs</span>
+            </div>
+            <h3>Geometry &amp; Data Adaptive</h3>
+            <p>2-stage adaptive module targeting Geometry, Trigonometry, and Problem-Solving &amp; Data Analysis.</p>
+            <button
+              type="button"
+              class="secondary-btn module-start-btn"
+              data-section="Math"
+              data-domains="GEO,PSD"
+              data-count="12"
+              data-timer="1080"
+              data-mode="random"
+              data-title="Geometry &amp; Data Adaptive"
+            >
+              Start Focused Module →
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ВКЛАДКА 4: VOCABULARY -->
+      <section id="tab-vocab" class="tab-panel hidden">
+        <header class="page-header vocab-header">
+          <div>
+            <h1>SAT Vocabulary</h1>
+            <p>320 Digital SAT words — click any card to inspect, flip 3D flashcards, or play mini-games</p>
+          </div>
+          <div class="vocab-header-actions">
+            <div class="vocab-mode-tabs" id="vocab-mode-tabs" role="tablist">
+              <button type="button" class="vocab-mode-btn active" data-vmode="bank">📚 Bank</button>
+              <button type="button" class="vocab-mode-btn" data-vmode="flashcards">🃏 Flashcards</button>
+              <button type="button" class="vocab-mode-btn" data-vmode="match">⚡ Match Sprint</button>
+              <button type="button" class="vocab-mode-btn" data-vmode="blitz">🎯 Context Blitz</button>
+            </div>
+          </div>
+        </header>
+
+        <!-- РЕЖИМ 1: WORD BANK -->
+        <div id="vocab-view-bank" class="vocab-view active">
+          <!-- ПРОГРЕСС ИЗУЧЕНИЯ СЛОВ -->
+          <div class="vocab-stats-bar">
+            <div class="vocab-kpi-row">
+              <div class="vocab-kpi-chip">
+                <span class="vk-label">Total</span>
+                <strong id="vocab-stat-total">0</strong>
+              </div>
+              <div class="vocab-kpi-chip mastered">
+                <span class="vk-label">Mastered</span>
+                <strong id="vocab-stat-mastered">0</strong>
+              </div>
+              <div class="vocab-kpi-chip learning">
+                <span class="vk-label">Learning</span>
+                <strong id="vocab-stat-learning">0</strong>
+              </div>
+              <div class="vocab-kpi-chip">
+                <span class="vk-label">New</span>
+                <strong id="vocab-stat-new">0</strong>
+              </div>
+            </div>
+            <div class="vocab-mastery-wrap">
+              <div class="vocab-mastery-top">
+                <span>Mastery Progress</span>
+                <strong id="vocab-mastery-pct">0%</strong>
+              </div>
+              <div class="vocab-mastery-track">
+                <div id="vocab-mastery-fill" class="vocab-mastery-fill" style="width: 0%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ПАНЕЛЬ ПОИСКА И ФИЛЬТРОВ -->
+          <div class="vocab-controls">
+            <input
+              type="text"
+              id="vocab-search-input"
+              class="vocab-search-input"
+              placeholder="Search word, definition, or synonym..."
+              autocomplete="off"
+            />
+            <div class="modules-filter-pills" id="vocab-status-pills">
+              <button type="button" class="mod-filter-btn active" data-vstatus="all">All</button>
+              <button type="button" class="mod-filter-btn" data-vstatus="new">New</button>
+              <button type="button" class="mod-filter-btn" data-vstatus="learning">Learning</button>
+              <button type="button" class="mod-filter-btn" data-vstatus="mastered">Mastered</button>
+            </div>
+          </div>
+
+          <!-- СКРОЛЛИРУЕМАЯ СЕТКА КАРТОЧЕК СЛОВ -->
+          <div id="vocab-cards-grid" class="vocab-cards-grid"></div>
+        </div>
+
+        <!-- РЕЖИМ 2: 3D FLASHCARDS -->
+        <div id="vocab-view-flashcards" class="vocab-view hidden">
+          <div class="fc-toolbar">
+            <div class="modules-filter-pills" id="fc-deck-pills">
+              <button type="button" class="mod-filter-btn active" data-fc-deck="all">All Words</button>
+              <button type="button" class="mod-filter-btn" data-fc-deck="unmastered">New &amp; Learning</button>
+              <button type="button" class="mod-filter-btn" data-fc-deck="learning">Learning Only</button>
+            </div>
+            <div class="fc-meta">
+              <span id="fc-counter" class="fc-counter">1 / 1</span>
+              <button type="button" id="fc-shuffle-btn" class="secondary-btn">🔀 Shuffle</button>
+            </div>
+          </div>
+
+          <div class="fc-stage">
+            <div id="fc-card-3d" class="fc-card-3d" tabindex="0" role="button" aria-label="Flip flashcard">
+              <div class="fc-face fc-front">
+                <span class="fc-hint-top">Click card or press Space to flip</span>
+                <div class="fc-word-wrap">
+                  <h2 id="fc-word" class="fc-word">Word</h2>
+                  <span id="fc-pos" class="fc-pos">adj.</span>
+                </div>
+                <button type="button" id="fc-speak-btn" class="vocab-speak-btn fc-speak" title="Pronounce">🔊</button>
+                <span id="fc-status-badge" class="fc-status-badge">New</span>
+              </div>
+
+              <div class="fc-face fc-back">
+                <span class="fc-hint-top">Definition &amp; Synonyms</span>
+                <div class="fc-back-word" id="fc-back-word">Word</div>
+                <p id="fc-def" class="fc-def">Definition</p>
+                <div id="fc-syns" class="vocab-syns fc-syns"></div>
+                <div id="fc-example" class="vocab-example fc-example"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fc-controls">
+            <button type="button" id="fc-prev-btn" class="secondary-btn">← Prev</button>
+            <div class="fc-grade-btns">
+              <button type="button" id="fc-learning-btn" class="fc-btn-learning">↻ Review Again</button>
+              <button type="button" id="fc-mastered-btn" class="fc-btn-mastered">✓ I Know This</button>
+            </div>
+            <button type="button" id="fc-next-btn" class="secondary-btn">Next →</button>
+          </div>
+        </div>
+
+        <!-- РЕЖИМ 3: MATCH SPRINT -->
+        <div id="vocab-view-match" class="vocab-view hidden">
+          <div class="game-hud">
+            <div class="game-hud-left">
+              <div class="game-pill">⏱ <strong id="match-timer">0.0s</strong></div>
+              <div class="game-pill">🔥 Combo: <strong id="match-combo">0</strong></div>
+              <div class="game-pill">🏆 Best: <strong id="match-best">—</strong></div>
+            </div>
+            <button type="button" id="match-restart-btn" class="primary-btn hidden">New Round</button>
+          </div>
+          <div id="match-start-screen" class="game-result-card game-start-screen">
+            <h3>⚡ Match Sprint</h3>
+            <p>Match 6 SAT words on the left with their definitions on the right as fast as you can.</p>
+            <button type="button" id="match-start-btn" class="primary-btn">Start Sprint →</button>
+          </div>
+          <p id="match-sub" class="game-sub hidden">Match each SAT word on the left with its definition on the right as fast as you can.</p>
+          <div id="match-board" class="match-board hidden">
+            <div id="match-words-col" class="match-col"></div>
+            <div id="match-defs-col" class="match-col"></div>
+          </div>
+          <div id="match-win-banner" class="game-result-card hidden"></div>
+        </div>
+
+        <!-- РЕЖИМ 4: CONTEXT BLITZ -->
+        <div id="vocab-view-blitz" class="vocab-view hidden">
+          <div class="game-hud">
+            <div class="game-hud-left">
+              <div class="game-pill">⏱ <strong id="blitz-timer">60s</strong></div>
+              <div class="game-pill">❤️ <strong id="blitz-lives">3</strong></div>
+              <div class="game-pill">⭐ Score: <strong id="blitz-score">0</strong></div>
+              <div class="game-pill">🔥 Streak: <strong id="blitz-streak">0</strong></div>
+              <div class="game-pill">🏆 Best: <strong id="blitz-best">0</strong></div>
+            </div>
+            <button type="button" id="blitz-restart-btn" class="primary-btn hidden">Restart Blitz</button>
+          </div>
+
+          <div id="blitz-start-screen" class="game-result-card game-start-screen">
+            <h3>🎯 Context Blitz</h3>
+            <p>Fill in the blank with the right SAT word. You have 60 seconds and 3 lives — build a streak for bonus points!</p>
+            <button type="button" id="blitz-start-btn" class="primary-btn">Start Blitz →</button>
+          </div>
+
+          <div id="blitz-stage" class="blitz-stage hidden">
+            <div class="blitz-prompt-card">
+              <span class="blitz-tag">Words in Context</span>
+              <p id="blitz-sentence" class="blitz-sentence">Loading...</p>
+            </div>
+            <div id="blitz-options" class="blitz-options"></div>
+            <div id="blitz-feedback" class="blitz-feedback hidden"></div>
+          </div>
+          <div id="blitz-gameover" class="game-result-card hidden"></div>
+        </div>
+      </section>
+
+      <!-- МОДАЛКА ПРИБЛИЖЕНИЯ КАРТОЧКИ СЛОВА (ZOOM) -->
+      <div id="vocab-zoom-modal" class="vocab-zoom-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="vz-word">
+        <div class="vocab-zoom-card">
+          <div class="vz-top-row">
+            <div class="vz-title-group">
+              <h2 id="vz-word" class="vz-word">Word</h2>
+              <span id="vz-pos" class="vz-pos">adj.</span>
+              <button type="button" id="vz-speak-btn" class="vocab-speak-btn" title="Listen">🔊</button>
+            </div>
+            <button type="button" id="vz-close-btn" class="vz-close-btn" aria-label="Close">✕</button>
+          </div>
+
+          <div class="vz-section">
+            <div class="vz-label">Definition</div>
+            <p id="vz-def" class="vz-def"></p>
+          </div>
+
+          <div class="vz-section" id="vz-syn-section">
+            <div class="vz-label">Synonyms</div>
+            <div id="vz-syns" class="vocab-syns vz-syns"></div>
+          </div>
+
+          <div class="vz-section" id="vz-ex-section">
+            <div class="vz-label">SAT Context Example</div>
+            <div id="vz-example" class="vocab-example vz-example"></div>
+          </div>
+
+          <div class="vz-footer">
+            <div class="vocab-status-actions">
+              <button type="button" id="vz-learning-btn" class="vocab-st-btn">Mark Learning</button>
+              <button type="button" id="vz-mastered-btn" class="vocab-st-btn">Mark Mastered</button>
+            </div>
+            <div class="vz-nav-btns">
+              <button type="button" id="vz-prev-btn" class="secondary-btn">← Prev</button>
+              <button type="button" id="vz-next-btn" class="secondary-btn">Next →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+
+  <!-- МОДАЛКА ВЫБОРА МОДУЛЕЙ (ГАЛОЧКИ MODULE 1 / MODULE 2) -->
+  <div id="module-length-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="mod-len-title">
+    <div class="modal-card module-length-card">
+      <div class="mod-len-top-pills">
+        <span class="mod-trans-pill" id="mod-len-pill">Practice Module</span>
+        <span class="mod-mode-badge" id="mod-len-mode-badge">2 Modules Adaptive</span>
+      </div>
+      <h3 id="mod-len-title">Choose Module Mode</h3>
+      <p id="mod-len-desc">Select Module 1, Module 2, or both for a full adaptive test.</p>
+      <div class="mod-len-options">
+        <label class="mod-len-check-card is-checked" id="mod-len-card-1">
+          <input type="checkbox" id="mod-len-check-1" checked />
+          <div class="mod-len-check-body">
+            <div class="mod-len-opt-title">Module 1</div>
+            <div class="mod-len-opt-sub" id="mod-len-one-sub">Balanced baseline module</div>
+          </div>
+        </label>
+        <label class="mod-len-check-card is-checked" id="mod-len-card-2">
+          <input type="checkbox" id="mod-len-check-2" checked />
+          <div class="mod-len-check-body">
+            <div class="mod-len-opt-title">Module 2</div>
+            <div class="mod-len-opt-sub" id="mod-len-two-sub">Adaptive follow-up module</div>
+          </div>
+        </label>
+      </div>
+      <div class="modal-actions">
+        <button type="button" id="mod-len-cancel-btn" class="secondary-btn">Cancel</button>
+        <button type="button" id="mod-len-start-btn" class="primary-btn">Start →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ЭКРАН 2: ТЕСТ НА ВЕСЬ ЭКРАН (ДВЕ КОЛОНКИ КАК В BLUEBOOK) -->
+  <div id="test-screen" class="test-container hidden">
+    <div class="top-bar">
+      <button id="back-btn" class="secondary-btn" type="button">← Back to Menu</button>
+      <span id="current-section-label">Reading &amp; Writing</span>
+      <span class="progress-text">
+        Question <span id="q-num">1</span> of <span id="q-total">1</span>
+      </span>
+      <span id="q-diff-badge" class="badge">Medium</span>
+      <button id="open-ref-sheet-btn" class="secondary-btn hidden" type="button">📐 Reference</button>
+      <button id="open-desmos-btn" class="secondary-btn" type="button" data-desmos>Desmos</button>
+      <button id="test-theme-toggle-btn" class="secondary-btn theme-mini-btn" type="button" title="Toggle Dark Mode">🌙</button>
+      <div id="timer-box" class="timer-box hidden">
+        <span id="timer-display">00:00</span>
+        <button id="timer-toggle-btn" class="timer-mini-btn" type="button">Pause</button>
+      </div>
+    </div>
+
+    <div class="bluebook-workspace">
+      <div id="passage-panel" class="passage-panel">
+        <div id="rw-highlighter-bar" class="rw-highlighter-bar hidden">
+          <button type="button" id="hl-mode-btn" class="hl-mode-btn" aria-pressed="false" title="Select text in the passage to highlight">
+            🖍 Highlight: OFF
+          </button>
+          <div class="hl-colors" role="group" aria-label="Highlight color">
+            <button type="button" class="hl-swatch active" data-hl-color="yellow" title="Yellow" aria-label="Yellow"></button>
+            <button type="button" class="hl-swatch" data-hl-color="green" title="Green" aria-label="Green"></button>
+            <button type="button" class="hl-swatch" data-hl-color="pink" title="Pink" aria-label="Pink"></button>
+          </div>
+          <button type="button" id="hl-clear-btn" class="hl-clear-btn" title="Clear highlights in this passage">Clear</button>
+        </div>
+        <div id="passage-text" class="passage-text"></div>
+      </div>
+
+      <div class="answer-panel">
+        <div class="question-header">
+          <button id="flag-btn" class="flag-btn" type="button" aria-pressed="false">⚑ Mark for Review</button>
+        </div>
+        <div id="question-text" class="question-box"></div>
+        <div id="options-container" class="options-grid"></div>
+
+        <div class="controls-bar">
+          <button id="check-btn" class="primary-btn" type="button" disabled>Check Answer</button>
+        </div>
+
+        <div id="explanation-box" class="explanation-box hidden"></div>
+
+        <div class="nav-arrows-bar">
+          <button id="prev-btn" class="secondary-btn" type="button">← Prev</button>
+          <button id="next-btn" class="primary-btn" type="button">Next →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- НИЖНЯЯ ПАНЕЛЬ ПО ЦЕНТРУ -->
+    <div class="question-nav-bottom">
+      <div id="question-picker-popup" class="question-picker-popup hidden">
+        <div class="picker-header">
+          <span>Jump to question</span>
+          <button id="close-picker-btn" class="picker-close-btn" type="button" aria-label="Close">✕</button>
+        </div>
+        <div id="question-squares" class="question-squares"></div>
+      </div>
+
+      <button id="question-picker-toggle" class="question-picker-btn" type="button">
+        Question <span id="picker-q-num">1</span> of <span id="picker-q-total">1</span> ▴
+      </button>
+    </div>
+
+    <!-- МОДАЛКА ЗАЩИТЫ ОТ СЛУЧАЙНОГО ВЫХОДА -->
+    <div id="exit-confirm-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="exit-modal-title">
+      <div class="modal-card">
+        <h3 id="exit-modal-title">Leave current session?</h3>
+        <p>Your current progress in this session will be reset if you return to the menu.</p>
+        <div class="modal-actions">
+          <button id="cancel-exit-btn" class="secondary-btn" type="button">Stay in Test</button>
+          <button id="confirm-exit-btn" class="danger-btn" type="button">Exit to Menu</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- МОДАЛКА ПЕРЕХОДА МЕЖДУ MODULE 1 И MODULE 2 -->
+    <div id="module-transition-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="mod-trans-title">
+      <div class="modal-card module-transition-card">
+        <span class="mod-trans-pill" id="mod-trans-pill">Module 1 Completed</span>
+        <h3 id="mod-trans-title">Ready for Module 2?</h3>
+        <p id="mod-trans-desc">
+          Your Module 1 responses have been locked. Module 2 has been adaptively assembled based on your performance. Full results and explanations will be shown once you finish Module 2.
+        </p>
+        <div class="mod-trans-stats" id="mod-trans-stats"></div>
+        <div class="modal-actions">
+          <button id="start-module2-btn" class="primary-btn" type="button">Start Module 2 →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ЭКРАН 3: ИТОГИ СЕССИИ И РАЗБОР ОШИБОК -->
+  <div id="summary-screen" class="summary-container hidden">
+    <div class="summary-card">
+      <div class="summary-header">
+        <h2>Session Summary</h2>
+        <p id="summary-subtitle" class="summary-subtitle"></p>
+      </div>
+
+      <div id="adaptive-score-banner" class="adaptive-score-banner hidden"></div>
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <span class="stat-value" id="stat-correct">0</span>
+          <span class="stat-label">Correct</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-value" id="stat-wrong">0</span>
+          <span class="stat-label">Incorrect</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-value" id="stat-skipped">0</span>
+          <span class="stat-label">Skipped</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-value" id="stat-accuracy">0%</span>
+          <span class="stat-label">Accuracy</span>
+        </div>
+      </div>
+
+      <div id="domain-breakdown" class="domain-breakdown"></div>
+      <div id="mistakes-review" class="mistakes-review"></div>
+
+      <div class="summary-actions">
+        <button id="restart-session-btn" class="primary-btn" type="button">Practice Again</button>
+        <button id="summary-menu-btn" class="secondary-btn" type="button">Back to Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="desmos.js"></script>
+  <script src="script.js"></script>
+  <script src="dashboard.js"></script>
+  <script src="vocab.js"></script>
+</body>
+</html>
