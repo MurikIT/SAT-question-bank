@@ -1,0 +1,1852 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #f4f6f9;
+  color: #1e293b;
+  line-height: 1.55;
+  padding: 20px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* КОМПАКТНОЕ ГЛАВНОЕ МЕНЮ (ДАШБОРД) */
+.menu-container {
+  max-width: 920px;
+  width: 100%;
+  margin: 24px auto;
+}
+
+.menu-header {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.menu-header h1 {
+  font-size: clamp(22px, 5vw, 28px);
+  margin-bottom: 6px;
+}
+
+.menu-header p {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.filters-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  background: #ffffff;
+  padding: 16px 20px;
+  border-radius: 22px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 16px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 180px;
+  flex: 1 1 180px;
+}
+
+.filter-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.filter-group select {
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.filter-status {
+  text-align: center;
+  color: #b91c1c;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.section-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+  min-width: 0;
+}
+
+.section-card h2 {
+  font-size: 20px;
+}
+
+.section-card p {
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* Начальные кнопки шире, но без раздувания карточки */
+.section-card .start-btn {
+  width: 100%;
+  padding: 12px 32px;
+}
+
+/* ОБНОВЛЁННЫЙ ДИЗАЙН ЭКРАНА ВЫБОРА ТИПОВ ВОПРОСОВ */
+@keyframes setupFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.setup-screen {
+  width: min(1240px, 94vw);
+  margin: 24px auto 36px;
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  animation: setupFadeIn 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.setup-screen.hidden {
+  display: none;
+}
+
+.setup-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.setup-back-btn {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #1e293b;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.18s ease, background-color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.setup-back-btn:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  transform: translateX(-2px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+}
+
+.setup-back-btn:active {
+  transform: translateX(0) scale(0.98);
+}
+
+.setup-pill {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  white-space: nowrap;
+}
+
+.setup-card {
+  background: linear-gradient(180deg, #ffffff 0%, #fcfdff 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 30px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
+  text-align: left;
+}
+
+.setup-title {
+  margin: 0 0 5px;
+  font-size: 27px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.015em;
+}
+
+.setup-subtitle {
+  margin: 0;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.setup-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px 42px;
+  align-items: start;
+}
+
+.setup-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.setup-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.setup-select {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 13px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.setup-select:hover {
+  border-color: #94a3b8;
+  background: #ffffff;
+}
+
+.setup-select:focus {
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+}
+
+/* Крупные красивые кнопки выбора */
+.setup-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.setup-chip-btn {
+  min-height: 44px;
+  padding: 11px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 13px;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  color: #334155;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.16s ease, background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.setup-chip-btn:hover {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #1e3a8a;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 14px rgba(37, 99, 235, 0.1);
+}
+
+.setup-chip-btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.setup-chip-btn.active {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  border-color: #1d4ed8;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.28);
+}
+
+.setup-chip-btn.active:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.setup-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.setup-pool-info {
+  font-size: 14px;
+  color: #475569;
+}
+
+.setup-pool-info strong {
+  color: #0f172a;
+}
+
+.setup-start-btn {
+  min-height: 48px;
+  padding: 13px 28px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.28);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+
+.setup-start-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.04);
+  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.36);
+}
+
+.setup-start-btn:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+.setup-start-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* ЭКРАН ТЕСТА — ДВЕ КОЛОНКИ КАК В BLUEBOOK */
+.test-container {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  background: #ffffff;
+  padding: 18px 28px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 50;
+}
+
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e2e8f0;
+  flex-shrink: 0;
+}
+
+#current-section-label {
+  font-weight: 700;
+  font-size: 18px;
+  color: #0f172a;
+  margin-right: auto;
+}
+
+.progress-text {
+  font-size: 15px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.badge {
+  background: #e2e8f0;
+  color: #1e293b;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* КНОПКА ФЛАЖКА ДЛЯ ПОВТОРА */
+.flag-btn {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.flag-btn:hover {
+  border-color: #d97706;
+  background: #fffbeb;
+  color: #92400e;
+}
+
+.flag-btn.flagged {
+  border-color: #d97706;
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.timer-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.timer-box.warning {
+  background: #fef2f2;
+  border-color: #ef4444;
+  color: #b91c1c;
+}
+
+.timer-mini-btn {
+  padding: 4px 12px;
+  font-size: 13px;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #1e293b;
+  cursor: pointer;
+}
+
+.bluebook-workspace {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: stretch;
+  min-height: 0;
+}
+
+.passage-panel {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 26px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-width: 0;
+}
+
+.passage-text {
+  font-size: 18px;
+  line-height: 1.72;
+  color: #1e293b;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.passage-text:empty::before {
+  content: "No passage for this question.";
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.answer-panel {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-width: 0;
+}
+
+.question-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.question-box {
+  font-size: 18px;
+  line-height: 1.6;
+  font-weight: 400;
+  margin-bottom: 20px;
+  color: #0f172a;
+  overflow-wrap: anywhere;
+}
+
+.options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  margin-bottom: 22px;
+}
+
+/* СКРУГЛЁННЫЕ КНОПКИ ВАРИАНТОВ */
+.option-btn {
+  text-align: left;
+  padding: 15px 22px;
+  border-radius: 24px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 16px;
+  line-height: 1.45;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.option-btn:hover {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+.option-btn.selected {
+  border-color: #2563eb;
+  background: #dbeafe;
+  font-weight: 600;
+}
+
+.option-btn.correct {
+  border-color: #16a34a;
+  background: #dcfce7;
+  color: #14532d;
+  font-weight: 600;
+}
+
+.option-btn.wrong {
+  border-color: #dc2626;
+  background: #fee2e2;
+  color: #7f1d1d;
+}
+
+/* СКРУГЛЁННЫЕ КНОПКИ УПРАВЛЕНИЯ */
+.primary-btn,
+.start-btn {
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 13px 26px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.primary-btn:hover,
+.start-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.secondary-btn {
+  background-color: #f1f5f9;
+  color: #1e293b;
+  border: 1px solid #cbd5e1;
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.secondary-btn:hover {
+  background-color: #e2e8f0;
+}
+
+.danger-btn {
+  background-color: #dc2626;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.danger-btn:hover {
+  background-color: #b91c1c;
+}
+
+#check-btn:disabled,
+button:disabled {
+  background-color: #d1d5db;
+  color: #6b7280;
+  border-color: #d1d5db;
+  opacity: 0.9;
+  cursor: not-allowed;
+}
+
+.controls-bar {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.explanation-box {
+  margin-top: 20px;
+  padding: 20px 22px;
+  border-radius: 22px;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #334155;
+  overflow-wrap: anywhere;
+}
+
+.explanation-box .exp-line {
+  margin-bottom: 12px;
+}
+
+.explanation-box .exp-line:last-child {
+  margin-bottom: 0;
+}
+
+.explanation-box strong {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+/* УВЕЛИЧЕННЫЕ КНОПКИ PREV И NEXT ПОД ОБЪЯСНЕНИЕМ */
+.nav-arrows-bar {
+  margin-top: auto;
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-arrows-bar #prev-btn,
+.nav-arrows-bar #next-btn {
+  min-width: 136px;
+  padding: 14px 24px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 999px;
+}
+
+.option-btn.locked,
+.option-btn:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+.option-btn.locked:hover,
+.option-btn:disabled:hover {
+  border-color: #cbd5e1;
+  background-color: #ffffff;
+}
+
+.option-btn.correct,
+.option-btn.correct:disabled,
+.option-btn.correct:hover {
+  border-color: #16a34a !important;
+  background-color: #dcfce7 !important;
+  color: #14532d !important;
+  font-weight: 600;
+}
+
+.option-btn.wrong,
+.option-btn.wrong:disabled,
+.option-btn.wrong:hover {
+  border-color: #dc2626 !important;
+  background-color: #fee2e2 !important;
+  color: #7f1d1d !important;
+  font-weight: 600;
+}
+
+/* ГРАФИКИ, КАРТИНКИ И ТАБЛИЦЫ В ОТРЫВКЕ */
+.passage-panel svg:not(.katex svg),
+.passage-panel img:not([role='math']),
+.passage-panel canvas {
+  display: block;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  max-height: 420px;
+  margin: 14px auto;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.passage-panel table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 15px;
+  background: #ffffff;
+  border-radius: 12px;
+}
+
+.passage-panel th,
+.passage-panel td {
+  border: 1px solid #cbd5e1;
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.passage-panel th {
+  background: #e2e8f0;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.passage-panel tr:nth-child(even) td {
+  background: #f8fafc;
+}
+
+/* НИЖНЯЯ ПАНЕЛЬ ПО ЦЕНТРУ + КОМПАКТНАЯ ВКЛАДКА СО СКРОЛЛОМ */
+.question-nav-bottom {
+  position: relative;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.question-picker-btn {
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  color: #0f172a;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.question-picker-btn:hover {
+  background: #eff6ff;
+  border-color: #2563eb;
+}
+
+.question-picker-popup {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(440px, calc(100vw - 24px));
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 18px;
+  padding: 14px 16px;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.16);
+  z-index: 80;
+}
+
+.picker-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #475569;
+}
+
+.picker-close-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.picker-close-btn:hover {
+  background: #e2e8f0;
+}
+
+.question-squares {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(38px, 1fr));
+  gap: 8px;
+  max-height: 210px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.q-square-btn {
+  position: relative;
+  height: 38px;
+  border-radius: 9px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #1e293b;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.1s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+
+.q-square-btn:hover {
+  border-color: #2563eb;
+  transform: translateY(-1px);
+}
+
+.q-square-btn.answered-draft {
+  background: #dbeafe;
+  border-color: #3b82f6;
+  color: #1e3a8a;
+}
+
+.q-square-btn.answered-correct {
+  background: #dcfce7;
+  border-color: #16a34a;
+  color: #14532d;
+}
+
+.q-square-btn.answered-wrong {
+  background: #fee2e2;
+  border-color: #dc2626;
+  color: #7f1d1d;
+}
+
+.q-square-btn.flagged::after {
+  content: "⚑";
+  position: absolute;
+  top: 1px;
+  right: 3px;
+  font-size: 9px;
+  color: #d97706;
+  line-height: 1;
+}
+
+.q-square-btn.active {
+  background: #2563eb;
+  border-color: #1d4ed8;
+  color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.28);
+  transform: scale(1.05);
+}
+
+.q-square-btn.active.flagged::after {
+  color: #fde68a;
+}
+
+/* МОДАЛКА ЗАЩИТЫ ОТ ВЫХОДА */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 120;
+}
+
+.modal-card {
+  width: min(420px, 100%);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 22px;
+  padding: 22px 24px;
+  box-shadow: 0 20px 44px rgba(15, 23, 42, 0.22);
+}
+
+.modal-card h3 {
+  font-size: 19px;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.modal-card p {
+  font-size: 14px;
+  color: #475569;
+  margin-bottom: 20px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* СТАТИСТИКА ПО СЕССИИ */
+.summary-container {
+  max-width: min(1320px, 96vw);
+  width: 100%;
+  margin: 24px auto;
+  padding: 0 12px;
+}
+
+.summary-card {
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid #e2e8f0;
+  padding: 26px 30px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  min-width: 0;
+}
+
+.summary-header {
+  margin-bottom: 20px;
+}
+
+.summary-subtitle {
+  margin-top: 6px;
+  color: #475569;
+  font-size: 14px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.stat-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 18px;
+  text-align: center;
+  min-width: 0;
+}
+
+.stat-value {
+  display: block;
+  font-size: 28px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.stat-label {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  color: #64748b;
+}
+
+/* РАЗБИВКА ТОЧНОСТИ ПО ТЕМАМ НА ЭКРАНЕ SUMMARY */
+.domain-breakdown {
+  margin-bottom: 24px;
+}
+
+.domain-section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.domain-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.domain-row {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 13px 16px;
+  min-width: 0;
+}
+
+.domain-row-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.domain-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.domain-metrics {
+  font-size: 13px;
+  color: #475569;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.domain-metrics strong {
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.domain-bar-track {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  overflow: hidden;
+}
+
+.domain-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: #2563eb;
+  transition: width 0.25s ease;
+}
+
+.domain-row.is-strong .domain-bar-fill {
+  background: #16a34a;
+}
+
+.domain-row.is-mid .domain-bar-fill {
+  background: #d97706;
+}
+
+.domain-row.is-weak .domain-bar-fill {
+  background: #dc2626;
+}
+
+.summary-review-tabs {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 2px;
+  flex-wrap: wrap;
+}
+
+.summary-tab-btn {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.summary-tab-btn.active {
+  background: #2563eb;
+  border-color: #1d4ed8;
+  color: #ffffff;
+}
+
+.mistakes-review {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+  max-height: 640px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.mistakes-review > p.exp-line {
+  grid-column: 1 / -1;
+}
+
+.mistake-item {
+  border: 1px solid #fecaca;
+  background: #fff5f5;
+  border-radius: 16px;
+  padding: 15px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.mistake-item.is-correct {
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+}
+
+.mistake-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.mistake-meta {
+  font-size: 12px;
+  font-weight: 700;
+  color: #991b1b;
+}
+
+.mistake-item.is-correct .mistake-meta {
+  color: #166534;
+}
+
+.review-open-btn {
+  padding: 6px 14px;
+  font-size: 12px;
+}
+
+.mistake-question {
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.mistake-answers {
+  font-size: 14px;
+  margin-bottom: 2px;
+  color: #1e293b;
+}
+
+.summary-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  padding: 4px 0;
+}
+
+@media (max-width: 900px) {
+  .domain-list,
+  .mistakes-review {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-card {
+    padding: 20px 18px;
+  }
+}
+
+@media (max-width: 860px) {
+  .cards-grid,
+  .bluebook-workspace {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .test-container {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100dvh;
+    padding: 10px 12px 74px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .bluebook-workspace {
+    flex: 0 0 auto;
+    height: auto;
+    min-height: auto;
+    overflow: visible;
+    padding-right: 0;
+  }
+
+  .passage-panel {
+    flex: 0 0 auto;
+    height: auto;
+    min-height: auto;
+    max-height: 135px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .passage-panel svg,
+  .passage-panel img,
+  .passage-panel canvas {
+    max-height: 115px;
+    margin: 8px auto;
+  }
+
+  .passage-panel svg.mobile-expanded,
+  .passage-panel img.mobile-expanded,
+  .passage-panel canvas.mobile-expanded {
+    max-height: 360px;
+    cursor: zoom-out;
+  }
+
+  .answer-panel {
+    flex: 0 0 auto;
+    height: auto;
+    min-height: auto;
+    margin-top: 2px;
+    padding: 16px 14px;
+    border-radius: 16px;
+    overflow: visible;
+  }
+
+  .passage-text {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .question-box {
+    font-size: 20px;
+    line-height: 1.62;
+    padding: 14px 16px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    margin-bottom: 18px;
+  }
+
+  .option-btn {
+    padding: 13px 16px;
+    font-size: 15px;
+    border-radius: 18px;
+  }
+
+  .explanation-box {
+    flex-shrink: 0;
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  .nav-arrows-bar {
+    flex-shrink: 0;
+    padding-top: 14px;
+  }
+
+  .nav-arrows-bar #prev-btn,
+  .nav-arrows-bar #next-btn {
+    flex: 1;
+    min-width: 0;
+    padding: 12px 16px;
+    font-size: 15px;
+  }
+
+  .question-nav-bottom {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin-top: 0;
+    padding: 9px 12px 11px;
+    background: #ffffff;
+    border-top: 1px solid #e2e8f0;
+    z-index: 60;
+  }
+}
+
+@media (max-width: 760px) {
+  .setup-screen {
+    margin: 14px auto 28px;
+    width: 100%;
+    padding: 0 12px;
+  }
+
+  .setup-card {
+    padding: 20px 16px;
+    border-radius: 18px;
+    gap: 18px;
+  }
+
+  .setup-title {
+    font-size: 22px;
+  }
+
+  .setup-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  body {
+    padding: 12px;
+  }
+
+  .menu-container {
+    margin: 10px auto 20px;
+  }
+
+  .filters-box {
+    padding: 14px;
+    border-radius: 18px;
+    gap: 10px;
+  }
+
+  .filter-group {
+    min-width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .section-card {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .top-bar {
+    gap: 8px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+
+  .top-bar .secondary-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  #current-section-label {
+    font-size: 15px;
+  }
+
+  .progress-text {
+    font-size: 13px;
+  }
+
+  .badge,
+  .flag-btn,
+  .timer-box {
+    font-size: 12px;
+    padding: 5px 11px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .stat-box {
+    padding: 14px 10px;
+  }
+
+  .stat-value {
+    font-size: 22px;
+  }
+
+  .summary-container {
+    margin: 12px auto 24px;
+    padding: 0;
+  }
+
+  .summary-card {
+    padding: 16px 14px;
+    border-radius: 20px;
+  }
+
+  .summary-actions .primary-btn,
+  .summary-actions .secondary-btn {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+}
+
+/* ==========================================================================
+   BLUEBOOK MATH MODES (CENTERED MULTIPLE-CHOICE & TWO-COLUMN SPR DIRECTIONS)
+   ========================================================================== */
+
+/* 1. Закрытые вопросы Math (Multiple Choice) — одна аккуратная колонка по центру */
+.bluebook-workspace.math-centered-mode {
+  grid-template-columns: minmax(0, 760px);
+  justify-content: center;
+}
+
+.bluebook-workspace.math-centered-mode .answer-panel {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 28px 36px;
+  box-shadow: 0 6px 24px rgba(15, 23, 42, 0.05);
+}
+
+/* Блок уравнений, таблиц и графиков над вопросом внутри карточки Math */
+.math-stimulus-block {
+  margin-bottom: 18px;
+  font-size: 19px;
+  line-height: 1.65;
+  color: #0f172a;
+  text-align: center;
+}
+
+.math-stimulus-block p {
+  margin-bottom: 10px;
+}
+
+.math-stimulus-block table {
+  margin: 12px auto !important;
+  border-collapse: collapse;
+  font-size: 16px;
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  width: auto !important;
+  max-width: 100%;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+.math-stimulus-block th,
+.math-stimulus-block td {
+  border: 1px solid #94a3b8;
+  padding: 8px 20px;
+  text-align: center;
+  white-space: nowrap;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+.math-stimulus-block th {
+  background: #f1f5f9;
+  font-weight: 700;
+}
+
+.math-visual-holder {
+  margin: 12px auto 18px;
+  text-align: center;
+}
+
+.math-visual-holder img,
+.math-visual-holder svg:not(.katex svg),
+.math-stimulus-block img:not([role='math']),
+.math-stimulus-block svg:not(.katex svg) {
+  max-width: 340px !important;
+  width: auto !important;
+  max-height: 250px !important;
+  height: auto !important;
+  object-fit: contain;
+  display: block;
+  margin: 10px auto;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.math-prompt-text {
+  text-align: left;
+  font-size: 18px;
+  line-height: 1.6;
+  font-weight: 400;
+  color: #0f172a;
+}
+
+/* Настоящие координатные графики внутри кнопок ответов (A, B, C, D) */
+.option-btn img:not([role='math']) {
+  max-width: 260px !important;
+  max-height: 220px !important;
+  width: auto;
+  height: auto;
+  display: block;
+  margin: 8px 0 4px 22px;
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+.option-btn svg:not(.katex svg) {
+  max-width: 260px !important;
+  max-height: 220px !important;
+  width: 240px;
+  height: auto;
+  display: block;
+  margin: 8px 0 4px 22px;
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+.img-alt-fallback {
+  margin: 6px 0 4px 22px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1px dashed #94a3b8;
+  font-size: 14px;
+  color: #334155;
+  line-height: 1.45;
+}
+
+/* 2. Открытые вопросы Math (Student-Produced Response) — инструкция слева, бланк справа */
+.spr-directions {
+  font-size: 15px;
+  line-height: 1.58;
+  color: #1e293b;
+}
+
+.spr-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.spr-list {
+  padding-left: 20px;
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.spr-examples-title {
+  font-weight: 700;
+  font-size: 15px;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.spr-table {
+  width: 100% !important;
+  max-width: 100% !important;
+  display: table !important;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.spr-table th,
+.spr-table td {
+  border: 1px solid #cbd5e1;
+  padding: 8px 10px;
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+.spr-table th {
+  background: #e2e8f0;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.spr-table code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  background: #f1f5f9;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+/* Поле ввода открытого ответа справа (как в Bluebook) */
+.spr-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 8px 0 18px;
+  max-width: 320px;
+}
+
+.spr-field-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.spr-blank-input {
+  width: 220px;
+  padding: 12px 16px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #0f172a;
+  background: #ffffff;
+  border: 2px solid #475569;
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.spr-blank-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+}
+
+.spr-blank-input.spr-correct {
+  border-color: #16a34a;
+  background: #f0fdf4;
+  color: #14532d;
+}
+
+.spr-blank-input.spr-wrong {
+  border-color: #dc2626;
+  background: #fef2f2;
+  color: #7f1d1d;
+}
+
+.spr-preview-row {
+  font-size: 14px;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.spr-preview-val {
+  font-weight: 700;
+  font-size: 16px;
+  color: #0f172a;
+}
+
+.spr-result-banner {
+  margin-top: 4px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.spr-result-banner.is-ok {
+  background: #dcfce7;
+  border: 1px solid #86efac;
+  color: #14532d;
+}
+
+.spr-result-banner.is-bad {
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #7f1d1d;
+}
+
+/* Чистый и аккуратный шрифт для текста и формул (без жирной обводки текста) */
+.math-stimulus-block,
+.math-prompt-text {
+  font-weight: 400 !important;
+  color: #0f172a;
+  -webkit-text-stroke: 0 !important;
+}
+
+.question-box .katex,
+.option-btn .katex,
+.math-stimulus-block .katex {
+  font-weight: 400 !important;
+  color: #0f172a !important;
+  -webkit-text-stroke: 0 !important;
+  font-size: 1.06em;
+}
+
+/* Знак доллара для цен ($4,334 и $25,000) обычным шрифтом текста */
+code.currency-dollar {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+.math-stimulus-block .katex-display {
+  margin: 8px 0 !important;
+  font-size: 1.12em;
+}
+
+/* Гарантируем, что внутренние SVG корней KaTeX (\sqrt) всегда отображаются корректно */
+.katex svg {
+  display: block !important;
+  position: absolute !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: inherit !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+
+/* Скрываем любые блоки для скринридеров (описания графиков для незрячих) */
+.sr-only,
+.visually-hidden,
+.screen-reader-only,
+.assistive-text,
+[class*="sr-only"] {
+  display: none !important;
+}
+
+/* Кнопка калькулятора Desmos в верхней панели */
+.desmos-topbar-btn {
+  padding: 6px 15px;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+
+.desmos-topbar-btn:hover {
+  background: #eff6ff;
+  border-color: #2563eb;
+  color: #1d4ed8;
+}
+
+/* Плавающее перемещаемое окно Desmos (как в Bluebook) */
+.desmos-floating-window {
+  position: fixed;
+  top: 76px;
+  right: 28px;
+  width: 480px;
+  height: 540px;
+  min-width: 320px;
+  min-height: 340px;
+  max-width: 94vw;
+  max-height: 86vh;
+  background: #ffffff;
+  border: 1px solid #94a3b8;
+  border-radius: 16px;
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.28);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  resize: both;
+  z-index: 900;
+}
+
+.desmos-floating-window.is-expanded {
+  width: 740px;
+  height: 640px;
+}
+
+.desmos-window-header {
+  height: 44px;
+  background: #1e293b;
+  color: #ffffff;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: grab;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.desmos-window-header:active {
+  cursor: grabbing;
+}
+
+.desmos-window-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.desmos-drag-dots {
+  color: #94a3b8;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.desmos-window-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.desmos-ctrl-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  border: none;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s;
+}
+
+.desmos-ctrl-btn:hover {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.desmos-ctrl-btn.desmos-close:hover {
+  background: #dc2626;
+}
+
+.desmos-window-body {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+}
+
+#desmos-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* Прозрачный щит поверх iframe во время перетаскивания мышкой, чтобы курсор не проваливался в iframe */
+.desmos-drag-shield {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  cursor: grabbing;
+}
+

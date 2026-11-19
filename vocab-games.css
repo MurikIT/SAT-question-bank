@@ -1,0 +1,1044 @@
+/* ==========================================================================
+   VOCABULARY GAMES, 3D FLASHCARDS & WORD ZOOM MODAL
+   (Подключается отдельным файлом, не трогает ваш dashboard.css)
+   ========================================================================== */
+
+/* Переключатель режимов в шапке Vocabulary */
+.vocab-mode-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  padding: 4px;
+  border-radius: 999px;
+}
+
+.vocab-mode-btn {
+  padding: 7px 13px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.vocab-mode-btn:hover {
+  color: #0f172a;
+}
+
+.vocab-mode-btn.active {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.vocab-view {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.vocab-view.hidden {
+  display: none !important;
+}
+
+/* Кликабельность карточек в Word Bank */
+.vocab-card.is-zoomable {
+  cursor: pointer;
+}
+
+.vocab-card-head-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vocab-zoom-hint {
+  font-size: 13px;
+  color: #94a3b8;
+  opacity: 0.55;
+  transition: opacity 0.16s ease, transform 0.16s ease, color 0.16s ease;
+}
+
+.vocab-card.is-zoomable:hover .vocab-zoom-hint {
+  opacity: 1;
+  color: #2563eb;
+  transform: scale(1.15);
+}
+
+/* ==========================================================================
+   МОДАЛКА ПРИБЛИЖЕНИЯ КАРТОЧКИ (WORD ZOOM MODAL)
+   ========================================================================== */
+@keyframes vocabBackdropFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes vocabCardZoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.84) translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.vocab-zoom-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.52);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1200;
+  animation: vocabBackdropFade 0.2s ease;
+}
+
+.vocab-zoom-backdrop.hidden {
+  display: none !important;
+}
+
+.vocab-zoom-card {
+  width: min(560px, 100%);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 26px 28px;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.24);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: vocabCardZoomIn 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.vz-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.vz-title-group {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.vz-word {
+  font-size: 30px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.15;
+}
+
+.vz-pos {
+  font-size: 15px;
+  font-style: italic;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.vz-close-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #475569;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.vz-close-btn:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #dc2626;
+}
+
+.vz-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.vz-label {
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748b;
+}
+
+.vz-def {
+  font-size: 16.5px;
+  color: #0f172a;
+  line-height: 1.55;
+}
+
+.vz-syns .vocab-syn-tag {
+  font-size: 13px;
+  padding: 4px 11px;
+}
+
+.vz-example {
+  font-size: 14.5px;
+  padding: 10px 14px;
+}
+
+.vz-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 12px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.vz-nav-btns {
+  display: flex;
+  gap: 8px;
+}
+
+/* ==========================================================================
+   3D FLASHCARDS
+   ========================================================================== */
+.fc-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  flex-shrink: 0;
+}
+
+.fc-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fc-counter {
+  font-size: 14px;
+  font-weight: 700;
+  color: #475569;
+}
+
+.fc-stage {
+  flex: 1;
+  min-height: 290px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+  padding: 6px 0 18px;
+}
+
+.fc-card-3d {
+  position: relative;
+  width: min(720px, 100%);
+  height: 410px;
+  transform-style: preserve-3d;
+  transition: transform 0.52s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+  outline: none;
+}
+
+.fc-card-3d.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.fc-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 26px;
+  padding: 34px 40px;
+  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 18px;
+}
+
+.fc-back {
+  transform: rotateY(180deg);
+  align-items: flex-start;
+  text-align: left;
+  justify-content: center;
+}
+
+.fc-hint-top {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+.fc-word-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.fc-word {
+  font-size: 46px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.fc-pos {
+  font-size: 18px;
+  font-style: italic;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.fc-speak {
+  width: 38px !important;
+  height: 38px !important;
+  font-size: 17px !important;
+}
+
+.fc-status-badge {
+  position: absolute;
+  bottom: 18px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.fc-status-badge.st-mastered {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.fc-status-badge.st-learning {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.fc-back-word {
+  font-size: 22px;
+  font-weight: 800;
+  color: #2563eb;
+}
+
+.fc-def {
+  font-size: 20px;
+  color: #0f172a;
+  line-height: 1.55;
+}
+
+.fc-syns .vocab-syn-tag {
+  font-size: 13.5px;
+  padding: 4px 12px;
+}
+
+.fc-example {
+  width: 100%;
+  font-size: 15.5px;
+  padding: 10px 14px;
+}
+
+.fc-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  padding-top: 8px;
+}
+
+.fc-grade-btns {
+  display: flex;
+  gap: 10px;
+}
+
+.fc-btn-learning,
+.fc-btn-mastered {
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.fc-btn-learning {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #92400e;
+}
+
+.fc-btn-learning:hover {
+  background: #fde68a;
+  transform: translateY(-1px);
+}
+
+.fc-btn-mastered {
+  background: #dcfce7;
+  border-color: #16a34a;
+  color: #166534;
+}
+
+.fc-btn-mastered:hover {
+  background: #bbf7d0;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   MATCH SPRINT & CONTEXT BLITZ (SHARED HUD + BOARDS)
+   ========================================================================== */
+.game-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+.game-hud-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.game-pill {
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  font-size: 13.5px;
+  color: #334155;
+}
+
+.game-sub {
+  font-size: 13.5px;
+  color: #64748b;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+.match-board {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: minmax(210px, 0.8fr) minmax(300px, 1.4fr);
+  gap: 16px;
+  padding-bottom: 12px;
+}
+
+.match-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.match-tile {
+  text-align: left;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 2px solid #e2e8f0;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 14px;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: transform 0.16s ease, border-color 0.16s ease, background-color 0.16s ease, opacity 0.25s ease;
+}
+
+.match-tile:hover:not(.matched) {
+  border-color: #93c5fd;
+  transform: translateY(-1px);
+}
+
+.match-word-tile {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.match-word-main {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.match-word-pos {
+  font-size: 12px;
+  font-style: italic;
+  color: #64748b;
+}
+
+.match-tile.selected {
+  border-color: #2563eb;
+  background: #eff6ff;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.14);
+}
+
+.match-tile.matched {
+  opacity: 0.28;
+  border-color: #86efac;
+  background: #f0fdf4;
+  pointer-events: none;
+  transform: scale(0.97);
+}
+
+@keyframes matchShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.match-tile.wrong-shake {
+  border-color: #ef4444;
+  background: #fef2f2;
+  animation: matchShake 0.32s ease;
+}
+
+.game-result-card {
+  margin-top: 14px;
+  padding: 24px;
+  border-radius: 18px;
+  background: #ffffff;
+  border: 1px solid #bfdbfe;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 26px rgba(37, 99, 235, 0.08);
+}
+
+.game-result-card h3 {
+  font-size: 22px;
+  color: #0f172a;
+}
+
+.game-result-card p {
+  font-size: 15px;
+  color: #475569;
+}
+
+/* Context Blitz */
+.blitz-stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  justify-content: center;
+  max-width: 760px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.blitz-prompt-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 24px 26px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.blitz-tag {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  margin-bottom: 12px;
+}
+
+.blitz-sentence {
+  font-size: 19px;
+  line-height: 1.6;
+  color: #0f172a;
+}
+
+.blitz-blank {
+  display: inline-block;
+  min-width: 96px;
+  height: 1em;
+  margin: 0 4px;
+  border-bottom: 2.5px solid #2563eb;
+  vertical-align: baseline;
+  line-height: 1;
+}
+
+.blitz-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.blitz-opt-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.blitz-opt-btn:hover:not(:disabled) {
+  border-color: #2563eb;
+  background: #eff6ff;
+  transform: translateY(-1px);
+}
+
+.blitz-opt-letter {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: #f1f5f9;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.blitz-opt-btn.is-correct {
+  background: #dcfce7;
+  border-color: #16a34a;
+  color: #166534;
+}
+
+.blitz-opt-btn.is-wrong {
+  background: #fee2e2;
+  border-color: #dc2626;
+  color: #991b1b;
+}
+
+.blitz-feedback {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.blitz-feedback.is-ok {
+  background: #ecfdf5;
+  border: 1px solid #86efac;
+  color: #166534;
+}
+
+.blitz-feedback.is-bad {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  color: #991b1b;
+}
+
+/* ==========================================================================
+   DARK MODE SUPPORT
+   ========================================================================== */
+body.dark-theme .vocab-mode-tabs,
+body.dark-theme .game-hud,
+body.dark-theme .blitz-prompt-card,
+body.dark-theme .game-result-card,
+body.dark-theme .vocab-zoom-card,
+body.dark-theme .fc-face {
+  background: #111827;
+  border-color: #1f2937;
+}
+
+body.dark-theme .vocab-mode-btn {
+  color: #cbd5e1;
+}
+
+body.dark-theme .vocab-mode-btn.active {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+body.dark-theme .vz-word,
+body.dark-theme .vz-def,
+body.dark-theme .fc-word,
+body.dark-theme .fc-def,
+body.dark-theme .blitz-sentence,
+body.dark-theme .game-result-card h3 {
+  color: #f8fafc;
+}
+
+body.dark-theme .vz-footer {
+  border-color: #1f2937;
+}
+
+body.dark-theme .vz-close-btn,
+body.dark-theme .game-pill,
+body.dark-theme .match-tile,
+body.dark-theme .blitz-opt-btn {
+  background: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+
+body.dark-theme .match-tile.selected,
+body.dark-theme .blitz-opt-btn:hover:not(:disabled) {
+  background: #172554;
+  border-color: #3b82f6;
+}
+
+body.dark-theme .match-tile.matched,
+body.dark-theme .blitz-opt-btn.is-correct {
+  background: #14532d;
+  border-color: #22c55e;
+  color: #dcfce7;
+}
+
+body.dark-theme .match-tile.wrong-shake,
+body.dark-theme .blitz-opt-btn.is-wrong {
+  background: #7f1d1d;
+  border-color: #ef4444;
+  color: #fee2e2;
+}
+
+body.dark-theme .blitz-opt-letter {
+  background: #0f172a;
+  color: #cbd5e1;
+}
+
+body.dark-theme .fc-back-word {
+  color: #60a5fa;
+}
+
+@media (max-width: 860px) {
+  .match-board,
+  .blitz-options {
+    grid-template-columns: 1fr;
+  }
+
+  .fc-card-3d {
+    height: 360px;
+  }
+}
+
+
+/* Карточка статистики Vocabulary на Dashboard */
+.dashboard-vocab-card {
+  margin-top: 18px !important;
+  margin-bottom: 12px;
+}
+
+
+/* Модалка выбора: 1 модуль или 2 модуля вместе */
+.module-length-card {
+  width: min(460px, 100%);
+}
+
+.mod-len-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.mod-len-option-btn {
+  width: 100%;
+  text-align: left;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 2px solid #e2e8f0;
+  background: #f8fafc;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: transform 0.16s ease, border-color 0.16s ease, background-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.mod-len-option-btn:hover {
+  border-color: #93c5fd;
+  background: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.08);
+}
+
+.mod-len-option-btn.is-primary {
+  border-color: #bfdbfe;
+  background: #eff6ff;
+}
+
+.mod-len-option-btn.is-primary:hover {
+  border-color: #2563eb;
+  background: #dbeafe;
+}
+
+.mod-len-opt-title {
+  font-size: 15.5px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.mod-len-opt-sub {
+  font-size: 13px;
+  color: #64748b;
+}
+
+body.dark-theme .mod-len-option-btn {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.dark-theme .mod-len-option-btn:hover {
+  background: #273549;
+  border-color: #60a5fa;
+}
+
+body.dark-theme .mod-len-option-btn.is-primary {
+  background: #172554;
+  border-color: #1d4ed8;
+}
+
+body.dark-theme .mod-len-option-btn.is-primary:hover {
+  background: #1e3a8a;
+  border-color: #60a5fa;
+}
+
+body.dark-theme .mod-len-opt-title {
+  color: #f8fafc;
+}
+
+body.dark-theme .mod-len-opt-sub {
+  color: #94a3b8;
+}
+
+
+/* Галочки выбора модулей (Module 1 / Module 2 / 2 Modules Adaptive) */
+.mod-len-top-pills {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.mod-len-top-pills .mod-trans-pill {
+  margin-bottom: 0;
+}
+
+.mod-mode-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #1e293b;
+  border: 1px solid #cbd5e1;
+}
+
+.mod-mode-badge.is-both {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #86efac;
+}
+
+.mod-mode-badge.is-empty {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #fca5a5;
+}
+
+.mod-len-check-card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 2px solid #e2e8f0;
+  background: #f8fafc;
+  cursor: pointer;
+  user-select: none;
+  transition: border-color 0.16s ease, background-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.mod-len-check-card:hover {
+  border-color: #93c5fd;
+  background: #ffffff;
+}
+
+.mod-len-check-card.is-checked {
+  border-color: #2563eb;
+  background: #eff6ff;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.08);
+}
+
+.mod-len-check-card input[type="checkbox"] {
+  width: 19px;
+  height: 19px;
+  accent-color: #2563eb;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.mod-len-check-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+body.dark-theme .mod-mode-badge {
+  background: #1e293b;
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
+body.dark-theme .mod-mode-badge.is-both {
+  background: #14532d;
+  color: #dcfce7;
+  border-color: #22c55e;
+}
+
+body.dark-theme .mod-mode-badge.is-empty {
+  background: #7f1d1d;
+  color: #fee2e2;
+  border-color: #ef4444;
+}
+
+body.dark-theme .mod-len-check-card {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.dark-theme .mod-len-check-card:hover {
+  background: #273549;
+  border-color: #60a5fa;
+}
+
+body.dark-theme .mod-len-check-card.is-checked {
+  background: #172554;
+  border-color: #3b82f6;
+}
+/* ==========================================================================
+   DARK MODE: ИСПРАВЛЕНИЕ КОНТРАСТНОСТИ ТЕКСТА (SETUP, SELECTS, TABLES)
+   ========================================================================== */
+
+/* Экран настройки секции (Reading & Writing / Math Practice Setup) */
+body.dark-theme .setup-screen {
+  background: #0b1120;
+  color: #f8fafc;
+}
+
+body.dark-theme .setup-label,
+body.dark-theme .setup-pool-info strong {
+  color: #f8fafc;
+}
+
+body.dark-theme .setup-pool-info {
+  color: #cbd5e1;
+}
+
+body.dark-theme .setup-pill {
+  background: #172554;
+  border-color: #1d4ed8;
+  color: #93c5fd;
+}
+
+body.dark-theme .setup-select,
+body.dark-theme .setup-select option {
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+body.dark-theme .setup-chip-btn {
+  background: #1e293b;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+body.dark-theme .setup-chip-btn.active {
+  background: #2563eb;
+  border-color: #3b82f6;
+  color: #ffffff;
+}
+
+/* Таблицы SPR, пикер вопросов и мелкие подписи в Dark Mode */
+body.dark-theme .picker-header,
+body.dark-theme .mod-trans-stats strong,
+body.dark-theme .adaptive-score-label,
+body.dark-theme .game-result-card p {
+  color: #e2e8f0;
+}
+
+body.dark-theme .spr-table th {
+  background: #0f172a;
+  color: #f8fafc;
+  border-color: #334155;
+}
+
+body.dark-theme .spr-table td {
+  background: #1e293b;
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
+body.dark-theme .spr-table code {
+  background: #0f172a;
+  color: #93c5fd;
+}
+
+body.dark-theme .fc-counter,
+body.dark-theme .fc-pos,
+body.dark-theme .vz-pos,
+body.dark-theme .vz-label,
+body.dark-theme .game-sub,
+body.dark-theme .match-word-pos {
+  color: #94a3b8;
+}

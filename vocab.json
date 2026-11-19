@@ -1,0 +1,3842 @@
+[
+  {
+    "id": "v001",
+    "word": "Abate",
+    "pos": "verb",
+    "definition": "Become less intense, severe, or widespread.",
+    "synonyms": [
+      "subside",
+      "diminish",
+      "lessen"
+    ],
+    "example": "Once the coastal winds began to abate, ferry service between the islands resumed."
+  },
+  {
+    "id": "v002",
+    "word": "Aberration",
+    "pos": "noun",
+    "definition": "A departure from what is normal, usual, or expected.",
+    "synonyms": [
+      "anomaly",
+      "deviation",
+      "irregularity"
+    ],
+    "example": "Meteorologists classified the unusually warm December as a statistical aberration rather than a permanent shift."
+  },
+  {
+    "id": "v003",
+    "word": "Abstain",
+    "pos": "verb",
+    "definition": "Restrain oneself from doing or enjoying something.",
+    "synonyms": [
+      "refrain",
+      "forgo",
+      "withhold"
+    ],
+    "example": "Several council members chose to abstain from the vote until the environmental review was completed."
+  },
+  {
+    "id": "v004",
+    "word": "Abstract",
+    "pos": "adj.",
+    "definition": "Existing in thought or as an idea but not having a physical or concrete existence.",
+    "synonyms": [
+      "theoretical",
+      "conceptual",
+      "intangible"
+    ],
+    "example": "The philosopher struggled to translate her abstract principles into actionable civic policies."
+  },
+  {
+    "id": "v005",
+    "word": "Acclaim",
+    "pos": "noun",
+    "definition": "Enthusiastic and public praise.",
+    "synonyms": [
+      "praise",
+      "applause",
+      "recognition"
+    ],
+    "example": "Although the debut novel received modest sales, it earned widespread critical acclaim."
+  },
+  {
+    "id": "v006",
+    "word": "Accrue",
+    "pos": "verb",
+    "definition": "Accumulate or receive payments, benefits, or value over time.",
+    "synonyms": [
+      "accumulate",
+      "amass",
+      "gather"
+    ],
+    "example": "Long-term benefits accrue when municipalities invest in preventive water infrastructure."
+  },
+  {
+    "id": "v007",
+    "word": "Adept",
+    "pos": "adj.",
+    "definition": "Very skilled or proficient at something.",
+    "synonyms": [
+      "skilled",
+      "proficient",
+      "expert"
+    ],
+    "example": "Octopuses are remarkably adept at altering their skin texture to blend into rocky reefs."
+  },
+  {
+    "id": "v008",
+    "word": "Adhere",
+    "pos": "verb",
+    "definition": "Stick fast to a surface or follow a rule, belief, or practice closely.",
+    "synonyms": [
+      "follow",
+      "comply",
+      "stick"
+    ],
+    "example": "Strict laboratories require researchers to adhere to standardized sterilization protocols."
+  },
+  {
+    "id": "v009",
+    "word": "Adversary",
+    "pos": "noun",
+    "definition": "One's opponent in a contest, conflict, or dispute.",
+    "synonyms": [
+      "opponent",
+      "rival",
+      "foe"
+    ],
+    "example": "Even his fiercest political adversary acknowledged the senator's mastery of budget law."
+  },
+  {
+    "id": "v010",
+    "word": "Advocate",
+    "pos": "verb",
+    "definition": "Publicly recommend or support a particular cause or policy.",
+    "synonyms": [
+      "champion",
+      "support",
+      "promote"
+    ],
+    "example": "Urban planners increasingly advocate for mixed-use neighborhoods that reduce car dependency."
+  },
+  {
+    "id": "v011",
+    "word": "Aesthetic",
+    "pos": "adj.",
+    "definition": "Concerned with beauty or the appreciation of beauty.",
+    "synonyms": [
+      "artistic",
+      "visual",
+      "stylistic"
+    ],
+    "example": "The bridge was praised not only for its structural durability but also for its minimalist aesthetic appeal."
+  },
+  {
+    "id": "v012",
+    "word": "Affable",
+    "pos": "adj.",
+    "definition": "Friendly, good-natured, and easy to talk to.",
+    "synonyms": [
+      "amiable",
+      "genial",
+      "cordial"
+    ],
+    "example": "Despite his formidable reputation as a critic, he proved surprisingly affable during interviews."
+  },
+  {
+    "id": "v013",
+    "word": "Affirm",
+    "pos": "verb",
+    "definition": "State as a fact; assert strongly and publicly.",
+    "synonyms": [
+      "confirm",
+      "assert",
+      "declare"
+    ],
+    "example": "The court's decision served to affirm the town's authority to regulate historic districts."
+  },
+  {
+    "id": "v014",
+    "word": "Alleviate",
+    "pos": "verb",
+    "definition": "Make suffering, deficiency, or a problem less severe.",
+    "synonyms": [
+      "ease",
+      "relieve",
+      "mitigate"
+    ],
+    "example": "Adding shaded bus shelters helped alleviate heat stress for summer commuters."
+  },
+  {
+    "id": "v015",
+    "word": "Allude",
+    "pos": "verb",
+    "definition": "Suggest or call attention to indirectly; hint at.",
+    "synonyms": [
+      "hint",
+      "reference",
+      "imply"
+    ],
+    "example": "Throughout the memoir, the author seems to allude to family tensions without naming them explicitly."
+  },
+  {
+    "id": "v016",
+    "word": "Altruistic",
+    "pos": "adj.",
+    "definition": "Showing a disinterested and selfless concern for the well-being of others.",
+    "synonyms": [
+      "selfless",
+      "charitable",
+      "benevolent"
+    ],
+    "example": "Biologists debate whether cooperative alarm calls in meerkats are truly altruistic or driven by kin survival."
+  },
+  {
+    "id": "v017",
+    "word": "Ambiguous",
+    "pos": "adj.",
+    "definition": "Open to more than one interpretation; not having one obvious meaning.",
+    "synonyms": [
+      "unclear",
+      "vague",
+      "equivocal"
+    ],
+    "example": "Because the treaty's wording was ambiguous, both nations interpreted the border differently."
+  },
+  {
+    "id": "v018",
+    "word": "Ambivalent",
+    "pos": "adj.",
+    "definition": "Having mixed feelings or contradictory ideas about someone or something.",
+    "synonyms": [
+      "conflicted",
+      "uncertain",
+      "torn"
+    ],
+    "example": "Many residents felt ambivalent about the new resort: it brought jobs, yet it raised housing costs."
+  },
+  {
+    "id": "v019",
+    "word": "Ameliorate",
+    "pos": "verb",
+    "definition": "Make something bad or unsatisfactory better.",
+    "synonyms": [
+      "improve",
+      "enhance",
+      "mitigate"
+    ],
+    "example": "Targeted tutoring programs were introduced to ameliorate learning gaps in rural schools."
+  },
+  {
+    "id": "v020",
+    "word": "Amiable",
+    "pos": "adj.",
+    "definition": "Having or displaying a friendly and pleasant manner.",
+    "synonyms": [
+      "friendly",
+      "cordial",
+      "agreeable"
+    ],
+    "example": "Her amiable demeanor quickly put the nervous interviewees at ease."
+  },
+  {
+    "id": "v021",
+    "word": "Anachronistic",
+    "pos": "adj.",
+    "definition": "Belonging to a period other than that being portrayed.",
+    "synonyms": [
+      "outdated",
+      "antiquated",
+      "misplaced"
+    ],
+    "example": "Historians noticed an anachronistic wristwatch visible on an extra in the nineteenth-century film."
+  },
+  {
+    "id": "v022",
+    "word": "Analogous",
+    "pos": "adj.",
+    "definition": "Comparable in certain respects, typically in a way that makes clearer the nature of the things compared.",
+    "synonyms": [
+      "similar",
+      "comparable",
+      "parallel"
+    ],
+    "example": "The flow of electrical current through a wire is often described as analogous to water moving through a pipe."
+  },
+  {
+    "id": "v023",
+    "word": "Anomaly",
+    "pos": "noun",
+    "definition": "Something that deviates from what is standard, normal, or expected.",
+    "synonyms": [
+      "irregularity",
+      "outlier",
+      "aberration"
+    ],
+    "example": "Astronomers noticed a brightness anomaly that eventually led to the discovery of an exoplanet."
+  },
+  {
+    "id": "v024",
+    "word": "Antagonize",
+    "pos": "verb",
+    "definition": "Cause someone to become hostile.",
+    "synonyms": [
+      "provoke",
+      "alienate",
+      "irritate"
+    ],
+    "example": "The negotiator avoided blunt ultimatums so as not to antagonize the opposing delegation."
+  },
+  {
+    "id": "v025",
+    "word": "Antiquated",
+    "pos": "adj.",
+    "definition": "Old-fashioned or outdated.",
+    "synonyms": [
+      "obsolete",
+      "outdated",
+      "archaic"
+    ],
+    "example": "The agency replaced its antiquated paper filing system with a searchable digital archive."
+  },
+  {
+    "id": "v026",
+    "word": "Apathy",
+    "pos": "noun",
+    "definition": "Lack of interest, enthusiasm, or concern.",
+    "synonyms": [
+      "indifference",
+      "detachment",
+      "unconcern"
+    ],
+    "example": "Low turnout in the local election reflected growing voter apathy rather than satisfaction."
+  },
+  {
+    "id": "v027",
+    "word": "Appease",
+    "pos": "verb",
+    "definition": "Pacify or placate someone by acceding to their demands.",
+    "synonyms": [
+      "placate",
+      "pacify",
+      "conciliate"
+    ],
+    "example": "The management offered flexible shifts to appease workers frustrated by the new schedule."
+  },
+  {
+    "id": "v028",
+    "word": "Apprehensive",
+    "pos": "adj.",
+    "definition": "Anxious or fearful that something bad or unpleasant will happen.",
+    "synonyms": [
+      "anxious",
+      "uneasy",
+      "nervous"
+    ],
+    "example": "Farmers grew apprehensive as the spring dry spell stretched into its sixth week."
+  },
+  {
+    "id": "v029",
+    "word": "Arbitrary",
+    "pos": "adj.",
+    "definition": "Based on random choice or personal whim rather than any reason or system.",
+    "synonyms": [
+      "random",
+      "capricious",
+      "unreasoned"
+    ],
+    "example": "Students complained that the cutoff score seemed arbitrary rather than grounded in performance data."
+  },
+  {
+    "id": "v030",
+    "word": "Archaic",
+    "pos": "adj.",
+    "definition": "Very old or old-fashioned; from an earlier period.",
+    "synonyms": [
+      "ancient",
+      "outdated",
+      "obsolete"
+    ],
+    "example": "Modern readers often need footnotes to unpack the archaic legal terms in eighteenth-century pamphlets."
+  },
+  {
+    "id": "v031",
+    "word": "Archetype",
+    "pos": "noun",
+    "definition": "A very typical example or original model of a certain person or thing.",
+    "synonyms": [
+      "prototype",
+      "model",
+      "exemplar"
+    ],
+    "example": "The reluctant hero has become a familiar archetype in modern adventure fiction."
+  },
+  {
+    "id": "v032",
+    "word": "Arduous",
+    "pos": "adj.",
+    "definition": "Involving or requiring strenuous effort; difficult and tiring.",
+    "synonyms": [
+      "strenuous",
+      "grueling",
+      "laborious"
+    ],
+    "example": "Restoring the water-damaged frescoes proved an arduous process lasting nearly four years."
+  },
+  {
+    "id": "v033",
+    "word": "Articulate",
+    "pos": "adj.",
+    "definition": "Having or showing the ability to speak fluently and coherently.",
+    "synonyms": [
+      "eloquent",
+      "expressive",
+      "clear"
+    ],
+    "example": "As an articulate spokesperson for marine conservation, she easily translated complex data for the public."
+  },
+  {
+    "id": "v034",
+    "word": "Ascertain",
+    "pos": "verb",
+    "definition": "Find something out for certain; make sure of.",
+    "synonyms": [
+      "determine",
+      "verify",
+      "establish"
+    ],
+    "example": "Archivists examined ink chemistry to ascertain the exact decade the letter was written."
+  },
+  {
+    "id": "v035",
+    "word": "Assuage",
+    "pos": "verb",
+    "definition": "Make an unpleasant feeling less intense.",
+    "synonyms": [
+      "soothe",
+      "relieve",
+      "ease"
+    ],
+    "example": "Transparent safety reports helped assuage public concerns about the new transit line."
+  },
+  {
+    "id": "v036",
+    "word": "Astute",
+    "pos": "adj.",
+    "definition": "Having or showing an ability to accurately assess situations or people and turn this to one's advantage.",
+    "synonyms": [
+      "shrewd",
+      "perceptive",
+      "sharp"
+    ],
+    "example": "An astute observer of consumer habits, the founder noticed the shift toward refillable packaging early."
+  },
+  {
+    "id": "v037",
+    "word": "Audacious",
+    "pos": "adj.",
+    "definition": "Showing a willingness to take surprisingly bold risks.",
+    "synonyms": [
+      "bold",
+      "daring",
+      "fearless"
+    ],
+    "example": "Critics initially dismissed the plan to tunnel beneath the strait as overly audacious."
+  },
+  {
+    "id": "v038",
+    "word": "Augment",
+    "pos": "verb",
+    "definition": "Make something greater by adding to it; increase.",
+    "synonyms": [
+      "increase",
+      "expand",
+      "supplement"
+    ],
+    "example": "Museums increasingly use audio guides to augment the information on gallery plaques."
+  },
+  {
+    "id": "v039",
+    "word": "Austere",
+    "pos": "adj.",
+    "definition": "Severe or strict in manner; having no comforts or luxuries; plain.",
+    "synonyms": [
+      "stark",
+      "spartan",
+      "unadorned"
+    ],
+    "example": "The sculptor favored austere concrete forms devoid of decorative flourishes."
+  },
+  {
+    "id": "v040",
+    "word": "Autonomous",
+    "pos": "adj.",
+    "definition": "Acting independently or having the freedom to do so.",
+    "synonyms": [
+      "independent",
+      "self-governing",
+      "sovereign"
+    ],
+    "example": "Researchers tested autonomous underwater drones capable of mapping deep-sea trenches without tether lines."
+  },
+  {
+    "id": "v041",
+    "word": "Banal",
+    "pos": "adj.",
+    "definition": "So lacking in originality as to be obvious and boring.",
+    "synonyms": [
+      "trite",
+      "mundane",
+      "clichéd"
+    ],
+    "example": "Although the cinematography was dazzling, reviewers found the dialogue disappointingly banal."
+  },
+  {
+    "id": "v042",
+    "word": "Belie",
+    "pos": "verb",
+    "definition": "Fail to give a true notion or impression of; disguise or contradict.",
+    "synonyms": [
+      "contradict",
+      "mask",
+      "misrepresent"
+    ],
+    "example": "The calm surface of the bay seemed to belie the powerful rip currents moving just beneath."
+  },
+  {
+    "id": "v043",
+    "word": "Benevolent",
+    "pos": "adj.",
+    "definition": "Well-meaning and kindly.",
+    "synonyms": [
+      "kind",
+      "charitable",
+      "compassionate"
+    ],
+    "example": "The foundation's benevolent grant program funded free music lessons across twelve districts."
+  },
+  {
+    "id": "v044",
+    "word": "Benign",
+    "pos": "adj.",
+    "definition": "Gentle and kindly; not harmful in effect.",
+    "synonyms": [
+      "harmless",
+      "gentle",
+      "innocuous"
+    ],
+    "example": "Further testing confirmed that the soil bacteria were benign and actually aided root growth."
+  },
+  {
+    "id": "v045",
+    "word": "Bolster",
+    "pos": "verb",
+    "definition": "Support, strengthen, or prop up an argument or structure.",
+    "synonyms": [
+      "reinforce",
+      "buttress",
+      "support"
+    ],
+    "example": "The author cites three longitudinal studies to bolster her argument for later school start times."
+  },
+  {
+    "id": "v046",
+    "word": "Brevity",
+    "pos": "noun",
+    "definition": "Concise and exact use of words in writing or speech; shortness of time.",
+    "synonyms": [
+      "conciseness",
+      "shortness",
+      "terseness"
+    ],
+    "example": "Known for his brevity, the columnist conveyed his entire critique in fewer than four hundred words."
+  },
+  {
+    "id": "v047",
+    "word": "Burgeon",
+    "pos": "verb",
+    "definition": "Begin to grow or increase rapidly; flourish.",
+    "synonyms": [
+      "flourish",
+      "thrive",
+      "expand"
+    ],
+    "example": "After the rail station opened, small cafes and bookstores began to burgeon along the avenue."
+  },
+  {
+    "id": "v048",
+    "word": "Buttress",
+    "pos": "verb",
+    "definition": "Increase the strength of or justification for; reinforce.",
+    "synonyms": [
+      "support",
+      "bolster",
+      "fortify"
+    ],
+    "example": "Archaeological pottery fragments buttress the view that trade flourished between the two valleys."
+  },
+  {
+    "id": "v049",
+    "word": "Cacophony",
+    "pos": "noun",
+    "definition": "A harsh, discordant mixture of sounds.",
+    "synonyms": [
+      "din",
+      "racket",
+      "clamor"
+    ],
+    "example": "At dusk, the marsh filled with a cacophony of frogs, cicadas, and nesting shorebirds."
+  },
+  {
+    "id": "v050",
+    "word": "Cajole",
+    "pos": "verb",
+    "definition": "Persuade someone to do something by sustained coaxing or flattery.",
+    "synonyms": [
+      "coax",
+      "persuade",
+      "wheedle"
+    ],
+    "example": "The curator managed to cajole the private collector into lending the painting for the exhibition."
+  },
+  {
+    "id": "v051",
+    "word": "Candid",
+    "pos": "adj.",
+    "definition": "Truthful and straightforward; frank.",
+    "synonyms": [
+      "frank",
+      "honest",
+      "forthright"
+    ],
+    "example": "In a candid interview, the director admitted that the first cut of the film lacked focus."
+  },
+  {
+    "id": "v052",
+    "word": "Capricious",
+    "pos": "adj.",
+    "definition": "Given to sudden and unaccountable changes of mood or behavior.",
+    "synonyms": [
+      "fickle",
+      "unpredictable",
+      "impulsive"
+    ],
+    "example": "Mountain weather is notoriously capricious, shifting from clear skies to hail within minutes."
+  },
+  {
+    "id": "v053",
+    "word": "Catalyst",
+    "pos": "noun",
+    "definition": "A substance or event that precipitates or speeds up a significant change.",
+    "synonyms": [
+      "spark",
+      "trigger",
+      "stimulus"
+    ],
+    "example": "The invention of the printing press served as a catalyst for the spread of scientific literacy."
+  },
+  {
+    "id": "v054",
+    "word": "Caustic",
+    "pos": "adj.",
+    "definition": "Sarcastic in a scathing and bitter way.",
+    "synonyms": [
+      "scathing",
+      "biting",
+      "acerbic"
+    ],
+    "example": "Her caustic review of the play left little doubt about her opinion of the script."
+  },
+  {
+    "id": "v055",
+    "word": "Censure",
+    "pos": "verb",
+    "definition": "Express severe disapproval of someone or something, typically in a formal statement.",
+    "synonyms": [
+      "condemn",
+      "reprimand",
+      "criticize"
+    ],
+    "example": "The ethics board voted to censure the agency for failing to disclose its funding sources."
+  },
+  {
+    "id": "v056",
+    "word": "Circumspect",
+    "pos": "adj.",
+    "definition": "Wary and unwilling to take risks.",
+    "synonyms": [
+      "cautious",
+      "prudent",
+      "guarded"
+    ],
+    "example": "Economists remained circumspect when forecasting growth amid fluctuating energy prices."
+  },
+  {
+    "id": "v057",
+    "word": "Circumvent",
+    "pos": "verb",
+    "definition": "Find a way around an obstacle or rule.",
+    "synonyms": [
+      "bypass",
+      "evade",
+      "sidestep"
+    ],
+    "example": "Engineers designed a bypass channel to circumvent the silted section of the canal."
+  },
+  {
+    "id": "v058",
+    "word": "Clandestine",
+    "pos": "adj.",
+    "definition": "Kept secret or done secretively, especially because illicit.",
+    "synonyms": [
+      "secret",
+      "covert",
+      "furtive"
+    ],
+    "example": "Historians uncovered letters detailing a clandestine network that smuggled banned newspapers."
+  },
+  {
+    "id": "v059",
+    "word": "Coalesce",
+    "pos": "verb",
+    "definition": "Come together to form one mass or whole.",
+    "synonyms": [
+      "merge",
+      "unite",
+      "fuse"
+    ],
+    "example": "Over several decades, scattered neighborhood clubs began to coalesce into a citywide coalition."
+  },
+  {
+    "id": "v060",
+    "word": "Coerce",
+    "pos": "verb",
+    "definition": "Persuade an unwilling person to do something by using force or threats.",
+    "synonyms": [
+      "compel",
+      "force",
+      "pressure"
+    ],
+    "example": "The charter explicitly forbids employers from attempting to coerce staff into unpaid overtime."
+  },
+  {
+    "id": "v061",
+    "word": "Cogent",
+    "pos": "adj.",
+    "definition": "Clear, logical, and convincing.",
+    "synonyms": [
+      "compelling",
+      "persuasive",
+      "sound"
+    ],
+    "example": "She presented a cogent analysis that persuaded the committee to revise its proposal."
+  },
+  {
+    "id": "v062",
+    "word": "Coherent",
+    "pos": "adj.",
+    "definition": "Logical and consistent; forming a unified whole.",
+    "synonyms": [
+      "logical",
+      "consistent",
+      "clear"
+    ],
+    "example": "By reorganizing the chapters chronologically, the editor turned scattered notes into a coherent narrative."
+  },
+  {
+    "id": "v063",
+    "word": "Collaborate",
+    "pos": "verb",
+    "definition": "Work jointly on an activity or project.",
+    "synonyms": [
+      "cooperate",
+      "partner",
+      "team up"
+    ],
+    "example": "Botanists and data scientists chose to collaborate on an open-source map of urban tree canopies."
+  },
+  {
+    "id": "v064",
+    "word": "Commensurate",
+    "pos": "adj.",
+    "definition": "Corresponding in size or degree; in proportion.",
+    "synonyms": [
+      "proportionate",
+      "equivalent",
+      "matching"
+    ],
+    "example": "The agency argued that funding for bridge maintenance should be commensurate with daily traffic volume."
+  },
+  {
+    "id": "v065",
+    "word": "Compelling",
+    "pos": "adj.",
+    "definition": "Evoking interest, attention, or admiration in a powerfully irresistible way; convincing.",
+    "synonyms": [
+      "persuasive",
+      "convincing",
+      "captivating"
+    ],
+    "example": "Tree-ring measurements provide compelling evidence of a severe fourteenth-century drought."
+  },
+  {
+    "id": "v066",
+    "word": "Complacent",
+    "pos": "adj.",
+    "definition": "Showing smug or uncritical satisfaction with oneself or one's achievements.",
+    "synonyms": [
+      "self-satisfied",
+      "unconcerned",
+      "smug"
+    ],
+    "example": "After years of market dominance, the company grew complacent and ignored emerging competitors."
+  },
+  {
+    "id": "v067",
+    "word": "Complementary",
+    "pos": "adj.",
+    "definition": "Combining in such a way as to enhance or emphasize the qualities of each other.",
+    "synonyms": [
+      "matching",
+      "harmonious",
+      "mutually supportive"
+    ],
+    "example": "The two researchers brought complementary strengths: one specialized in fieldwork, the other in statistical modeling."
+  },
+  {
+    "id": "v068",
+    "word": "Concede",
+    "pos": "verb",
+    "definition": "Admit that something is true or valid after first denying or resisting it.",
+    "synonyms": [
+      "acknowledge",
+      "grant",
+      "admit"
+    ],
+    "example": "Even critics of the policy concede that it reduced traffic congestion during peak hours."
+  },
+  {
+    "id": "v069",
+    "word": "Concise",
+    "pos": "adj.",
+    "definition": "Giving a lot of information clearly and in a few words.",
+    "synonyms": [
+      "brief",
+      "succinct",
+      "terse"
+    ],
+    "example": "The handbook is valued for its concise instructions that avoid unnecessary technical jargon."
+  },
+  {
+    "id": "v070",
+    "word": "Concur",
+    "pos": "verb",
+    "definition": "Be of the same opinion; agree.",
+    "synonyms": [
+      "agree",
+      "accord",
+      "assent"
+    ],
+    "example": "Most paleontologists now concur that many non-avian dinosaurs possessed feathers."
+  },
+  {
+    "id": "v071",
+    "word": "Condone",
+    "pos": "verb",
+    "definition": "Accept and allow behavior that is considered morally wrong or offensive to continue.",
+    "synonyms": [
+      "tolerate",
+      "excuse",
+      "overlook"
+    ],
+    "example": "The university stated clearly that it does not condone plagiarism under any circumstances."
+  },
+  {
+    "id": "v072",
+    "word": "Conflate",
+    "pos": "verb",
+    "definition": "Combine two or more texts, ideas, or concepts into one, often mistakenly.",
+    "synonyms": [
+      "merge",
+      "confuse",
+      "blend"
+    ],
+    "example": "The article warns readers not to conflate statistical correlation with direct causation."
+  },
+  {
+    "id": "v073",
+    "word": "Conjecture",
+    "pos": "noun",
+    "definition": "An opinion or conclusion formed on the basis of incomplete information.",
+    "synonyms": [
+      "speculation",
+      "guess",
+      "hypothesis"
+    ],
+    "example": "Without direct tissue samples, the exact coloration of the extinct bird remains a matter of conjecture."
+  },
+  {
+    "id": "v074",
+    "word": "Consensus",
+    "pos": "noun",
+    "definition": "General agreement among a group.",
+    "synonyms": [
+      "agreement",
+      "harmony",
+      "unanimity"
+    ],
+    "example": "After months of debate, the panel reached a consensus on the new air-quality benchmarks."
+  },
+  {
+    "id": "v075",
+    "word": "Conspicuous",
+    "pos": "adj.",
+    "definition": "Standing out so as to be clearly visible; attracting notice.",
+    "synonyms": [
+      "noticeable",
+      "prominent",
+      "obvious"
+    ],
+    "example": "Brightly colored plumage makes the male bird conspicuous to both mates and predators."
+  },
+  {
+    "id": "v076",
+    "word": "Contend",
+    "pos": "verb",
+    "definition": "Assert something as a position in an argument.",
+    "synonyms": [
+      "argue",
+      "maintain",
+      "assert"
+    ],
+    "example": "Some economists contend that automation creates more specialized roles than it eliminates."
+  },
+  {
+    "id": "v077",
+    "word": "Contentious",
+    "pos": "adj.",
+    "definition": "Causing or likely to cause an argument; controversial.",
+    "synonyms": [
+      "controversial",
+      "disputed",
+      "divisive"
+    ],
+    "example": "Zoning reform proved to be the most contentious item on the city council's autumn agenda."
+  },
+  {
+    "id": "v078",
+    "word": "Contradict",
+    "pos": "verb",
+    "definition": "Deny the truth of a statement by asserting the opposite.",
+    "synonyms": [
+      "refute",
+      "oppose",
+      "counter"
+    ],
+    "example": "Fresh radiocarbon dates appear to contradict the textbook timeline of the settlement."
+  },
+  {
+    "id": "v079",
+    "word": "Conventional",
+    "pos": "adj.",
+    "definition": "Based on or in accordance with what is generally done or believed.",
+    "synonyms": [
+      "traditional",
+      "standard",
+      "orthodox"
+    ],
+    "example": "Rather than following conventional portrait poses, the photographer captured subjects mid-conversation."
+  },
+  {
+    "id": "v080",
+    "word": "Converge",
+    "pos": "verb",
+    "definition": "Tend to meet at a point; come together from different directions.",
+    "synonyms": [
+      "meet",
+      "merge",
+      "intersect"
+    ],
+    "example": "Multiple independent lines of evidence converge on the same conclusion about early human migration."
+  },
+  {
+    "id": "v081",
+    "word": "Convoluted",
+    "pos": "adj.",
+    "definition": "Extremely complex and difficult to follow.",
+    "synonyms": [
+      "intricate",
+      "tangled",
+      "complicated"
+    ],
+    "example": "Taxpayers struggled to navigate the convoluted application form until it was redesigned."
+  },
+  {
+    "id": "v082",
+    "word": "Copious",
+    "pos": "adj.",
+    "definition": "Abundant in supply or quantity.",
+    "synonyms": [
+      "abundant",
+      "plentiful",
+      "profuse"
+    ],
+    "example": "The naturalist kept copious field notebooks filled with sketches and weather logs."
+  },
+  {
+    "id": "v083",
+    "word": "Corroborate",
+    "pos": "verb",
+    "definition": "Confirm or give support to a statement, theory, or finding.",
+    "synonyms": [
+      "verify",
+      "substantiate",
+      "confirm"
+    ],
+    "example": "Recent satellite images corroborate the geologists' claim that the glacier is retreating faster than expected."
+  },
+  {
+    "id": "v084",
+    "word": "Credible",
+    "pos": "adj.",
+    "definition": "Able to be believed; convincing.",
+    "synonyms": [
+      "believable",
+      "plausible",
+      "trustworthy"
+    ],
+    "example": "Peer review helps journals ensure that published claims rest on credible methodology."
+  },
+  {
+    "id": "v085",
+    "word": "Cryptic",
+    "pos": "adj.",
+    "definition": "Having a meaning that is mysterious or obscure.",
+    "synonyms": [
+      "enigmatic",
+      "puzzling",
+      "obscure"
+    ],
+    "example": "Scholars spent years decoding the cryptic inscriptions carved into the doorway."
+  },
+  {
+    "id": "v086",
+    "word": "Culminate",
+    "pos": "verb",
+    "definition": "Reach a climax or point of highest development.",
+    "synonyms": [
+      "climax",
+      "peak",
+      "conclude"
+    ],
+    "example": "Three years of rehearsal will culminate in the orchestra's international tour."
+  },
+  {
+    "id": "v087",
+    "word": "Cursory",
+    "pos": "adj.",
+    "definition": "Hasty and therefore not thorough or detailed.",
+    "synonyms": [
+      "superficial",
+      "brief",
+      "perfunctory"
+    ],
+    "example": "A cursory glance at the table might miss the sharp dip in output during the third quarter."
+  },
+  {
+    "id": "v088",
+    "word": "Daunting",
+    "pos": "adj.",
+    "definition": "Seeming difficult to deal with in anticipation; intimidating.",
+    "synonyms": [
+      "intimidating",
+      "formidable",
+      "challenging"
+    ],
+    "example": "Cataloging over two million herbarium specimens initially seemed like a daunting task."
+  },
+  {
+    "id": "v089",
+    "word": "Debilitate",
+    "pos": "verb",
+    "definition": "Make someone or something weak and infirm.",
+    "synonyms": [
+      "weaken",
+      "enfeeble",
+      "drain"
+    ],
+    "example": "Severe frost can debilitate young citrus trees and reduce yields for several seasons."
+  },
+  {
+    "id": "v090",
+    "word": "Defer",
+    "pos": "verb",
+    "definition": "Put off an action or event to a later time; or submit humbly to another's wishes.",
+    "synonyms": [
+      "postpone",
+      "yield",
+      "delay"
+    ],
+    "example": "The committee decided to defer the vote until independent engineers reviewed the blueprints."
+  },
+  {
+    "id": "v091",
+    "word": "Deferential",
+    "pos": "adj.",
+    "definition": "Showing humble respect and submission to another's judgment.",
+    "synonyms": [
+      "respectful",
+      "courteous",
+      "submissive"
+    ],
+    "example": "The junior curator maintained a deferential tone when questioning the senior historian."
+  },
+  {
+    "id": "v092",
+    "word": "Deficient",
+    "pos": "adj.",
+    "definition": "Not having enough of a specified quality or ingredient.",
+    "synonyms": [
+      "lacking",
+      "inadequate",
+      "insufficient"
+    ],
+    "example": "Soils deficient in nitrogen often produce stunted crops with pale leaves."
+  },
+  {
+    "id": "v093",
+    "word": "Deft",
+    "pos": "adj.",
+    "definition": "Neatly skillful and quick in one's movements.",
+    "synonyms": [
+      "skillful",
+      "nimble",
+      "adroit"
+    ],
+    "example": "With a few deft brushstrokes, the restorer blended the repaired corner into the original canvas."
+  },
+  {
+    "id": "v094",
+    "word": "Deleterious",
+    "pos": "adj.",
+    "definition": "Causing harm or damage.",
+    "synonyms": [
+      "harmful",
+      "damaging",
+      "detrimental"
+    ],
+    "example": "Long-term exposure to industrial noise has a deleterious impact on migratory songbirds."
+  },
+  {
+    "id": "v095",
+    "word": "Delineate",
+    "pos": "verb",
+    "definition": "Describe or portray something precisely.",
+    "synonyms": [
+      "outline",
+      "define",
+      "depict"
+    ],
+    "example": "The opening chapter clearly delineates the legal boundaries between federal and state courts."
+  },
+  {
+    "id": "v096",
+    "word": "Denounce",
+    "pos": "verb",
+    "definition": "Publicly declare to be wrong or evil.",
+    "synonyms": [
+      "condemn",
+      "criticize",
+      "censure"
+    ],
+    "example": "Editorial writers were quick to denounce the proposal to cut public library hours."
+  },
+  {
+    "id": "v097",
+    "word": "Deplete",
+    "pos": "verb",
+    "definition": "Use up the supply or resources of.",
+    "synonyms": [
+      "exhaust",
+      "drain",
+      "consume"
+    ],
+    "example": "Unregulated pumping can rapidly deplete underground aquifers during dry years."
+  },
+  {
+    "id": "v098",
+    "word": "Deride",
+    "pos": "verb",
+    "definition": "Express contempt for; ridicule.",
+    "synonyms": [
+      "mock",
+      "ridicule",
+      "scorn"
+    ],
+    "example": "Nineteenth-century critics initially chose to deride Impressionist painters for their loose brushwork."
+  },
+  {
+    "id": "v099",
+    "word": "Derivative",
+    "pos": "adj.",
+    "definition": "Imitative of the work of another person, and usually disapproved of for that reason.",
+    "synonyms": [
+      "unoriginal",
+      "imitative",
+      "secondhand"
+    ],
+    "example": "While technically polished, the sequel felt overly derivative of earlier science-fiction films."
+  },
+  {
+    "id": "v100",
+    "word": "Despondent",
+    "pos": "adj.",
+    "definition": "In low spirits from loss of hope or courage.",
+    "synonyms": [
+      "dejected",
+      "discouraged",
+      "downcast"
+    ],
+    "example": "After two failed prototypes, the inventors refused to grow despondent and redesigned the valve."
+  },
+  {
+    "id": "v101",
+    "word": "Detrimental",
+    "pos": "adj.",
+    "definition": "Tending to cause harm.",
+    "synonyms": [
+      "harmful",
+      "damaging",
+      "injurious"
+    ],
+    "example": "Excessive fertilizer runoff is detrimental to the oxygen levels of coastal estuaries."
+  },
+  {
+    "id": "v102",
+    "word": "Devious",
+    "pos": "adj.",
+    "definition": "Showing a skillful use of underhanded tactics to achieve goals.",
+    "synonyms": [
+      "crafty",
+      "cunning",
+      "deceitful"
+    ],
+    "example": "In the detective novel, the culprit's devious alibi nearly fooled the entire precinct."
+  },
+  {
+    "id": "v103",
+    "word": "Didactic",
+    "pos": "adj.",
+    "definition": "Intended to teach, particularly in having moral instruction as an ulterior motive.",
+    "synonyms": [
+      "instructive",
+      "educational",
+      "preachy"
+    ],
+    "example": "Unlike earlier didactic fables, the story leaves readers to draw their own ethical conclusions."
+  },
+  {
+    "id": "v104",
+    "word": "Diffident",
+    "pos": "adj.",
+    "definition": "Modest or shy because of a lack of self-confidence.",
+    "synonyms": [
+      "shy",
+      "hesitant",
+      "timid"
+    ],
+    "example": "Though diffident during class discussions, she wrote some of the sharpest analytical essays."
+  },
+  {
+    "id": "v105",
+    "word": "Diligent",
+    "pos": "adj.",
+    "definition": "Having or showing care and conscientiousness in one's work or duties.",
+    "synonyms": [
+      "industrious",
+      "thorough",
+      "hardworking"
+    ],
+    "example": "Through diligent archival research, the biographer uncovered thirty previously unpublished letters."
+  },
+  {
+    "id": "v106",
+    "word": "Diminish",
+    "pos": "verb",
+    "definition": "Make or become less.",
+    "synonyms": [
+      "decrease",
+      "lessen",
+      "decline"
+    ],
+    "example": "Overgrazing can diminish the nutrient content of prairie topsoil."
+  },
+  {
+    "id": "v107",
+    "word": "Discern",
+    "pos": "verb",
+    "definition": "Perceive or recognize something subtle or indistinct.",
+    "synonyms": [
+      "detect",
+      "perceive",
+      "distinguish"
+    ],
+    "example": "Using infrared imaging, art historians can discern earlier sketches hidden beneath oil paint."
+  },
+  {
+    "id": "v108",
+    "word": "Discrepancy",
+    "pos": "noun",
+    "definition": "An illogical or surprising lack of compatibility or similarity between two or more facts.",
+    "synonyms": [
+      "inconsistency",
+      "difference",
+      "mismatch"
+    ],
+    "example": "Auditors flagged a minor discrepancy between the warehouse inventory and the shipping ledger."
+  },
+  {
+    "id": "v109",
+    "word": "Disdain",
+    "pos": "noun",
+    "definition": "The feeling that someone or something is unworthy of one's consideration or respect.",
+    "synonyms": [
+      "contempt",
+      "scorn",
+      "derision"
+    ],
+    "example": "The novelist's disdain for superficial celebrity culture is evident on every page."
+  },
+  {
+    "id": "v110",
+    "word": "Disparage",
+    "pos": "verb",
+    "definition": "Regard or represent as being of little worth.",
+    "synonyms": [
+      "belittle",
+      "criticize",
+      "denigrate"
+    ],
+    "example": "Early reviewers tended to disparage the novel, though critics now consider it a classic."
+  },
+  {
+    "id": "v111",
+    "word": "Disparate",
+    "pos": "adj.",
+    "definition": "Essentially different in kind; not allowing comparison.",
+    "synonyms": [
+      "diverse",
+      "distinct",
+      "contrasting"
+    ],
+    "example": "The exhibition brings together disparate artistic traditions from five coastal regions."
+  },
+  {
+    "id": "v112",
+    "word": "Dispel",
+    "pos": "verb",
+    "definition": "Make a doubt, feeling, or belief disappear.",
+    "synonyms": [
+      "eliminate",
+      "dismiss",
+      "banish"
+    ],
+    "example": "Clear clinical data helped dispel lingering myths about the vaccine's side effects."
+  },
+  {
+    "id": "v113",
+    "word": "Disseminate",
+    "pos": "verb",
+    "definition": "Spread something, especially information, widely.",
+    "synonyms": [
+      "spread",
+      "circulate",
+      "distribute"
+    ],
+    "example": "Community radio stations remain a vital way to disseminate weather alerts in remote valleys."
+  },
+  {
+    "id": "v114",
+    "word": "Dissent",
+    "pos": "noun",
+    "definition": "The expression or holding of opinions at variance with those previously, commonly, or officially held.",
+    "synonyms": [
+      "disagreement",
+      "opposition",
+      "objection"
+    ],
+    "example": "Rather than suppressing dissent, the chair encouraged committee members to voice alternative views."
+  },
+  {
+    "id": "v115",
+    "word": "Diverge",
+    "pos": "verb",
+    "definition": "Separate from another route and go in a different direction; differ.",
+    "synonyms": [
+      "differ",
+      "branch",
+      "deviate"
+    ],
+    "example": "Although the two linguists agree on early grammar, their theories diverge on modern slang."
+  },
+  {
+    "id": "v116",
+    "word": "Dogmatic",
+    "pos": "adj.",
+    "definition": "Inclined to lay down principles as incontrovertibly true without considering evidence.",
+    "synonyms": [
+      "rigid",
+      "opinionated",
+      "inflexible"
+    ],
+    "example": "Her dogmatic insistence on a single teaching method alienated her colleagues."
+  },
+  {
+    "id": "v117",
+    "word": "Dormant",
+    "pos": "adj.",
+    "definition": "Temporarily inactive or inoperative, though capable of becoming active.",
+    "synonyms": [
+      "inactive",
+      "latent",
+      "quiescent"
+    ],
+    "example": "Some seeds can remain dormant underground for decades until fire clears the canopy."
+  },
+  {
+    "id": "v118",
+    "word": "Dubious",
+    "pos": "adj.",
+    "definition": "Hesitating or doubting; not to be relied upon.",
+    "synonyms": [
+      "doubtful",
+      "skeptical",
+      "questionable"
+    ],
+    "example": "Historians remain dubious about the memoir's claim that the explorer crossed the range in winter."
+  },
+  {
+    "id": "v119",
+    "word": "Eclectic",
+    "pos": "adj.",
+    "definition": "Deriving ideas, style, or taste from a broad and diverse range of sources.",
+    "synonyms": [
+      "diverse",
+      "varied",
+      "wide-ranging"
+    ],
+    "example": "The museum's eclectic collection ranges from ancient bronze tools to contemporary neon sculptures."
+  },
+  {
+    "id": "v120",
+    "word": "Efficacy",
+    "pos": "noun",
+    "definition": "The ability to produce a desired or intended result.",
+    "synonyms": [
+      "effectiveness",
+      "potency",
+      "power"
+    ],
+    "example": "Randomized trials confirmed the efficacy of the new filtration membrane."
+  },
+  {
+    "id": "v121",
+    "word": "Elaborate",
+    "pos": "adj.",
+    "definition": "Involving many carefully arranged parts or details; detailed and complicated.",
+    "synonyms": [
+      "intricate",
+      "complex",
+      "ornate"
+    ],
+    "example": "Bowerbirds construct elaborate twig structures decorated with blue berries and shells."
+  },
+  {
+    "id": "v122",
+    "word": "Elicit",
+    "pos": "verb",
+    "definition": "Evoke or draw out a response, answer, or fact from someone.",
+    "synonyms": [
+      "draw out",
+      "evoke",
+      "provoke"
+    ],
+    "example": "Open-ended interview questions tend to elicit far richer recollections than yes-or-no surveys."
+  },
+  {
+    "id": "v123",
+    "word": "Eloquent",
+    "pos": "adj.",
+    "definition": "Fluent, expressive, and persuasive in speaking or writing.",
+    "synonyms": [
+      "articulate",
+      "expressive",
+      "fluent"
+    ],
+    "example": "Her eloquent defense of public libraries moved the entire city council."
+  },
+  {
+    "id": "v124",
+    "word": "Elusive",
+    "pos": "adj.",
+    "definition": "Difficult to find, catch, or achieve.",
+    "synonyms": [
+      "evasive",
+      "intangible",
+      "hard to pin down"
+    ],
+    "example": "Despite decades of study, a unified explanation for the phenomenon remains elusive."
+  },
+  {
+    "id": "v125",
+    "word": "Embellish",
+    "pos": "verb",
+    "definition": "Make something more attractive by the addition of decorative details; exaggerate a story.",
+    "synonyms": [
+      "decorate",
+      "adorn",
+      "exaggerate"
+    ],
+    "example": "Oral storytellers often embellish historical anecdotes to heighten suspense."
+  },
+  {
+    "id": "v126",
+    "word": "Empirical",
+    "pos": "adj.",
+    "definition": "Based on observation or experience rather than pure theory or logic.",
+    "synonyms": [
+      "observational",
+      "experimental",
+      "factual"
+    ],
+    "example": "The team gathered empirical data from over four hundred soil samples."
+  },
+  {
+    "id": "v127",
+    "word": "Emulate",
+    "pos": "verb",
+    "definition": "Match or surpass a person or achievement, typically by imitation.",
+    "synonyms": [
+      "imitate",
+      "mirror",
+      "follow"
+    ],
+    "example": "Young jazz trumpeters traveled to New Orleans hoping to emulate his phrasing."
+  },
+  {
+    "id": "v128",
+    "word": "Endorse",
+    "pos": "verb",
+    "definition": "Declare one's public approval or support of.",
+    "synonyms": [
+      "support",
+      "approve",
+      "back"
+    ],
+    "example": "Several medical associations voted to endorse the updated guidelines on sleep hygiene."
+  },
+  {
+    "id": "v129",
+    "word": "Engender",
+    "pos": "verb",
+    "definition": "Cause or give rise to a feeling, situation, or condition.",
+    "synonyms": [
+      "generate",
+      "produce",
+      "provoke"
+    ],
+    "example": "Transparent communication from leadership tends to engender trust during organizational change."
+  },
+  {
+    "id": "v130",
+    "word": "Enigmatic",
+    "pos": "adj.",
+    "definition": "Difficult to interpret or understand; mysterious.",
+    "synonyms": [
+      "mysterious",
+      "cryptic",
+      "puzzling"
+    ],
+    "example": "The painting's enigmatic expression has fascinated art critics for centuries."
+  },
+  {
+    "id": "v131",
+    "word": "Ephemeral",
+    "pos": "adj.",
+    "definition": "Lasting for a very short time.",
+    "synonyms": [
+      "fleeting",
+      "transient",
+      "brief"
+    ],
+    "example": "Desert wildflowers are ephemeral, blooming for only a few days after rare rainfall."
+  },
+  {
+    "id": "v132",
+    "word": "Equitable",
+    "pos": "adj.",
+    "definition": "Fair and impartial.",
+    "synonyms": [
+      "fair",
+      "just",
+      "impartial"
+    ],
+    "example": "Advocates called for a more equitable distribution of park funding across neighborhoods."
+  },
+  {
+    "id": "v133",
+    "word": "Equivocal",
+    "pos": "adj.",
+    "definition": "Open to more than one interpretation; ambiguous or uncertain.",
+    "synonyms": [
+      "ambiguous",
+      "vague",
+      "unclear"
+    ],
+    "example": "The spokesperson offered an equivocal reply that neither confirmed nor denied the merger."
+  },
+  {
+    "id": "v134",
+    "word": "Eradicate",
+    "pos": "verb",
+    "definition": "Destroy completely; put an end to.",
+    "synonyms": [
+      "eliminate",
+      "wipe out",
+      "remove"
+    ],
+    "example": "Coordinated vaccination campaigns helped eradicate the disease across the continent."
+  },
+  {
+    "id": "v135",
+    "word": "Erratic",
+    "pos": "adj.",
+    "definition": "Not even or regular in pattern or movement; unpredictable.",
+    "synonyms": [
+      "unpredictable",
+      "irregular",
+      "inconsistent"
+    ],
+    "example": "Erratic rainfall patterns have forced local growers to adopt drip irrigation."
+  },
+  {
+    "id": "v136",
+    "word": "Esoteric",
+    "pos": "adj.",
+    "definition": "Intended for or likely to be understood by only a small number of people with specialized knowledge.",
+    "synonyms": [
+      "obscure",
+      "arcane",
+      "specialized"
+    ],
+    "example": "The lecture avoided esoteric jargon so that first-year students could follow the proof."
+  },
+  {
+    "id": "v137",
+    "word": "Evoke",
+    "pos": "verb",
+    "definition": "Bring or recall a feeling, memory, or image to the conscious mind.",
+    "synonyms": [
+      "elicit",
+      "conjure",
+      "arouse"
+    ],
+    "example": "The sparse piano score helps evoke the quiet isolation of the winter landscape."
+  },
+  {
+    "id": "v138",
+    "word": "Exacerbate",
+    "pos": "verb",
+    "definition": "Make a problem, bad situation, or negative feeling worse.",
+    "synonyms": [
+      "worsen",
+      "aggravate",
+      "intensify"
+    ],
+    "example": "Prolonged drought can exacerbate soil erosion in heavily farmed valleys."
+  },
+  {
+    "id": "v139",
+    "word": "Exemplify",
+    "pos": "verb",
+    "definition": "Be a typical example of.",
+    "synonyms": [
+      "illustrate",
+      "embody",
+      "represent"
+    ],
+    "example": "The restored railway depot exemplifies early twentieth-century civic architecture."
+  },
+  {
+    "id": "v140",
+    "word": "Exhaustive",
+    "pos": "adj.",
+    "definition": "Examining, including, or considering all elements or aspects; fully comprehensive.",
+    "synonyms": [
+      "thorough",
+      "comprehensive",
+      "complete"
+    ],
+    "example": "The commission published an exhaustive 600-page review of regional water rights."
+  },
+  {
+    "id": "v141",
+    "word": "Expedite",
+    "pos": "verb",
+    "definition": "Make an action or process happen sooner or be accomplished more quickly.",
+    "synonyms": [
+      "accelerate",
+      "speed up",
+      "hasten"
+    ],
+    "example": "Digital permitting was introduced to expedite approvals for rooftop solar installations."
+  },
+  {
+    "id": "v142",
+    "word": "Explicit",
+    "pos": "adj.",
+    "definition": "Stated clearly and in detail, leaving no room for confusion or doubt.",
+    "synonyms": [
+      "clear",
+      "direct",
+      "unambiguous"
+    ],
+    "example": "The contract contains explicit terms governing how data may be shared with third parties."
+  },
+  {
+    "id": "v143",
+    "word": "Extrapolate",
+    "pos": "verb",
+    "definition": "Extend the application of known data to an unknown situation by assuming trends continue.",
+    "synonyms": [
+      "infer",
+      "project",
+      "generalize"
+    ],
+    "example": "Researchers cautioned against trying to extrapolate global climate trends from a single region."
+  },
+  {
+    "id": "v144",
+    "word": "Facilitate",
+    "pos": "verb",
+    "definition": "Make an action or process easy or easier.",
+    "synonyms": [
+      "assist",
+      "enable",
+      "ease"
+    ],
+    "example": "Dedicated bike corridors facilitate safer commuting for students and office workers alike."
+  },
+  {
+    "id": "v145",
+    "word": "Fallacious",
+    "pos": "adj.",
+    "definition": "Based on a mistaken belief or unsound reasoning.",
+    "synonyms": [
+      "flawed",
+      "mistaken",
+      "erroneous"
+    ],
+    "example": "The editorial exposed the fallacious assumption that higher cost always guarantees better durability."
+  },
+  {
+    "id": "v146",
+    "word": "Fastidious",
+    "pos": "adj.",
+    "definition": "Very attentive to and concerned about accuracy and detail.",
+    "synonyms": [
+      "meticulous",
+      "particular",
+      "exacting"
+    ],
+    "example": "A fastidious archivist, she logged the exact humidity of the vault every morning."
+  },
+  {
+    "id": "v147",
+    "word": "Feasible",
+    "pos": "adj.",
+    "definition": "Possible to do easily or conveniently.",
+    "synonyms": [
+      "viable",
+      "practical",
+      "achievable"
+    ],
+    "example": "Engineers determined that converting the abandoned rail viaduct into a greenway was financially feasible."
+  },
+  {
+    "id": "v148",
+    "word": "Fickle",
+    "pos": "adj.",
+    "definition": "Changing frequently, especially as regards one's loyalties, interests, or affection.",
+    "synonyms": [
+      "changeable",
+      "capricious",
+      "inconstant"
+    ],
+    "example": "Fashion trends are notoriously fickle, often reversing within a single season."
+  },
+  {
+    "id": "v149",
+    "word": "Fluctuate",
+    "pos": "verb",
+    "definition": "Rise and fall irregularly in number or amount.",
+    "synonyms": [
+      "vary",
+      "oscillate",
+      "shift"
+    ],
+    "example": "Pollen counts fluctuate sharply depending on wind speed and humidity."
+  },
+  {
+    "id": "v150",
+    "word": "Foreshadow",
+    "pos": "verb",
+    "definition": "Be a warning or indication of a future event in a narrative.",
+    "synonyms": [
+      "hint at",
+      "portend",
+      "presage"
+    ],
+    "example": "The recurring storm imagery in chapter one foreshadows the family's sudden upheaval."
+  },
+  {
+    "id": "v151",
+    "word": "Formidable",
+    "pos": "adj.",
+    "definition": "Inspiring fear or respect through being impressively large, powerful, or capable.",
+    "synonyms": [
+      "daunting",
+      "impressive",
+      "intimidating"
+    ],
+    "example": "Mapping the ocean floor remains a formidable engineering challenge due to crushing water pressure."
+  },
+  {
+    "id": "v152",
+    "word": "Fortuitous",
+    "pos": "adj.",
+    "definition": "Happening by a lucky chance; fortunate.",
+    "synonyms": [
+      "lucky",
+      "serendipitous",
+      "chance"
+    ],
+    "example": "The discovery of penicillin was a fortuitous accident that transformed modern medicine."
+  },
+  {
+    "id": "v153",
+    "word": "Foster",
+    "pos": "verb",
+    "definition": "Encourage or promote the development of something.",
+    "synonyms": [
+      "encourage",
+      "cultivate",
+      "nurture"
+    ],
+    "example": "Open-plan studios were designed to foster spontaneous collaboration among designers."
+  },
+  {
+    "id": "v154",
+    "word": "Frugal",
+    "pos": "adj.",
+    "definition": "Sparing or economical with regard to money or food.",
+    "synonyms": [
+      "thrifty",
+      "economical",
+      "sparing"
+    ],
+    "example": "Through frugal budgeting, the nonprofit stretched its modest grant across three school years."
+  },
+  {
+    "id": "v155",
+    "word": "Futile",
+    "pos": "adj.",
+    "definition": "Incapable of producing any useful result; pointless.",
+    "synonyms": [
+      "pointless",
+      "vain",
+      "ineffective"
+    ],
+    "example": "Without repairing the upstream leak, bailing water from the cellar proved futile."
+  },
+  {
+    "id": "v156",
+    "word": "Galvanize",
+    "pos": "verb",
+    "definition": "Shock or excite someone into taking action.",
+    "synonyms": [
+      "inspire",
+      "spur",
+      "motivate"
+    ],
+    "example": "The publication of the air-quality map helped galvanize residents to attend the town hall."
+  },
+  {
+    "id": "v157",
+    "word": "Gregarious",
+    "pos": "adj.",
+    "definition": "Fond of company; sociable.",
+    "synonyms": [
+      "sociable",
+      "outgoing",
+      "convivial"
+    ],
+    "example": "Unlike solitary leopards, lions are gregarious animals that live and hunt in prides."
+  },
+  {
+    "id": "v158",
+    "word": "Hackneyed",
+    "pos": "adj.",
+    "definition": "Lacking significance through having been overused; unoriginal and trite.",
+    "synonyms": [
+      "clichéd",
+      "trite",
+      "stale"
+    ],
+    "example": "The writing coach urged students to replace hackneyed slogans with concrete observations."
+  },
+  {
+    "id": "v159",
+    "word": "Hamper",
+    "pos": "verb",
+    "definition": "Hinder or impede the movement or progress of.",
+    "synonyms": [
+      "impede",
+      "hinder",
+      "obstruct"
+    ],
+    "example": "Thick morning fog continued to hamper rescue helicopters searching the ridge."
+  },
+  {
+    "id": "v160",
+    "word": "Haphazard",
+    "pos": "adj.",
+    "definition": "Lacking any obvious principle of organization.",
+    "synonyms": [
+      "random",
+      "disorganized",
+      "chaotic"
+    ],
+    "example": "Early excavations were haphazard, leaving modern archaeologists with incomplete site records."
+  },
+  {
+    "id": "v161",
+    "word": "Haughty",
+    "pos": "adj.",
+    "definition": "Arrogantly superior and disdainful.",
+    "synonyms": [
+      "arrogant",
+      "pompous",
+      "aloof"
+    ],
+    "example": "The protagonist's haughty manner initially alienates the villagers he hopes to lead."
+  },
+  {
+    "id": "v162",
+    "word": "Hinder",
+    "pos": "verb",
+    "definition": "Create difficulties for someone or something, resulting in delay or obstruction.",
+    "synonyms": [
+      "impede",
+      "obstruct",
+      "delay"
+    ],
+    "example": "Outdated port cranes can hinder supply chains during peak shipping months."
+  },
+  {
+    "id": "v163",
+    "word": "Homogeneous",
+    "pos": "adj.",
+    "definition": "Of the same kind; alike and uniform throughout.",
+    "synonyms": [
+      "uniform",
+      "consistent",
+      "identical"
+    ],
+    "example": "Contrary to stereotypes, the region's culinary traditions are far from homogeneous."
+  },
+  {
+    "id": "v164",
+    "word": "Hypothetical",
+    "pos": "adj.",
+    "definition": "Based on or serving as a hypothesis; supposed but not necessarily real or true.",
+    "synonyms": [
+      "theoretical",
+      "assumed",
+      "speculative"
+    ],
+    "example": "The seminar examined a hypothetical scenario in which sea levels rose by two meters."
+  },
+  {
+    "id": "v165",
+    "word": "Iconoclastic",
+    "pos": "adj.",
+    "definition": "Criticizing or attacking cherished beliefs or institutions.",
+    "synonyms": [
+      "unconventional",
+      "rebellious",
+      "nonconformist"
+    ],
+    "example": "Her iconoclastic essays challenged long-standing assumptions about classical music education."
+  },
+  {
+    "id": "v166",
+    "word": "Idiosyncratic",
+    "pos": "adj.",
+    "definition": "Peculiar or distinctive to a particular individual.",
+    "synonyms": [
+      "quirky",
+      "distinctive",
+      "unconventional"
+    ],
+    "example": "The composer's idiosyncratic use of percussion makes her symphonies instantly recognizable."
+  },
+  {
+    "id": "v167",
+    "word": "Imminent",
+    "pos": "adj.",
+    "definition": "About to happen.",
+    "synonyms": [
+      "impending",
+      "approaching",
+      "upcoming"
+    ],
+    "example": "Seismic sensors warned geologists that a minor volcanic eruption was imminent."
+  },
+  {
+    "id": "v168",
+    "word": "Impartial",
+    "pos": "adj.",
+    "definition": "Treating all rivals or disputants equally; fair and just.",
+    "synonyms": [
+      "unbiased",
+      "neutral",
+      "objective"
+    ],
+    "example": "An impartial mediator helped the two neighborhood groups draft a compromise."
+  },
+  {
+    "id": "v169",
+    "word": "Impede",
+    "pos": "verb",
+    "definition": "Delay or prevent someone or something by obstructing them.",
+    "synonyms": [
+      "hinder",
+      "obstruct",
+      "hamper"
+    ],
+    "example": "Heavy sediment runoff can impede the growth of underwater seagrass beds."
+  },
+  {
+    "id": "v170",
+    "word": "Imperative",
+    "pos": "adj.",
+    "definition": "Of vital importance; crucial.",
+    "synonyms": [
+      "essential",
+      "crucial",
+      "urgent"
+    ],
+    "example": "When handling fragile manuscripts, it is imperative to control both light and humidity."
+  },
+  {
+    "id": "v171",
+    "word": "Implicit",
+    "pos": "adj.",
+    "definition": "Implied though not plainly expressed.",
+    "synonyms": [
+      "implied",
+      "unspoken",
+      "tacit"
+    ],
+    "example": "There was an implicit understanding among the editors that local stories came first."
+  },
+  {
+    "id": "v172",
+    "word": "Inadvertent",
+    "pos": "adj.",
+    "definition": "Not resulting from or achieved through deliberate planning.",
+    "synonyms": [
+      "unintentional",
+      "accidental",
+      "unplanned"
+    ],
+    "example": "The new dam had the inadvertent effect of blocking seasonal fish migration."
+  },
+  {
+    "id": "v173",
+    "word": "Inconclusive",
+    "pos": "adj.",
+    "definition": "Not leading to a firm conclusion or definite result.",
+    "synonyms": [
+      "indecisive",
+      "uncertain",
+      "unsettled"
+    ],
+    "example": "Because the sample size was small, the initial clinical trials were inconclusive."
+  },
+  {
+    "id": "v174",
+    "word": "Indifferent",
+    "pos": "adj.",
+    "definition": "Having no particular interest or sympathy; unconcerned.",
+    "synonyms": [
+      "apathetic",
+      "unconcerned",
+      "detached"
+    ],
+    "example": "The audience appeared indifferent to the speaker's lengthy technical digression."
+  },
+  {
+    "id": "v175",
+    "word": "Indigenous",
+    "pos": "adj.",
+    "definition": "Originating or occurring naturally in a particular place; native.",
+    "synonyms": [
+      "native",
+      "local",
+      "endemic"
+    ],
+    "example": "Park rangers are replanting indigenous grasses that require far less irrigation."
+  },
+  {
+    "id": "v176",
+    "word": "Inevitable",
+    "pos": "adj.",
+    "definition": "Certain to happen; unavoidable.",
+    "synonyms": [
+      "unavoidable",
+      "certain",
+      "inescapable"
+    ],
+    "example": "As battery prices dropped, a shift toward electric transit buses seemed almost inevitable."
+  },
+  {
+    "id": "v177",
+    "word": "Ingenious",
+    "pos": "adj.",
+    "definition": "Clever, original, and inventive.",
+    "synonyms": [
+      "clever",
+      "inventive",
+      "resourceful"
+    ],
+    "example": "Ancient engineers devised an ingenious gravity-fed aqueduct to supply hilltop towns."
+  },
+  {
+    "id": "v178",
+    "word": "Inherent",
+    "pos": "adj.",
+    "definition": "Existing in something as a permanent, essential, or characteristic attribute.",
+    "synonyms": [
+      "intrinsic",
+      "innate",
+      "built-in"
+    ],
+    "example": "Every measurement instrument has an inherent margin of error."
+  },
+  {
+    "id": "v179",
+    "word": "Inhibit",
+    "pos": "verb",
+    "definition": "Hinder, restrain, or prevent an action or process.",
+    "synonyms": [
+      "restrain",
+      "impede",
+      "suppress"
+    ],
+    "example": "Cold soil temperatures can inhibit seed germination well into late spring."
+  },
+  {
+    "id": "v180",
+    "word": "Innocuous",
+    "pos": "adj.",
+    "definition": "Not harmful or offensive.",
+    "synonyms": [
+      "harmless",
+      "benign",
+      "safe"
+    ],
+    "example": "What seemed like an innocuous software tweak accidentally slowed down image loading."
+  },
+  {
+    "id": "v181",
+    "word": "Innovative",
+    "pos": "adj.",
+    "definition": "Featuring new methods; advanced and original.",
+    "synonyms": [
+      "original",
+      "inventive",
+      "pioneering"
+    ],
+    "example": "The studio won an award for its innovative use of recycled timber in modular housing."
+  },
+  {
+    "id": "v182",
+    "word": "Inscrutable",
+    "pos": "adj.",
+    "definition": "Impossible to understand or interpret.",
+    "synonyms": [
+      "enigmatic",
+      "mysterious",
+      "unfathomable"
+    ],
+    "example": "The diplomat maintained an inscrutable expression throughout the tense briefing."
+  },
+  {
+    "id": "v183",
+    "word": "Insipid",
+    "pos": "adj.",
+    "definition": "Lacking flavor, vigor, or interest.",
+    "synonyms": [
+      "bland",
+      "dull",
+      "uninspiring"
+    ],
+    "example": "Critics dismissed the remake as an insipid imitation of the original thriller."
+  },
+  {
+    "id": "v184",
+    "word": "Intricate",
+    "pos": "adj.",
+    "definition": "Very complicated or detailed.",
+    "synonyms": [
+      "complex",
+      "elaborate",
+      "detailed"
+    ],
+    "example": "Watchmakers spend years mastering the intricate gear assemblies of mechanical timepieces."
+  },
+  {
+    "id": "v185",
+    "word": "Intrinsic",
+    "pos": "adj.",
+    "definition": "Belonging naturally; essential.",
+    "synonyms": [
+      "inherent",
+      "innate",
+      "fundamental"
+    ],
+    "example": "Curiosity is an intrinsic driver of scientific discovery."
+  },
+  {
+    "id": "v186",
+    "word": "Inundate",
+    "pos": "verb",
+    "definition": "Overwhelm someone with things or people to be dealt with; flood.",
+    "synonyms": [
+      "flood",
+      "overwhelm",
+      "swamp"
+    ],
+    "example": "After the viral broadcast, applications began to inundate the small fellowship office."
+  },
+  {
+    "id": "v187",
+    "word": "Ironic",
+    "pos": "adj.",
+    "definition": "Happening in the opposite way to what is expected, and typically causing wry amusement.",
+    "synonyms": [
+      "paradoxical",
+      "unexpected",
+      "wry"
+    ],
+    "example": "It was ironic that the town's oldest printing press museum launched its campaign entirely online."
+  },
+  {
+    "id": "v188",
+    "word": "Juxtapose",
+    "pos": "verb",
+    "definition": "Place or deal with close together for contrasting effect.",
+    "synonyms": [
+      "contrast",
+      "compare",
+      "set side by side"
+    ],
+    "example": "The filmmaker juxtaposes bustling market scenes with silent, empty corridors."
+  },
+  {
+    "id": "v189",
+    "word": "Lament",
+    "pos": "verb",
+    "definition": "Express passionate grief or regret about something.",
+    "synonyms": [
+      "mourn",
+      "bemoan",
+      "regret"
+    ],
+    "example": "Longtime commuters continue to lament the closure of the historic ferry route."
+  },
+  {
+    "id": "v190",
+    "word": "Latent",
+    "pos": "adj.",
+    "definition": "Existing but not yet developed or manifest; hidden or concealed.",
+    "synonyms": [
+      "dormant",
+      "hidden",
+      "potential"
+    ],
+    "example": "High-resolution scans revealed latent fractures inside the marble column."
+  },
+  {
+    "id": "v191",
+    "word": "Laud",
+    "pos": "verb",
+    "definition": "Praise a person or their achievements highly, especially in a public context.",
+    "synonyms": [
+      "praise",
+      "extol",
+      "applaud"
+    ],
+    "example": "Environmentalists were quick to laud the city's commitment to restoring urban wetlands."
+  },
+  {
+    "id": "v192",
+    "word": "Lucid",
+    "pos": "adj.",
+    "definition": "Expressed clearly; easy to understand.",
+    "synonyms": [
+      "clear",
+      "intelligible",
+      "transparent"
+    ],
+    "example": "The physicist is admired for writing lucid explanations of quantum mechanics for general readers."
+  },
+  {
+    "id": "v193",
+    "word": "Lucrative",
+    "pos": "adj.",
+    "definition": "Producing a great deal of profit.",
+    "synonyms": [
+      "profitable",
+      "remunerative",
+      "gainful"
+    ],
+    "example": "Spice routes across the Indian Ocean remained lucrative for centuries."
+  },
+  {
+    "id": "v194",
+    "word": "Magnanimous",
+    "pos": "adj.",
+    "definition": "Generous or forgiving, especially toward a rival or less powerful person.",
+    "synonyms": [
+      "generous",
+      "noble",
+      "forgiving"
+    ],
+    "example": "In a magnanimous gesture, the champion praised her opponent's strategy during the ceremony."
+  },
+  {
+    "id": "v195",
+    "word": "Malleable",
+    "pos": "adj.",
+    "definition": "Easily influenced or pliable; able to be hammered or pressed permanently out of shape without breaking.",
+    "synonyms": [
+      "pliable",
+      "adaptable",
+      "flexible"
+    ],
+    "example": "Gold is prized by jewelers because it is both corrosion-resistant and highly malleable."
+  },
+  {
+    "id": "v196",
+    "word": "Meager",
+    "pos": "adj.",
+    "definition": "Lacking in quantity or quality.",
+    "synonyms": [
+      "scanty",
+      "sparse",
+      "inadequate"
+    ],
+    "example": "Despite meager rainfall, the desert shrubs managed to produce seeds."
+  },
+  {
+    "id": "v197",
+    "word": "Meticulous",
+    "pos": "adj.",
+    "definition": "Showing great attention to detail; very careful and precise.",
+    "synonyms": [
+      "thorough",
+      "exacting",
+      "fastidious"
+    ],
+    "example": "Meticulous record-keeping allowed astronomers to track the comet's return accurately."
+  },
+  {
+    "id": "v198",
+    "word": "Mitigate",
+    "pos": "verb",
+    "definition": "Make something bad less severe, serious, or painful.",
+    "synonyms": [
+      "alleviate",
+      "reduce",
+      "lessen"
+    ],
+    "example": "Coastal wetlands help mitigate flood damage by absorbing storm surges."
+  },
+  {
+    "id": "v199",
+    "word": "Monotonous",
+    "pos": "adj.",
+    "definition": "Dull, tedious, and repetitious; lacking in variety and interest.",
+    "synonyms": [
+      "tedious",
+      "repetitive",
+      "dreary"
+    ],
+    "example": "Automating data entry freed analysts from the most monotonous part of their week."
+  },
+  {
+    "id": "v200",
+    "word": "Mundane",
+    "pos": "adj.",
+    "definition": "Lacking interest or excitement; dull and ordinary.",
+    "synonyms": [
+      "ordinary",
+      "commonplace",
+      "banal"
+    ],
+    "example": "The painter transforms mundane kitchen objects into luminous geometric studies."
+  },
+  {
+    "id": "v201",
+    "word": "Negligible",
+    "pos": "adj.",
+    "definition": "So small or unimportant as to be not worth considering; insignificant.",
+    "synonyms": [
+      "insignificant",
+      "minimal",
+      "trivial"
+    ],
+    "example": "The temperature change had a negligible effect on the alloy's overall strength."
+  },
+  {
+    "id": "v202",
+    "word": "Nonchalant",
+    "pos": "adj.",
+    "definition": "Feeling or appearing casually calm and relaxed; not displaying anxiety.",
+    "synonyms": [
+      "casual",
+      "unconcerned",
+      "composed"
+    ],
+    "example": "Despite the tight deadline, the lead engineer remained remarkably nonchalant."
+  },
+  {
+    "id": "v203",
+    "word": "Novel",
+    "pos": "adj.",
+    "definition": "New or unusual in an interesting way.",
+    "synonyms": [
+      "new",
+      "original",
+      "innovative"
+    ],
+    "example": "The chemist proposed a novel catalyst made from abundant iron rather than rare platinum."
+  },
+  {
+    "id": "v204",
+    "word": "Nuanced",
+    "pos": "adj.",
+    "definition": "Characterized by subtle shades of meaning or expression.",
+    "synonyms": [
+      "subtle",
+      "refined",
+      "complex"
+    ],
+    "example": "Rather than taking a rigid stance, the essay offers a nuanced view of urban renewal."
+  },
+  {
+    "id": "v205",
+    "word": "Obscure",
+    "pos": "adj.",
+    "definition": "Not discovered or known about; uncertain or hard to understand.",
+    "synonyms": [
+      "unclear",
+      "little-known",
+      "vague"
+    ],
+    "example": "The documentary brought an obscure nineteenth-century inventor back into public view."
+  },
+  {
+    "id": "v206",
+    "word": "Obsolete",
+    "pos": "adj.",
+    "definition": "No longer produced or used; out of date.",
+    "synonyms": [
+      "outdated",
+      "antiquated",
+      "archaic"
+    ],
+    "example": "Cloud backups have rendered magnetic tape drives largely obsolete for small offices."
+  },
+  {
+    "id": "v207",
+    "word": "Obstinate",
+    "pos": "adj.",
+    "definition": "Stubbornly refusing to change one's opinion or chosen course of action.",
+    "synonyms": [
+      "stubborn",
+      "inflexible",
+      "headstrong"
+    ],
+    "example": "His obstinate refusal to update the menu eventually cost the cafe its regular customers."
+  },
+  {
+    "id": "v208",
+    "word": "Ominous",
+    "pos": "adj.",
+    "definition": "Giving the impression that something bad or unpleasant is going to happen.",
+    "synonyms": [
+      "threatening",
+      "foreboding",
+      "menacing"
+    ],
+    "example": "Low dark clouds gathered over the harbor in an ominous prelude to the squall."
+  },
+  {
+    "id": "v209",
+    "word": "Opaque",
+    "pos": "adj.",
+    "definition": "Not able to be seen through; hard to understand.",
+    "synonyms": [
+      "unclear",
+      "obscure",
+      "impenetrable"
+    ],
+    "example": "Investors criticized the firm's opaque accounting footnotes and demanded clearer disclosures."
+  },
+  {
+    "id": "v210",
+    "word": "Opportunistic",
+    "pos": "adj.",
+    "definition": "Exploiting chances offered by immediate circumstances without regard for principles or long-term plans.",
+    "synonyms": [
+      "calculating",
+      "exploitative",
+      "adaptive"
+    ],
+    "example": "Raccoons are opportunistic feeders that quickly adapt to whatever food sources are nearby."
+  },
+  {
+    "id": "v211",
+    "word": "Ornate",
+    "pos": "adj.",
+    "definition": "Elaborately or highly decorated.",
+    "synonyms": [
+      "elaborate",
+      "intricate",
+      "embellished"
+    ],
+    "example": "In contrast to the minimalist lobby, the concert hall features ornate gilded balconies."
+  },
+  {
+    "id": "v212",
+    "word": "Ostensible",
+    "pos": "adj.",
+    "definition": "Stated or appearing to be true, but not necessarily so.",
+    "synonyms": [
+      "apparent",
+      "seeming",
+      "supposed"
+    ],
+    "example": "The ostensible purpose of the trip was tourism, though she spent most of her time in archives."
+  },
+  {
+    "id": "v213",
+    "word": "Ostentatious",
+    "pos": "adj.",
+    "definition": "Characterized by vulgar or pretentious display; designed to impress.",
+    "synonyms": [
+      "showy",
+      "flamboyant",
+      "pretentious"
+    ],
+    "example": "The architect avoided ostentatious marble facades in favor of quiet brick and glass."
+  },
+  {
+    "id": "v214",
+    "word": "Palpable",
+    "pos": "adj.",
+    "definition": "Able to be touched or felt; so intense as to seem almost tangible.",
+    "synonyms": [
+      "tangible",
+      "noticeable",
+      "evident"
+    ],
+    "example": "A palpable sense of relief swept through the control room when the probe sent its first signal."
+  },
+  {
+    "id": "v215",
+    "word": "Paradoxical",
+    "pos": "adj.",
+    "definition": "Seemingly absurd or self-contradictory, yet potentially true.",
+    "synonyms": [
+      "contradictory",
+      "ironic",
+      "counterintuitive"
+    ],
+    "example": "Adding more highway lanes can have the paradoxical effect of increasing traffic congestion."
+  },
+  {
+    "id": "v216",
+    "word": "Partisan",
+    "pos": "adj.",
+    "definition": "Prejudiced in favor of a particular cause or political party.",
+    "synonyms": [
+      "biased",
+      "one-sided",
+      "factional"
+    ],
+    "example": "The nonpartisan research institute avoids partisan rhetoric in its economic briefs."
+  },
+  {
+    "id": "v217",
+    "word": "Paucity",
+    "pos": "noun",
+    "definition": "The presence of something only in small or insufficient quantities or amounts.",
+    "synonyms": [
+      "scarcity",
+      "shortage",
+      "dearth"
+    ],
+    "example": "Because of the paucity of surviving letters, historians know little about the composer's youth."
+  },
+  {
+    "id": "v218",
+    "word": "Pedantic",
+    "pos": "adj.",
+    "definition": "Excessively concerned with minor details and rules or with displaying academic learning.",
+    "synonyms": [
+      "nitpicky",
+      "overly formal",
+      "fussy"
+    ],
+    "example": "Rather than offering a pedantic list of grammar rules, the guide focuses on clear storytelling."
+  },
+  {
+    "id": "v219",
+    "word": "Peripheral",
+    "pos": "adj.",
+    "definition": "Relating to or situated on the edge; of secondary or minor importance.",
+    "synonyms": [
+      "marginal",
+      "secondary",
+      "incidental"
+    ],
+    "example": "The committee kept its focus on core transit routes rather than peripheral parking disputes."
+  },
+  {
+    "id": "v220",
+    "word": "Perpetuate",
+    "pos": "verb",
+    "definition": "Make something, typically an undesirable situation or belief, continue indefinitely.",
+    "synonyms": [
+      "sustain",
+      "prolong",
+      "preserve"
+    ],
+    "example": "Outdated textbooks can inadvertently perpetuate historical misconceptions."
+  },
+  {
+    "id": "v221",
+    "word": "Pervasive",
+    "pos": "adj.",
+    "definition": "Spreading widely throughout an area or a group of people.",
+    "synonyms": [
+      "widespread",
+      "prevalent",
+      "ubiquitous"
+    ],
+    "example": "Artificial light at night has a pervasive effect on nocturnal pollinators."
+  },
+  {
+    "id": "v222",
+    "word": "Pessimistic",
+    "pos": "adj.",
+    "definition": "Tending to see the worst aspect of things or believe that the worst will happen.",
+    "synonyms": [
+      "gloomy",
+      "cynical",
+      "negative"
+    ],
+    "example": "Early forecasts for the harvest were pessimistic, yet late-season rains saved the crop."
+  },
+  {
+    "id": "v223",
+    "word": "Placate",
+    "pos": "verb",
+    "definition": "Make someone less angry or hostile.",
+    "synonyms": [
+      "appease",
+      "pacify",
+      "soothe"
+    ],
+    "example": "The airline issued travel vouchers to placate passengers delayed by the storm."
+  },
+  {
+    "id": "v224",
+    "word": "Plausible",
+    "pos": "adj.",
+    "definition": "Seeming reasonable or probable.",
+    "synonyms": [
+      "credible",
+      "believable",
+      "likely"
+    ],
+    "example": "Geologists proposed a plausible mechanism explaining how the boulders moved across the dry lakebed."
+  },
+  {
+    "id": "v225",
+    "word": "Poignant",
+    "pos": "adj.",
+    "definition": "Evoking a keen sense of sadness or regret.",
+    "synonyms": [
+      "moving",
+      "touching",
+      "heartfelt"
+    ],
+    "example": "The memoir ends with a poignant reflection on the neighborhood that no longer exists."
+  },
+  {
+    "id": "v226",
+    "word": "Polarize",
+    "pos": "verb",
+    "definition": "Divide or cause to divide into two sharply contrasting groups or sets of opinions.",
+    "synonyms": [
+      "divide",
+      "split",
+      "alienate"
+    ],
+    "example": "Proposed changes to the school calendar quickly began to polarize parents across the district."
+  },
+  {
+    "id": "v227",
+    "word": "Pragmatic",
+    "pos": "adj.",
+    "definition": "Dealing with things sensibly and realistically based on practical considerations.",
+    "synonyms": [
+      "practical",
+      "realistic",
+      "sensible"
+    ],
+    "example": "City planners adopted a pragmatic approach, upgrading existing bus lanes before building new rail lines."
+  },
+  {
+    "id": "v228",
+    "word": "Precarious",
+    "pos": "adj.",
+    "definition": "Not securely held or in position; dangerously likely to fall or collapse.",
+    "synonyms": [
+      "unstable",
+      "insecure",
+      "risky"
+    ],
+    "example": "Cliffside trails became precarious after weeks of heavy autumn rain."
+  },
+  {
+    "id": "v229",
+    "word": "Precede",
+    "pos": "verb",
+    "definition": "Come before something in time, order, or position.",
+    "synonyms": [
+      "come before",
+      "antedate",
+      "forerun"
+    ],
+    "example": "A brief period of economic stagnation preceded the wave of industrial reforms."
+  },
+  {
+    "id": "v230",
+    "word": "Precedent",
+    "pos": "noun",
+    "definition": "An earlier event or action regarded as an example or guide for future situations.",
+    "synonyms": [
+      "example",
+      "model",
+      "benchmark"
+    ],
+    "example": "The landmark court ruling set a lasting precedent for digital privacy cases."
+  },
+  {
+    "id": "v231",
+    "word": "Precipitate",
+    "pos": "verb",
+    "definition": "Cause an event or situation, typically an undesirable one, to happen suddenly.",
+    "synonyms": [
+      "trigger",
+      "spark",
+      "hasten"
+    ],
+    "example": "A sudden drop in export prices helped precipitate the regional banking crisis."
+  },
+  {
+    "id": "v232",
+    "word": "Preclude",
+    "pos": "verb",
+    "definition": "Prevent from happening; make impossible.",
+    "synonyms": [
+      "prevent",
+      "rule out",
+      "bar"
+    ],
+    "example": "High altitude and freezing winds preclude most trees from growing above the timberline."
+  },
+  {
+    "id": "v233",
+    "word": "Predominant",
+    "pos": "adj.",
+    "definition": "Present as the strongest or main element.",
+    "synonyms": [
+      "dominant",
+      "primary",
+      "prevailing"
+    ],
+    "example": "Limestone is the predominant rock formation throughout the karst valley."
+  },
+  {
+    "id": "v234",
+    "word": "Pretentious",
+    "pos": "adj.",
+    "definition": "Attempting to impress by affecting greater importance, talent, or culture than is actually possessed.",
+    "synonyms": [
+      "pompous",
+      "showy",
+      "ostentatious"
+    ],
+    "example": "Readers appreciated the chef's straightforward recipes, free of pretentious culinary jargon."
+  },
+  {
+    "id": "v235",
+    "word": "Prevalent",
+    "pos": "adj.",
+    "definition": "Widespread in a particular area at a particular time.",
+    "synonyms": [
+      "widespread",
+      "common",
+      "pervasive"
+    ],
+    "example": "Seasonal allergies are especially prevalent in valleys where wind-pollinated trees thrive."
+  },
+  {
+    "id": "v236",
+    "word": "Profound",
+    "pos": "adj.",
+    "definition": "Very great or intense; having or showing great knowledge or insight.",
+    "synonyms": [
+      "deep",
+      "intense",
+      "insightful"
+    ],
+    "example": "The invention of refrigeration had a profound effect on global food distribution."
+  },
+  {
+    "id": "v237",
+    "word": "Profuse",
+    "pos": "adj.",
+    "definition": "Exuberantly plentiful; abundant.",
+    "synonyms": [
+      "abundant",
+      "copious",
+      "lavish"
+    ],
+    "example": "After the spring thaw, profuse blooms of lupine covered the hillside."
+  },
+  {
+    "id": "v238",
+    "word": "Proliferate",
+    "pos": "verb",
+    "definition": "Increase rapidly in numbers; multiply.",
+    "synonyms": [
+      "multiply",
+      "burgeon",
+      "expand"
+    ],
+    "example": "In the absence of natural predators, invasive algae began to proliferate across the bay."
+  },
+  {
+    "id": "v239",
+    "word": "Prolific",
+    "pos": "adj.",
+    "definition": "Producing much fruit, foliage, or many works.",
+    "synonyms": [
+      "productive",
+      "fertile",
+      "abundant"
+    ],
+    "example": "A remarkably prolific playwright, she completed more than thirty stage dramas in two decades."
+  },
+  {
+    "id": "v240",
+    "word": "Proponent",
+    "pos": "noun",
+    "definition": "A person who advocates a theory, proposal, or project.",
+    "synonyms": [
+      "advocate",
+      "supporter",
+      "champion"
+    ],
+    "example": "As an early proponent of urban forestry, he helped plant ten thousand street trees."
+  },
+  {
+    "id": "v241",
+    "word": "Prudent",
+    "pos": "adj.",
+    "definition": "Acting with or showing care and thought for the future.",
+    "synonyms": [
+      "wise",
+      "cautious",
+      "sensible"
+    ],
+    "example": "Financial advisors consider it prudent to maintain an emergency reserve before expanding."
+  },
+  {
+    "id": "v242",
+    "word": "Quell",
+    "pos": "verb",
+    "definition": "Put an end to or suppress a feeling or disorder.",
+    "synonyms": [
+      "suppress",
+      "calm",
+      "subdue"
+    ],
+    "example": "Prompt clarification from the ministry helped quell rumors about fuel shortages."
+  },
+  {
+    "id": "v243",
+    "word": "Quintessential",
+    "pos": "adj.",
+    "definition": "Representing the most perfect or typical example of a quality or class.",
+    "synonyms": [
+      "archetypal",
+      "classic",
+      "ideal"
+    ],
+    "example": "With its limestone arches and tiled courtyard, the house is a quintessential example of local craft."
+  },
+  {
+    "id": "v244",
+    "word": "Rebut",
+    "pos": "verb",
+    "definition": "Claim or prove that evidence or an accusation is false.",
+    "synonyms": [
+      "refute",
+      "disprove",
+      "counter"
+    ],
+    "example": "The defense attorney produced timestamped receipts to rebut the witness's timeline."
+  },
+  {
+    "id": "v245",
+    "word": "Recalcitrant",
+    "pos": "adj.",
+    "definition": "Having an obstinately uncooperative attitude toward authority or discipline.",
+    "synonyms": [
+      "defiant",
+      "unruly",
+      "stubborn"
+    ],
+    "example": "Mediators struggled to bring the recalcitrant faction back to the bargaining table."
+  },
+  {
+    "id": "v246",
+    "word": "Reconcile",
+    "pos": "verb",
+    "definition": "Restore friendly relations between; or make two apparently conflicting things consistent.",
+    "synonyms": [
+      "harmonize",
+      "resolve",
+      "settle"
+    ],
+    "example": "Physicists have long sought to reconcile general relativity with quantum mechanics."
+  },
+  {
+    "id": "v247",
+    "word": "Rectify",
+    "pos": "verb",
+    "definition": "Put right; correct an error or unfair situation.",
+    "synonyms": [
+      "correct",
+      "remedy",
+      "fix"
+    ],
+    "example": "The software update was released immediately to rectify the calculation bug."
+  },
+  {
+    "id": "v248",
+    "word": "Redundant",
+    "pos": "adj.",
+    "definition": "Not or no longer needed or useful; superfluous.",
+    "synonyms": [
+      "superfluous",
+      "unnecessary",
+      "repetitive"
+    ],
+    "example": "The editor cut three redundant sentences that merely repeated the opening thesis."
+  },
+  {
+    "id": "v249",
+    "word": "Refute",
+    "pos": "verb",
+    "definition": "Prove a statement or theory to be wrong or false.",
+    "synonyms": [
+      "disprove",
+      "rebut",
+      "debunk"
+    ],
+    "example": "The newly discovered fossils refute the earlier hypothesis that the species was exclusively aquatic."
+  },
+  {
+    "id": "v250",
+    "word": "Reiterate",
+    "pos": "verb",
+    "definition": "Say something again or a number of times, typically for emphasis or clarity.",
+    "synonyms": [
+      "repeat",
+      "restate",
+      "emphasize"
+    ],
+    "example": "At the close of the briefing, the director chose to reiterate the safety guidelines."
+  },
+  {
+    "id": "v251",
+    "word": "Relinquish",
+    "pos": "verb",
+    "definition": "Voluntarily cease to keep or claim; give up.",
+    "synonyms": [
+      "surrender",
+      "yield",
+      "abandon"
+    ],
+    "example": "After forty years leading the archive, she decided to relinquish her post to a younger curator."
+  },
+  {
+    "id": "v252",
+    "word": "Remedy",
+    "pos": "verb",
+    "definition": "Set right an undesirable situation.",
+    "synonyms": [
+      "correct",
+      "rectify",
+      "fix"
+    ],
+    "example": "New drainage channels were dug to remedy the chronic flooding on the lower boulevard."
+  },
+  {
+    "id": "v253",
+    "word": "Replicate",
+    "pos": "verb",
+    "definition": "Make an exact copy of; reproduce an experiment.",
+    "synonyms": [
+      "reproduce",
+      "duplicate",
+      "repeat"
+    ],
+    "example": "Other laboratories were unable to replicate the astonishing result, raising doubts about the method."
+  },
+  {
+    "id": "v254",
+    "word": "Repudiate",
+    "pos": "verb",
+    "definition": "Refuse to accept or be associated with; deny the truth or validity of.",
+    "synonyms": [
+      "reject",
+      "renounce",
+      "disown"
+    ],
+    "example": "Later in his career, the economist came to repudiate his earlier support for strict tariffs."
+  },
+  {
+    "id": "v255",
+    "word": "Resilient",
+    "pos": "adj.",
+    "definition": "Able to withstand or recover quickly from difficult conditions.",
+    "synonyms": [
+      "hardy",
+      "adaptable",
+      "tough"
+    ],
+    "example": "Coral reefs with greater genetic diversity tend to be more resilient to warming waters."
+  },
+  {
+    "id": "v256",
+    "word": "Resolute",
+    "pos": "adj.",
+    "definition": "Admirably purposeful, determined, and unwavering.",
+    "synonyms": [
+      "determined",
+      "firm",
+      "steadfast"
+    ],
+    "example": "Despite repeated budget cuts, the volunteer orchestra remained resolute in its mission."
+  },
+  {
+    "id": "v257",
+    "word": "Reticent",
+    "pos": "adj.",
+    "definition": "Not revealing one's thoughts or feelings readily.",
+    "synonyms": [
+      "reserved",
+      "guarded",
+      "taciturn"
+    ],
+    "example": "Although outspoken in his letters, the poet was notoriously reticent in public."
+  },
+  {
+    "id": "v258",
+    "word": "Revere",
+    "pos": "verb",
+    "definition": "Feel deep respect or admiration for something or someone.",
+    "synonyms": [
+      "admire",
+      "venerate",
+      "esteem"
+    ],
+    "example": "Generations of architects continue to revere the cathedral for its innovative vaulting."
+  },
+  {
+    "id": "v259",
+    "word": "Rigorous",
+    "pos": "adj.",
+    "definition": "Extremely thorough, exhaustive, or accurate.",
+    "synonyms": [
+      "thorough",
+      "strict",
+      "exacting"
+    ],
+    "example": "Every clinical study must pass rigorous statistical checks before publication."
+  },
+  {
+    "id": "v260",
+    "word": "Robust",
+    "pos": "adj.",
+    "definition": "Strong and healthy; vigorous and able to withstand adverse conditions.",
+    "synonyms": [
+      "strong",
+      "sturdy",
+      "resilient"
+    ],
+    "example": "A robust transit network keeps a city moving even during severe winter storms."
+  },
+  {
+    "id": "v261",
+    "word": "Rudimentary",
+    "pos": "adj.",
+    "definition": "Involving or limited to basic principles; undeveloped.",
+    "synonyms": [
+      "basic",
+      "elementary",
+      "primitive"
+    ],
+    "example": "Early telescopes offered only a rudimentary view of Saturn's rings."
+  },
+  {
+    "id": "v262",
+    "word": "Sagacious",
+    "pos": "adj.",
+    "definition": "Having or showing keen mental discernment and good judgment; shrewd.",
+    "synonyms": [
+      "wise",
+      "astute",
+      "perceptive"
+    ],
+    "example": "Her sagacious advice helped the startup avoid an overly risky expansion."
+  },
+  {
+    "id": "v263",
+    "word": "Salient",
+    "pos": "adj.",
+    "definition": "Most noticeable or important.",
+    "synonyms": [
+      "prominent",
+      "notable",
+      "key"
+    ],
+    "example": "The summary highlights the three most salient findings from the decade-long study."
+  },
+  {
+    "id": "v264",
+    "word": "Sanction",
+    "pos": "verb",
+    "definition": "Give official permission or approval for; or impose a penalty on.",
+    "synonyms": [
+      "approve",
+      "authorize",
+      "penalize"
+    ],
+    "example": "The aviation board refused to sanction the new flight path until noise tests were completed."
+  },
+  {
+    "id": "v265",
+    "word": "Sanguine",
+    "pos": "adj.",
+    "definition": "Optimistic or positive, especially in an apparently bad or difficult situation.",
+    "synonyms": [
+      "optimistic",
+      "hopeful",
+      "confident"
+    ],
+    "example": "Despite a sluggish spring quarter, analysts remained sanguine about year-end exports."
+  },
+  {
+    "id": "v266",
+    "word": "Scanty",
+    "pos": "adj.",
+    "definition": "Small or insufficient in quantity or amount.",
+    "synonyms": [
+      "meager",
+      "sparse",
+      "scarce"
+    ],
+    "example": "Historians had to piece together the trade route from scanty mentions in port ledgers."
+  },
+  {
+    "id": "v267",
+    "word": "Scrutinize",
+    "pos": "verb",
+    "definition": "Examine or inspect closely and thoroughly.",
+    "synonyms": [
+      "inspect",
+      "examine",
+      "analyze"
+    ],
+    "example": "Peer reviewers scrutinize a paper's methodology before recommending it for publication."
+  },
+  {
+    "id": "v268",
+    "word": "Serendipitous",
+    "pos": "adj.",
+    "definition": "Occurring or discovered by chance in a happy or beneficial way.",
+    "synonyms": [
+      "fortuitous",
+      "lucky",
+      "chance"
+    ],
+    "example": "A serendipitous encounter at a conference led to a decade-long research partnership."
+  },
+  {
+    "id": "v269",
+    "word": "Skeptical",
+    "pos": "adj.",
+    "definition": "Not easily convinced; having doubts or reservations.",
+    "synonyms": [
+      "doubtful",
+      "dubious",
+      "cynical"
+    ],
+    "example": "Botanists remained skeptical of the claim until the experiment was replicated independently."
+  },
+  {
+    "id": "v270",
+    "word": "Solicitous",
+    "pos": "adj.",
+    "definition": "Characterized by or showing interest or concern.",
+    "synonyms": [
+      "attentive",
+      "caring",
+      "considerate"
+    ],
+    "example": "The host was solicitous of every guest's comfort throughout the long evening."
+  },
+  {
+    "id": "v271",
+    "word": "Sparse",
+    "pos": "adj.",
+    "definition": "Thinly dispersed or scattered.",
+    "synonyms": [
+      "scarce",
+      "scanty",
+      "thin"
+    ],
+    "example": "Vegetation is sparse along the wind-scoured volcanic plateau."
+  },
+  {
+    "id": "v272",
+    "word": "Speculate",
+    "pos": "verb",
+    "definition": "Form a theory or conjecture about a subject without firm evidence.",
+    "synonyms": [
+      "conjecture",
+      "hypothesize",
+      "guess"
+    ],
+    "example": "Archaeologists speculate that the circular stones were used to track seasonal solstices."
+  },
+  {
+    "id": "v273",
+    "word": "Sporadic",
+    "pos": "adj.",
+    "definition": "Occurring at irregular intervals or only in a few places; scattered.",
+    "synonyms": [
+      "occasional",
+      "intermittent",
+      "infrequent"
+    ],
+    "example": "Early telegraph service was sporadic, often interrupted by severe storms."
+  },
+  {
+    "id": "v274",
+    "word": "Spurious",
+    "pos": "adj.",
+    "definition": "Not being what it purports to be; false or fake.",
+    "synonyms": [
+      "false",
+      "bogus",
+      "counterfeit"
+    ],
+    "example": "Careful handwriting analysis exposed the newly auctioned manuscript as spurious."
+  },
+  {
+    "id": "v275",
+    "word": "Stagnate",
+    "pos": "verb",
+    "definition": "Cease to flow, move, or develop; become inactive or dull.",
+    "synonyms": [
+      "stall",
+      "plateau",
+      "languish"
+    ],
+    "example": "Without fresh investment in transit, suburban growth began to stagnate."
+  },
+  {
+    "id": "v276",
+    "word": "Steadfast",
+    "pos": "adj.",
+    "definition": "Resolutely or dutifully firm and unwavering.",
+    "synonyms": [
+      "loyal",
+      "resolute",
+      "unwavering"
+    ],
+    "example": "Her steadfast commitment to open data inspired a generation of young researchers."
+  },
+  {
+    "id": "v277",
+    "word": "Stringent",
+    "pos": "adj.",
+    "definition": "Strict, precise, and exacting.",
+    "synonyms": [
+      "strict",
+      "rigorous",
+      "severe"
+    ],
+    "example": "New building codes introduced stringent insulation standards to cut winter heating loss."
+  },
+  {
+    "id": "v278",
+    "word": "Subside",
+    "pos": "verb",
+    "definition": "Become less intense, violent, or severe.",
+    "synonyms": [
+      "abate",
+      "diminish",
+      "recede"
+    ],
+    "example": "Residents waited for the floodwaters to subside before inspecting the bridge."
+  },
+  {
+    "id": "v279",
+    "word": "Substantiate",
+    "pos": "verb",
+    "definition": "Provide concrete evidence to prove the truth of a claim.",
+    "synonyms": [
+      "validate",
+      "prove",
+      "corroborate"
+    ],
+    "example": "Without primary archival records, historians could not substantiate the legend."
+  },
+  {
+    "id": "v280",
+    "word": "Subtle",
+    "pos": "adj.",
+    "definition": "So delicate or precise as to be difficult to analyze or describe.",
+    "synonyms": [
+      "understated",
+      "delicate",
+      "nuanced"
+    ],
+    "example": "A subtle shift in lighting signals the narrator's realization."
+  },
+  {
+    "id": "v281",
+    "word": "Succinct",
+    "pos": "adj.",
+    "definition": "Briefly and clearly expressed.",
+    "synonyms": [
+      "concise",
+      "brief",
+      "terse"
+    ],
+    "example": "A succinct summary at the start of the report helps busy readers grasp the main findings."
+  },
+  {
+    "id": "v282",
+    "word": "Superficial",
+    "pos": "adj.",
+    "definition": "Existing or occurring at or on the surface; not thorough or deep.",
+    "synonyms": [
+      "shallow",
+      "cursory",
+      "surface-level"
+    ],
+    "example": "A superficial reading of the poem misses its layered historical allusions."
+  },
+  {
+    "id": "v283",
+    "word": "Superfluous",
+    "pos": "adj.",
+    "definition": "Unnecessary, especially through being more than enough.",
+    "synonyms": [
+      "excess",
+      "redundant",
+      "unneeded"
+    ],
+    "example": "Stripping away superfluous ornaments made the interface much easier to navigate."
+  },
+  {
+    "id": "v284",
+    "word": "Supersede",
+    "pos": "verb",
+    "definition": "Take the place of a person or thing previously in authority or use.",
+    "synonyms": [
+      "replace",
+      "supplant",
+      "displace"
+    ],
+    "example": "Digital streaming quickly superseded physical compact discs as the primary music format."
+  },
+  {
+    "id": "v285",
+    "word": "Supplant",
+    "pos": "verb",
+    "definition": "Supersede and replace.",
+    "synonyms": [
+      "replace",
+      "displace",
+      "oust"
+    ],
+    "example": "Electric heat pumps are gradually beginning to supplant older oil furnaces."
+  },
+  {
+    "id": "v286",
+    "word": "Surmise",
+    "pos": "verb",
+    "definition": "Suppose that something is true without having evidence to confirm it.",
+    "synonyms": [
+      "infer",
+      "guess",
+      "deduce"
+    ],
+    "example": "From the charred timber beams, archaeologists could surmise that a fire ended the settlement."
+  },
+  {
+    "id": "v287",
+    "word": "Surpass",
+    "pos": "verb",
+    "definition": "Exceed; be greater than.",
+    "synonyms": [
+      "exceed",
+      "outstrip",
+      "eclipse"
+    ],
+    "example": "Renewable energy generation is projected to surpass coal output within the decade."
+  },
+  {
+    "id": "v288",
+    "word": "Susceptible",
+    "pos": "adj.",
+    "definition": "Likely or liable to be influenced or harmed by a particular thing.",
+    "synonyms": [
+      "vulnerable",
+      "prone",
+      "sensitive"
+    ],
+    "example": "Young saplings are especially susceptible to late-spring frosts."
+  },
+  {
+    "id": "v289",
+    "word": "Synthesize",
+    "pos": "verb",
+    "definition": "Combine multiple elements or ideas to form a connected whole.",
+    "synonyms": [
+      "integrate",
+      "combine",
+      "merge"
+    ],
+    "example": "The review article synthesizes findings from twelve separate ecological surveys."
+  },
+  {
+    "id": "v290",
+    "word": "Tacit",
+    "pos": "adj.",
+    "definition": "Understood or implied without being stated.",
+    "synonyms": [
+      "implicit",
+      "unspoken",
+      "unexpressed"
+    ],
+    "example": "Although no formal contract was signed, there was a tacit agreement to share studio space."
+  },
+  {
+    "id": "v291",
+    "word": "Tangible",
+    "pos": "adj.",
+    "definition": "Perceptible by touch; clear and definite; real.",
+    "synonyms": [
+      "concrete",
+      "palpable",
+      "real"
+    ],
+    "example": "Restoring the riverbank produced tangible benefits, including cleaner water and returning birds."
+  },
+  {
+    "id": "v292",
+    "word": "Tedious",
+    "pos": "adj.",
+    "definition": "Too long, slow, or dull; tiresome or monotonous.",
+    "synonyms": [
+      "monotonous",
+      "boring",
+      "tiresome"
+    ],
+    "example": "Transcribing handwritten nineteenth-century census tables by hand was a tedious chore."
+  },
+  {
+    "id": "v293",
+    "word": "Tenacious",
+    "pos": "adj.",
+    "definition": "Tending to keep a firm hold of something; persistent and determined.",
+    "synonyms": [
+      "persistent",
+      "determined",
+      "resolute"
+    ],
+    "example": "Through tenacious reporting, the journalist uncovered documents buried in municipal archives."
+  },
+  {
+    "id": "v294",
+    "word": "Tentative",
+    "pos": "adj.",
+    "definition": "Not certain or fixed; provisional; done without confidence.",
+    "synonyms": [
+      "provisional",
+      "hesitant",
+      "uncertain"
+    ],
+    "example": "The team announced a tentative launch date pending final wind-tunnel tests."
+  },
+  {
+    "id": "v295",
+    "word": "Tenuous",
+    "pos": "adj.",
+    "definition": "Very weak, slight, or poorly supported.",
+    "synonyms": [
+      "flimsy",
+      "fragile",
+      "weak"
+    ],
+    "example": "The link between the two historical manuscripts remains tenuous at best."
+  },
+  {
+    "id": "v296",
+    "word": "Terse",
+    "pos": "adj.",
+    "definition": "Sparing in the use of words; abrupt.",
+    "synonyms": [
+      "brief",
+      "concise",
+      "curt"
+    ],
+    "example": "The captain's terse logbook entries recorded only wind direction and miles sailed."
+  },
+  {
+    "id": "v297",
+    "word": "Thwart",
+    "pos": "verb",
+    "definition": "Prevent someone from accomplishing something; oppose successfully.",
+    "synonyms": [
+      "foil",
+      "frustrate",
+      "block"
+    ],
+    "example": "Unexpected ice floes threatened to thwart the expedition's attempt to reach the harbor."
+  },
+  {
+    "id": "v298",
+    "word": "Transient",
+    "pos": "adj.",
+    "definition": "Lasting only for a short time; impermanent.",
+    "synonyms": [
+      "temporary",
+      "fleeting",
+      "ephemeral"
+    ],
+    "example": "Tourist towns often experience transient surges in population during July and August."
+  },
+  {
+    "id": "v299",
+    "word": "Transparent",
+    "pos": "adj.",
+    "definition": "Allowing light to pass through; easy to perceive or detect; open and honest.",
+    "synonyms": [
+      "clear",
+      "open",
+      "candid"
+    ],
+    "example": "Voters demanded a more transparent process for awarding public infrastructure contracts."
+  },
+  {
+    "id": "v300",
+    "word": "Trivial",
+    "pos": "adj.",
+    "definition": "Of little value or importance.",
+    "synonyms": [
+      "minor",
+      "insignificant",
+      "negligible"
+    ],
+    "example": "The committee refused to let trivial formatting debates delay the policy vote."
+  },
+  {
+    "id": "v301",
+    "word": "Ubiquitous",
+    "pos": "adj.",
+    "definition": "Present, appearing, or found everywhere.",
+    "synonyms": [
+      "omnipresent",
+      "pervasive",
+      "universal"
+    ],
+    "example": "Microplastics have become so ubiquitous that traces are found even in remote alpine snow."
+  },
+  {
+    "id": "v302",
+    "word": "Unanimous",
+    "pos": "adj.",
+    "definition": "Fully in agreement.",
+    "synonyms": [
+      "united",
+      "undivided",
+      "consensus"
+    ],
+    "example": "The jury reached a unanimous decision to award the prize to the documentary."
+  },
+  {
+    "id": "v303",
+    "word": "Undermine",
+    "pos": "verb",
+    "definition": "Weaken or gradually erode the effectiveness or validity of something.",
+    "synonyms": [
+      "weaken",
+      "subvert",
+      "erode"
+    ],
+    "example": "Inconsistent sampling methods can undermine the reliability of an otherwise promising experiment."
+  },
+  {
+    "id": "v304",
+    "word": "Underscore",
+    "pos": "verb",
+    "definition": "Emphasize or highlight the importance of.",
+    "synonyms": [
+      "emphasize",
+      "highlight",
+      "stress"
+    ],
+    "example": "Recent heat waves underscore the need for shaded public spaces in dense cities."
+  },
+  {
+    "id": "v305",
+    "word": "Unequivocal",
+    "pos": "adj.",
+    "definition": "Leaving no doubt; unambiguous.",
+    "synonyms": [
+      "clear",
+      "definite",
+      "unmistakable"
+    ],
+    "example": "The laboratory results provided unequivocal proof that the water sample was uncontaminated."
+  },
+  {
+    "id": "v306",
+    "word": "Unprecedented",
+    "pos": "adj.",
+    "definition": "Never done or known before.",
+    "synonyms": [
+      "unmatched",
+      "novel",
+      "extraordinary"
+    ],
+    "example": "The observatory captured images of the distant galaxy at an unprecedented level of clarity."
+  },
+  {
+    "id": "v307",
+    "word": "Unwarranted",
+    "pos": "adj.",
+    "definition": "Not justified or authorized.",
+    "synonyms": [
+      "unjustified",
+      "groundless",
+      "baseless"
+    ],
+    "example": "Further inspection showed that fears of structural failure were completely unwarranted."
+  },
+  {
+    "id": "v308",
+    "word": "Vacillate",
+    "pos": "verb",
+    "definition": "Alternate or waver between different opinions or actions; be indecisive.",
+    "synonyms": [
+      "waver",
+      "hesitate",
+      "fluctuate"
+    ],
+    "example": "The board continued to vacillate between renovating the old hall and building a new one."
+  },
+  {
+    "id": "v309",
+    "word": "Validate",
+    "pos": "verb",
+    "definition": "Check or prove the validity or accuracy of something.",
+    "synonyms": [
+      "confirm",
+      "verify",
+      "substantiate"
+    ],
+    "example": "Independent sea-level gauges helped validate the satellite altimeter readings."
+  },
+  {
+    "id": "v310",
+    "word": "Venerable",
+    "pos": "adj.",
+    "definition": "Accorded a great deal of respect, especially because of age, wisdom, or character.",
+    "synonyms": [
+      "respected",
+      "esteemed",
+      "revered"
+    ],
+    "example": "The venerable botanical garden has maintained its glass conservatory since 1874."
+  },
+  {
+    "id": "v311",
+    "word": "Verbose",
+    "pos": "adj.",
+    "definition": "Using or expressed in more words than are needed.",
+    "synonyms": [
+      "wordy",
+      "long-winded",
+      "prolix"
+    ],
+    "example": "The editor trimmed the verbose introduction down to two crisp paragraphs."
+  },
+  {
+    "id": "v312",
+    "word": "Verify",
+    "pos": "verb",
+    "definition": "Make sure or demonstrate that something is true, accurate, or justified.",
+    "synonyms": [
+      "confirm",
+      "validate",
+      "corroborate"
+    ],
+    "example": "Journalists are trained to verify quotes against at least two independent sources."
+  },
+  {
+    "id": "v313",
+    "word": "Versatile",
+    "pos": "adj.",
+    "definition": "Able to adapt or be adapted to many different functions or activities.",
+    "synonyms": [
+      "adaptable",
+      "flexible",
+      "multipurpose"
+    ],
+    "example": "Bamboo is prized as a versatile material used in everything from scaffolding to textiles."
+  },
+  {
+    "id": "v314",
+    "word": "Viable",
+    "pos": "adj.",
+    "definition": "Capable of working successfully; feasible.",
+    "synonyms": [
+      "feasible",
+      "workable",
+      "practical"
+    ],
+    "example": "Advances in battery storage have made solar power a viable option for northern cities."
+  },
+  {
+    "id": "v315",
+    "word": "Vindicate",
+    "pos": "verb",
+    "definition": "Clear someone of blame or prove that an earlier claim was right.",
+    "synonyms": [
+      "justify",
+      "exonerate",
+      "validate"
+    ],
+    "example": "Decades later, deep-sea discoveries vindicated the marine biologist's once-dismissed theory."
+  },
+  {
+    "id": "v316",
+    "word": "Volatile",
+    "pos": "adj.",
+    "definition": "Liable to change rapidly and unpredictably, especially for the worse.",
+    "synonyms": [
+      "unstable",
+      "unpredictable",
+      "erratic"
+    ],
+    "example": "Commodity prices remained volatile throughout the shipping disruption."
+  },
+  {
+    "id": "v317",
+    "word": "Wane",
+    "pos": "verb",
+    "definition": "Decrease in vigor, power, or extent; become weaker.",
+    "synonyms": [
+      "decline",
+      "diminish",
+      "fade"
+    ],
+    "example": "Public enthusiasm for the project began to wane after repeated construction delays."
+  },
+  {
+    "id": "v318",
+    "word": "Wary",
+    "pos": "adj.",
+    "definition": "Feeling or showing caution about possible dangers or problems.",
+    "synonyms": [
+      "cautious",
+      "guarded",
+      "leery"
+    ],
+    "example": "Consumers have grown wary of apps that request unnecessary personal permissions."
+  },
+  {
+    "id": "v319",
+    "word": "Whimsical",
+    "pos": "adj.",
+    "definition": "Playfully quaint or fanciful, especially in an appealing and amusing way.",
+    "synonyms": [
+      "playful",
+      "fanciful",
+      "quirky"
+    ],
+    "example": "The children's museum is filled with whimsical kinetic sculptures powered by marbles."
+  },
+  {
+    "id": "v320",
+    "word": "Zealous",
+    "pos": "adj.",
+    "definition": "Having or showing great energy or enthusiasm in pursuit of a cause.",
+    "synonyms": [
+      "fervent",
+      "passionate",
+      "ardent"
+    ],
+    "example": "Zealous volunteers spent every weekend restoring the overgrown community garden."
+  }
+]
