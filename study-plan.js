@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SAT Prep — Personalized Study Plan Generator & Tab (study-plan.js)
+   SAT Prep — Personalized Study Plan Generator, Test Day Planner & Dashboard Launcher
    Подключается в index.html ПОСЛЕ dashboard.js и script.js:
      <script src="study-plan.js"></script>
    ========================================================================== */
@@ -25,12 +25,112 @@
   let selectedDayIndex = 0;
   let isEditingConfig = false;
 
-  /* ---------- 1. Стили вкладки Study Plan (Light + Dark Theme) ---------- */
+  /* ---------- 1. Стили (Study Plan + обновлённый виджет Dashboard) ---------- */
   function injectStudyPlanStyles() {
     if (document.getElementById("study-plan-styles")) return;
     const style = document.createElement("style");
     style.id = "study-plan-styles";
     style.textContent = `
+      /* Убираем форму с кнопкой Add на Dashboard */
+      #daily-plan-form {
+        display: none !important;
+      }
+
+      /* Кликабельные задачи на Dashboard */
+      #daily-plan-list .daily-plan-item.sp-dash-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 9px 11px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.12s ease;
+      }
+
+      #daily-plan-list .daily-plan-item.sp-dash-item:hover {
+        border-color: #93c5fd;
+        background: #eff6ff;
+        transform: translateX(2px);
+      }
+
+      #daily-plan-list .sp-dash-left {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        min-width: 0;
+        flex: 1;
+      }
+
+      #daily-plan-list .sp-dash-check {
+        width: 17px;
+        height: 17px;
+        accent-color: #16a34a;
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+
+      #daily-plan-list .sp-dash-text {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: #1e293b;
+        line-height: 1.35;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      #daily-plan-list .daily-plan-item.done .sp-dash-text {
+        text-decoration: line-through;
+        color: #94a3b8;
+      }
+
+      #daily-plan-list .sp-dash-go {
+        padding: 5px 11px;
+        border-radius: 9px;
+        border: none;
+        background: #2563eb;
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      #daily-plan-list .daily-plan-item.done .sp-dash-go {
+        background: #e2e8f0;
+        color: #475569;
+      }
+
+      .sp-dash-footer {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+        font-size: 12.5px;
+        color: #64748b;
+      }
+
+      .sp-dash-open-btn {
+        border: 1px solid #cbd5e1;
+        background: #f8fafc;
+        color: #1d4ed8;
+        font-size: 12.5px;
+        font-weight: 700;
+        padding: 6px 12px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+
+      .sp-dash-open-btn:hover {
+        background: #eff6ff;
+        border-color: #93c5fd;
+      }
+
+      /* Вкладка Study Plan */
       #tab-studyplan.active {
         height: 100%;
         overflow-y: auto;
@@ -74,6 +174,62 @@
         color: #64748b;
       }
 
+      .sp-mode-switch {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .sp-mode-btn {
+        text-align: left;
+        padding: 13px 16px;
+        border-radius: 14px;
+        border: 1.5px solid #cbd5e1;
+        background: #f8fafc;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+
+      .sp-mode-btn:hover {
+        border-color: #93c5fd;
+      }
+
+      .sp-mode-btn.active {
+        border-color: #2563eb;
+        background: #eff6ff;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.14);
+      }
+
+      .sp-mode-title {
+        display: block;
+        font-size: 14px;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 2px;
+      }
+
+      .sp-mode-desc {
+        display: block;
+        font-size: 12px;
+        color: #64748b;
+      }
+
+      .sp-auto-banner {
+        padding: 14px 16px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
+        border: 1px solid #bfdbfe;
+        margin-bottom: 18px;
+        font-size: 13.5px;
+        color: #1e293b;
+        line-height: 1.5;
+      }
+
+      .sp-auto-banner strong {
+        color: #1d4ed8;
+      }
+
       .sp-form-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -89,6 +245,10 @@
 
       .sp-field.full-span {
         grid-column: 1 / -1;
+      }
+
+      .sp-field.is-hidden {
+        display: none;
       }
 
       .sp-label {
@@ -127,7 +287,8 @@
         box-shadow: 0 4px 12px rgba(37, 99, 235, 0.24);
       }
 
-      .sp-select {
+      .sp-select,
+      .sp-date-input {
         width: 100%;
         padding: 10px 14px;
         border-radius: 12px;
@@ -430,25 +591,42 @@
       body.dark-theme .sp-card-title,
       body.dark-theme .sp-day-title,
       body.dark-theme .sp-kpi-val,
-      body.dark-theme .sp-task-title {
+      body.dark-theme .sp-task-title,
+      body.dark-theme .sp-mode-title,
+      body.dark-theme #daily-plan-list .sp-dash-text {
         color: #f8fafc;
       }
       body.dark-theme .sp-label,
-      body.dark-theme .sp-toggle-item {
+      body.dark-theme .sp-toggle-item,
+      body.dark-theme .sp-auto-banner {
         color: #e2e8f0;
       }
       body.dark-theme .sp-card-sub,
       body.dark-theme .sp-day-sub,
       body.dark-theme .sp-kpi-lbl,
       body.dark-theme .sp-task-desc,
-      body.dark-theme .sp-task-time {
+      body.dark-theme .sp-task-time,
+      body.dark-theme .sp-mode-desc,
+      body.dark-theme .sp-dash-footer {
         color: #94a3b8;
       }
       body.dark-theme .sp-kpi,
       body.dark-theme .sp-toggles,
-      body.dark-theme .sp-task-row {
+      body.dark-theme .sp-task-row,
+      body.dark-theme .sp-mode-btn {
         background: #0f172a;
         border-color: #334155;
+      }
+      body.dark-theme .sp-mode-btn.active {
+        background: #172554;
+        border-color: #3b82f6;
+      }
+      body.dark-theme .sp-auto-banner {
+        background: linear-gradient(135deg, #172554 0%, #0f291e 100%);
+        border-color: #1d4ed8;
+      }
+      body.dark-theme .sp-auto-banner strong {
+        color: #93c5fd;
       }
       body.dark-theme .sp-task-row.is-done {
         background: #0f291e;
@@ -456,7 +634,9 @@
       }
       body.dark-theme .sp-chip,
       body.dark-theme .sp-select,
-      body.dark-theme .sp-day-pill {
+      body.dark-theme .sp-date-input,
+      body.dark-theme .sp-day-pill,
+      body.dark-theme .sp-dash-open-btn {
         background: #0f172a;
         border-color: #334155;
         color: #e2e8f0;
@@ -478,14 +658,20 @@
       body.dark-theme .sp-form-footer {
         border-top-color: #334155;
       }
-      body.dark-theme .sp-task-row.is-done .sp-launch-btn {
+      body.dark-theme .sp-task-row.is-done .sp-launch-btn,
+      body.dark-theme #daily-plan-list .daily-plan-item.done .sp-dash-go {
         background: #334155;
         color: #e2e8f0;
+      }
+      body.dark-theme #daily-plan-list .daily-plan-item.sp-dash-item:hover {
+        background: #1e293b;
+        border-color: #3b82f6;
       }
 
       @media (max-width: 860px) {
         .sp-form-grid,
-        .sp-summary-grid {
+        .sp-summary-grid,
+        .sp-mode-switch {
           grid-template-columns: 1fr 1fr;
         }
         .sp-task-row {
@@ -498,7 +684,8 @@
       }
       @media (max-width: 560px) {
         .sp-form-grid,
-        .sp-summary-grid {
+        .sp-summary-grid,
+        .sp-mode-switch {
           grid-template-columns: 1fr;
         }
       }
@@ -506,7 +693,34 @@
     document.head.appendChild(style);
   }
 
-  /* ---------- 2. Хранилище плана ---------- */
+  /* ---------- 2. Даты и хранилище ---------- */
+  function getTodayIso() {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  }
+
+  function addDaysIso(startIso, offset) {
+    const parts = startIso.split("-").map(Number);
+    const d = new Date(parts[0], (parts[1] || 1) - 1, (parts[2] || 1) + offset);
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  }
+
+  function diffDaysIso(fromIso, toIso) {
+    if (!fromIso || !toIso) return 0;
+    const a = fromIso.split("-").map(Number);
+    const b = toIso.split("-").map(Number);
+    const d1 = new Date(a[0], (a[1] || 1) - 1, a[2] || 1);
+    const d2 = new Date(b[0], (b[1] || 1) - 1, b[2] || 1);
+    return Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
+  }
+
+  function formatShortDate(iso) {
+    if (!iso) return "";
+    const parts = iso.split("-").map(Number);
+    const d = new Date(parts[0], (parts[1] || 1) - 1, parts[2] || 1);
+    return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  }
+
   function loadPlan() {
     try {
       const raw = localStorage.getItem(PLAN_STORAGE_KEY);
@@ -523,24 +737,55 @@
     localStorage.setItem(PLAN_STORAGE_KEY, JSON.stringify(plan));
   }
 
-  function getTodayIso() {
-    const d = new Date();
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  /* ---------- 3. Авто-расчёт интенсивности по Test Day и целевому росту балла ---------- */
+  function computeAutoRecommendation(testDateIso, scoreBoost) {
+    const today = getTodayIso();
+    const rawDays = diffDaysIso(today, testDateIso);
+    const daysUntilTest = Math.max(3, rawDays || 14);
+    const planDays = Math.min(45, Math.max(3, daysUntilTest));
+    const boost = Number(scoreBoost) || 100;
+    const weeks = Math.max(daysUntilTest / 7, 0.5);
+    const ptsPerWeek = Math.round(boost / weeks);
+
+    let intensity = "standard";
+    let moduleFreq = "every2";
+    let moduleFormat = "mixed";
+    let paceLabel = "Standard (~60m/day)";
+    let modLabel = "Modules every 2 days";
+
+    if (ptsPerWeek >= 55) {
+      intensity = "intensive";
+      moduleFreq = "daily";
+      moduleFormat = "mixed";
+      paceLabel = "Intensive (~90m+/day)";
+      modLabel = "Daily adaptive modules";
+    } else if (ptsPerWeek >= 25) {
+      intensity = "standard";
+      moduleFreq = "every2";
+      moduleFormat = "mixed";
+      paceLabel = "Standard (~60m/day)";
+      modLabel = "Adaptive module every 2 days";
+    } else {
+      intensity = "light";
+      moduleFreq = "weekly";
+      moduleFormat = "full";
+      paceLabel = "Light (~30m/day)";
+      modLabel = "Weekly full adaptive mock";
+    }
+
+    return {
+      daysUntilTest,
+      planDays,
+      ptsPerWeek,
+      intensity,
+      moduleFreq,
+      moduleFormat,
+      paceLabel,
+      modLabel
+    };
   }
 
-  function addDaysIso(startIso, offset) {
-    const parts = startIso.split("-").map(Number);
-    const d = new Date(parts[0], (parts[1] || 1) - 1, (parts[2] || 1) + offset);
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-  }
-
-  function formatShortDate(iso) {
-    const parts = iso.split("-").map(Number);
-    const d = new Date(parts[0], (parts[1] || 1) - 1, parts[2] || 1);
-    return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-  }
-
-  /* ---------- 3. Генератор персонализированного Study Plan ---------- */
+  /* ---------- 4. Генератор Study Plan ---------- */
   function getOrderedDomains(section, prioritizeWeak) {
     const base = section === "Math" ? MATH_DOMAINS.slice() : RW_DOMAINS.slice();
     if (!prioritizeWeak || typeof window.getQuestionBankStats !== "function") {
@@ -561,13 +806,24 @@
     }
   }
 
-  function generateStudyPlan(prefs) {
+  function generateStudyPlan(rawPrefs) {
     const startDate = getTodayIso();
-    const totalDays = Number(prefs.duration) || 14;
-    const focus = prefs.focus || "balanced"; // balanced | rw_heavy | math_heavy | rw_only | math_only
-    const intensity = prefs.intensity || "standard"; // light | standard | intensive
-    const moduleFreq = prefs.moduleFreq || "daily"; // daily | every2 | weekly | none
-    const moduleFormat = prefs.moduleFormat || "mixed"; // express | full | mixed
+    const prefs = { ...rawPrefs };
+
+    // Если включён Auto-режим — подставляем рекомендованные параметры
+    if (prefs.planMode === "auto") {
+      const rec = computeAutoRecommendation(prefs.testDate, prefs.scoreBoost);
+      prefs.duration = rec.planDays;
+      prefs.intensity = rec.intensity;
+      prefs.moduleFreq = rec.moduleFreq;
+      prefs.moduleFormat = rec.moduleFormat;
+    }
+
+    const totalDays = Math.min(45, Math.max(3, Number(prefs.duration) || 14));
+    const focus = prefs.focus || "balanced";
+    const intensity = prefs.intensity || "standard";
+    const moduleFreq = prefs.moduleFreq || "daily";
+    const moduleFormat = prefs.moduleFormat || "mixed";
     const includeVocab = Boolean(prefs.includeVocab);
     const includeMissed = Boolean(prefs.includeMissed);
     const prioritizeWeak = Boolean(prefs.prioritizeWeak);
@@ -609,8 +865,7 @@
       const dateIso = addDaysIso(startDate, i);
       const tasks = [];
 
-      // 1. Определяем, есть ли сегодня адаптивный модуль
-      const isWeeklyMockDay = dayNum % 7 === 0;
+      const isWeeklyMockDay = dayNum % 7 === 0 || (dayNum === totalDays && totalDays >= 5);
       const shouldAddModule =
         moduleFreq === "daily" ||
         (moduleFreq === "every2" && dayNum % 2 === 1) ||
@@ -665,7 +920,6 @@
         }
       }
 
-      // 2. Тематические тренировки по выбранному фокусу
       const drillSections = [];
       if (focus === "rw_only") {
         drillSections.push("RW");
@@ -692,7 +946,6 @@
           drillSections[0] = "RW";
         }
       } else {
-        // balanced
         if (intensity === "light") {
           drillSections.push(dayNum % 2 === 1 ? "RW" : "Math");
         } else if (intensity === "standard") {
@@ -722,7 +975,6 @@
         });
       });
 
-      // 3. Повторение ошибок (Missed Questions)
       if (includeMissed && (intensity === "intensive" || dayNum % 2 === 0)) {
         tasks.push({
           id: `d${dayNum}_missed`,
@@ -736,7 +988,6 @@
         });
       }
 
-      // 4. Словарь (если не Math Only или явно включён)
       if (includeVocab && focus !== "math_only") {
         const useBlitz = dayNum % 2 === 0;
         tasks.push({
@@ -762,44 +1013,13 @@
 
     return {
       createdAt: startDate,
+      syncedDayIndex: 0,
       prefs,
       days
     };
   }
 
-  /* ---------- 4. Синхронизация дня в Dashboard Daily Plan ---------- */
-  function syncDayToDashboard(dayObj) {
-    if (!dayObj || !Array.isArray(dayObj.tasks)) return;
-    const dashboardItems = dayObj.tasks.map(t => ({
-      id: `sp_${t.id}`,
-      text: `${t.title} (~${t.minutes}m)`,
-      done: Boolean(t.done)
-    }));
-    localStorage.setItem(DAILY_PLAN_KEY, JSON.stringify(dashboardItems));
-
-    // Обновляем список на Dashboard, если он уже отрендерен
-    const listEl = document.getElementById("daily-plan-list");
-    const progressEl = document.getElementById("plan-progress-label");
-    if (listEl) {
-      const doneCount = dashboardItems.filter(i => i.done).length;
-      if (progressEl) progressEl.textContent = `${doneCount} / ${dashboardItems.length} done`;
-      listEl.innerHTML = dashboardItems
-        .map(
-          item => `
-          <li class="daily-plan-item ${item.done ? "done" : ""}">
-            <label>
-              <input type="checkbox" data-plan-id="${item.id}" ${item.done ? "checked" : ""} />
-              <span>${item.text}</span>
-            </label>
-            <button type="button" class="plan-del-btn" data-del-id="${item.id}" aria-label="Remove">✕</button>
-          </li>
-        `
-        )
-        .join("");
-    }
-  }
-
-  /* ---------- 5. Запуск задачи прямо из Study Plan ---------- */
+  /* ---------- 5. Запуск задачи (из Study Plan и с Dashboard) ---------- */
   function launchTask(task) {
     if (!task || !task.action) return;
     const act = task.action;
@@ -824,6 +1044,11 @@
       return;
     }
 
+    if (act.type === "section" && typeof window.openSectionSetup === "function") {
+      window.openSectionSetup(act.section);
+      return;
+    }
+
     if (act.type === "missed" && typeof window.startMissedQuestionsSession === "function") {
       const stats = typeof window.getQuestionBankStats === "function" ? window.getQuestionBankStats() : null;
       if (stats && stats.missedCount === 0 && typeof window.startUnsolvedQuestionsSession === "function") {
@@ -844,7 +1069,154 @@
     }
   }
 
-  /* ---------- 6. Рендеринг интерфейса вкладки ---------- */
+  /* ---------- 6. Интерактивный виджет Daily Study Plan на Dashboard ---------- */
+  function getDefaultDashboardTasks() {
+    let savedDone = {};
+    try {
+      const raw = JSON.parse(localStorage.getItem(DAILY_PLAN_KEY) || "[]");
+      if (Array.isArray(raw)) {
+        raw.forEach(item => {
+          if (item && item.id) savedDone[item.id] = Boolean(item.done);
+        });
+      }
+    } catch (e) {}
+
+    return [
+      {
+        id: "def_rw",
+        title: "Solve 15 Reading & Writing questions",
+        minutes: 18,
+        done: Boolean(savedDone["def_rw"]),
+        action: { type: "section", section: "RW" }
+      },
+      {
+        id: "def_math",
+        title: "Solve 15 Math questions",
+        minutes: 22,
+        done: Boolean(savedDone["def_math"]),
+        action: { type: "section", section: "Math" }
+      },
+      {
+        id: "def_mod",
+        title: "Complete 1 Adaptive Practice Module",
+        minutes: 30,
+        done: Boolean(savedDone["def_mod"]),
+        action: {
+          type: "module",
+          section: "RW",
+          countPerModule: 12,
+          timerSeconds: 840,
+          title: "Express R&W Adaptive Sprint"
+        }
+      }
+    ];
+  }
+
+  function renderDashboardDailyPlan() {
+    const listEl = document.getElementById("daily-plan-list");
+    const progressEl = document.getElementById("plan-progress-label");
+    if (!listEl) return;
+
+    const plan = loadPlan();
+    let tasks = [];
+    let activeDayObj = null;
+    let footerMeta = "Click any task to start practicing";
+
+    if (plan) {
+      const todayIso = getTodayIso();
+      const todayIdx = plan.days.findIndex(d => d.date === todayIso);
+      const dayIdx =
+        typeof plan.syncedDayIndex === "number" && plan.days[plan.syncedDayIndex]
+          ? plan.syncedDayIndex
+          : todayIdx >= 0
+          ? todayIdx
+          : 0;
+      activeDayObj = plan.days[dayIdx] || plan.days[0];
+      tasks = activeDayObj.tasks || [];
+
+      const daysLeft = plan.prefs?.testDate ? diffDaysIso(todayIso, plan.prefs.testDate) : null;
+      const countdown = daysLeft !== null && daysLeft >= 0 ? ` · ${daysLeft}d to SAT` : "";
+      const boostTxt = plan.prefs?.scoreBoost ? ` · +${plan.prefs.scoreBoost} pts goal` : "";
+      footerMeta = `Day ${activeDayObj.day}/${plan.days.length}${countdown}${boostTxt}`;
+    } else {
+      tasks = getDefaultDashboardTasks();
+    }
+
+    const doneCount = tasks.filter(t => t.done).length;
+    if (progressEl) {
+      progressEl.textContent = `${doneCount} / ${tasks.length} done`;
+    }
+
+    listEl.innerHTML = tasks
+      .map(
+        t => `
+        <li class="daily-plan-item sp-dash-item ${t.done ? "done" : ""}" data-dash-task-id="${t.id}" title="Click to start">
+          <div class="sp-dash-left">
+            <input type="checkbox" class="sp-dash-check" data-dash-check-id="${t.id}" ${t.done ? "checked" : ""} />
+            <span class="sp-dash-text">${t.title}${t.minutes ? ` (~${t.minutes}m)` : ""}</span>
+          </div>
+          <button type="button" class="sp-dash-go" data-dash-go-id="${t.id}">
+            ${t.done ? "Redo" : "Start →"}
+          </button>
+        </li>
+      `
+      )
+      .join("");
+
+    // Футер карточки с переходом во вкладку Study Plan
+    const card = listEl.closest(".dash-card");
+    if (card) {
+      let footer = card.querySelector(".sp-dash-footer");
+      if (!footer) {
+        footer = document.createElement("div");
+        footer.className = "sp-dash-footer";
+        listEl.insertAdjacentElement("afterend", footer);
+      }
+      footer.innerHTML = `
+        <span>${footerMeta}</span>
+        <button type="button" class="sp-dash-open-btn" id="sp-dash-open-plan-btn">
+          ${plan ? "Open Full Plan →" : "✨ Generate Study Plan →"}
+        </button>
+      `;
+      const openBtn = document.getElementById("sp-dash-open-plan-btn");
+      if (openBtn) {
+        openBtn.addEventListener("click", () => {
+          activateTab("studyplan");
+          renderStudyPlanTab();
+        });
+      }
+    }
+
+    // Обработчики чекбоксов (синхронизируются с Study Plan)
+    listEl.querySelectorAll(".sp-dash-check").forEach(cb => {
+      cb.addEventListener("click", e => e.stopPropagation());
+      cb.addEventListener("change", () => {
+        const tid = cb.dataset.dashCheckId;
+        if (plan && activeDayObj) {
+          const target = activeDayObj.tasks.find(t => t.id === tid);
+          if (target) target.done = cb.checked;
+          savePlan(plan);
+          renderStudyPlanTab();
+        } else {
+          const updated = tasks.map(t => (t.id === tid ? { id: t.id, text: t.title, done: cb.checked } : { id: t.id, text: t.title, done: t.done }));
+          localStorage.setItem(DAILY_PLAN_KEY, JSON.stringify(updated));
+        }
+        renderDashboardDailyPlan();
+      });
+    });
+
+    // Клик по строке задачи или кнопке Start → сразу запускает работу
+    listEl.querySelectorAll(".sp-dash-item").forEach(li => {
+      li.addEventListener("click", e => {
+        if (e.target.closest(".sp-dash-check")) return;
+        const tid = li.dataset.dashTaskId;
+        const target = tasks.find(t => t.id === tid);
+        if (target) launchTask(target);
+      });
+    });
+  }
+
+  /* ---------- 7. Рендеринг вкладки Study Plan ---------- */
   const FOCUS_LABELS = {
     balanced: "Balanced (50/50)",
     rw_heavy: "R&W Focus (70/30)",
@@ -855,6 +1227,9 @@
 
   function getDefaultPrefs() {
     return {
+      planMode: "auto", // auto | manual
+      testDate: addDaysIso(getTodayIso(), 21),
+      scoreBoost: 150,
       focus: "balanced",
       duration: 14,
       intensity: "standard",
@@ -862,13 +1237,16 @@
       moduleFormat: "mixed",
       includeVocab: true,
       includeMissed: true,
-      prioritizeWeak: true,
-      syncDashboard: true
+      prioritizeWeak: true
     };
   }
 
   function renderGeneratorForm(container, existingPlan) {
     const prefs = existingPlan?.prefs ? { ...getDefaultPrefs(), ...existingPlan.prefs } : getDefaultPrefs();
+    const minTestDate = addDaysIso(getTodayIso(), 3);
+    if (!prefs.testDate || diffDaysIso(getTodayIso(), prefs.testDate) < 3) {
+      prefs.testDate = addDaysIso(getTodayIso(), 21);
+    }
 
     const makeChips = (name, options, currentVal) =>
       options
@@ -880,22 +1258,57 @@
         )
         .join("");
 
+    const isManual = prefs.planMode === "manual";
+
     container.innerHTML = `
       <header class="page-header sp-header">
         <div>
           <h1>Study Plan</h1>
-          <p>Build a personalized daily SAT schedule tailored to your section focus and practice module pace</p>
+          <p>Set your SAT Test Day and target score boost — let Auto Mode build your schedule or customize everything yourself</p>
         </div>
         ${existingPlan ? `<button type="button" id="sp-cancel-edit-btn" class="secondary-btn">← Back to Current Plan</button>` : ""}
       </header>
 
       <div class="sp-card">
         <h2 class="sp-card-title">Generate Your SAT Study Plan</h2>
-        <p class="sp-card-sub">Choose your section emphasis, daily intensity, and how often you want adaptive practice modules.</p>
+        <p class="sp-card-sub">Choose Auto Mode to calculate workload from your Test Day & score goal, or Manual Mode for full control.</p>
+
+        <div class="sp-mode-switch">
+          <button type="button" class="sp-mode-btn ${!isManual ? "active" : ""}" data-sp-mode="auto">
+            <span class="sp-mode-title">⚡ Auto-Calculated Plan</span>
+            <span class="sp-mode-desc">Sets intensity & module frequency from your Test Day and score goal</span>
+          </button>
+          <button type="button" class="sp-mode-btn ${isManual ? "active" : ""}" data-sp-mode="manual">
+            <span class="sp-mode-title">🛠️ Manual Custom Setup</span>
+            <span class="sp-mode-desc">Pick your own plan length, daily workload, and module schedule</span>
+          </button>
+        </div>
 
         <div class="sp-form-grid">
+          <div class="sp-field">
+            <label for="sp-test-date" class="sp-label">1. SAT Test Day</label>
+            <input type="date" id="sp-test-date" class="sp-date-input" min="${minTestDate}" value="${prefs.testDate}" />
+          </div>
+
+          <div class="sp-field">
+            <span class="sp-label">2. Target Score Increase</span>
+            <div class="sp-chips">
+              ${makeChips("scoreBoost", [
+                { value: 50, label: "+50 pts" },
+                { value: 100, label: "+100 pts" },
+                { value: 150, label: "+150 pts" },
+                { value: 200, label: "+200 pts" },
+                { value: 300, label: "+300+ pts" }
+              ], prefs.scoreBoost)}
+            </div>
+          </div>
+
           <div class="sp-field full-span">
-            <span class="sp-label">1. Section Focus</span>
+            <div id="sp-auto-banner" class="sp-auto-banner"></div>
+          </div>
+
+          <div class="sp-field full-span">
+            <span class="sp-label">3. Section Focus</span>
             <div class="sp-chips">
               ${makeChips("focus", [
                 { value: "balanced", label: "⚖️ Balanced (50/50)" },
@@ -907,8 +1320,8 @@
             </div>
           </div>
 
-          <div class="sp-field">
-            <span class="sp-label">2. Plan Length</span>
+          <div class="sp-field sp-manual-only ${isManual ? "" : "is-hidden"}">
+            <span class="sp-label">4. Plan Length</span>
             <div class="sp-chips">
               ${makeChips("duration", [
                 { value: 7, label: "7 Days" },
@@ -918,8 +1331,8 @@
             </div>
           </div>
 
-          <div class="sp-field">
-            <span class="sp-label">3. Daily Workload</span>
+          <div class="sp-field sp-manual-only ${isManual ? "" : "is-hidden"}">
+            <span class="sp-label">5. Daily Workload</span>
             <div class="sp-chips">
               ${makeChips("intensity", [
                 { value: "light", label: "Light (~30m)" },
@@ -929,8 +1342,8 @@
             </div>
           </div>
 
-          <div class="sp-field">
-            <label for="sp-mod-freq" class="sp-label">4. Adaptive Practice Modules</label>
+          <div class="sp-field sp-manual-only ${isManual ? "" : "is-hidden"}">
+            <label for="sp-mod-freq" class="sp-label">6. Adaptive Practice Modules</label>
             <select id="sp-mod-freq" class="sp-select">
               <option value="daily" ${prefs.moduleFreq === "daily" ? "selected" : ""}>Every Day (Daily Module)</option>
               <option value="every2" ${prefs.moduleFreq === "every2" ? "selected" : ""}>Every 2 Days</option>
@@ -939,8 +1352,8 @@
             </select>
           </div>
 
-          <div class="sp-field">
-            <label for="sp-mod-format" class="sp-label">5. Module Length</label>
+          <div class="sp-field sp-manual-only ${isManual ? "" : "is-hidden"}">
+            <label for="sp-mod-format" class="sp-label">7. Module Length</label>
             <select id="sp-mod-format" class="sp-select" ${prefs.moduleFreq === "none" ? "disabled" : ""}>
               <option value="mixed" ${prefs.moduleFormat === "mixed" ? "selected" : ""}>Mixed (Express daily + Full on Day 7/14)</option>
               <option value="express" ${prefs.moduleFormat === "express" ? "selected" : ""}>Express Adaptive Sprints (~30 min)</option>
@@ -949,7 +1362,7 @@
           </div>
 
           <div class="sp-field full-span">
-            <span class="sp-label">6. Smart Options</span>
+            <span class="sp-label">Smart Options</span>
             <div class="sp-toggles">
               <label class="sp-toggle-item">
                 <input type="checkbox" id="sp-opt-vocab" ${prefs.includeVocab ? "checked" : ""} />
@@ -963,10 +1376,6 @@
                 <input type="checkbox" id="sp-opt-weak" ${prefs.prioritizeWeak ? "checked" : ""} />
                 <span>Prioritize my weakest domains first</span>
               </label>
-              <label class="sp-toggle-item">
-                <input type="checkbox" id="sp-opt-sync" ${prefs.syncDashboard ? "checked" : ""} />
-                <span>Sync Day 1 tasks to Dashboard checklist</span>
-              </label>
             </div>
           </div>
         </div>
@@ -978,15 +1387,61 @@
     `;
 
     const state = { ...prefs };
+    const bannerEl = document.getElementById("sp-auto-banner");
+    const dateInput = document.getElementById("sp-test-date");
+
+    const updateAutoBanner = () => {
+      if (!bannerEl) return;
+      const rec = computeAutoRecommendation(state.testDate, state.scoreBoost);
+      if (state.planMode === "auto") {
+        bannerEl.innerHTML = `
+          📅 <strong>${rec.daysUntilTest} days</strong> until Test Day (${formatShortDate(state.testDate)}) ·
+          🎯 Goal: <strong>+${state.scoreBoost} pts</strong> (~${rec.ptsPerWeek} pts/week)<br/>
+          ⚡ Auto Recommendation: <strong>${rec.paceLabel}</strong> · <strong>${rec.modLabel}</strong> · ${rec.planDays}-day roadmap
+        `;
+      } else {
+        bannerEl.innerHTML = `
+          📅 <strong>${rec.daysUntilTest} days</strong> until Test Day (${formatShortDate(state.testDate)}) ·
+          🎯 Goal: <strong>+${state.scoreBoost} pts</strong> ·
+          🛠️ Manual mode active — customize duration, workload, and modules below.
+        `;
+      }
+    };
+
+    updateAutoBanner();
+
+    container.querySelectorAll(".sp-mode-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        state.planMode = btn.dataset.spMode === "manual" ? "manual" : "auto";
+        container.querySelectorAll(".sp-mode-btn").forEach(b => {
+          b.classList.toggle("active", b === btn);
+        });
+        const showManual = state.planMode === "manual";
+        container.querySelectorAll(".sp-manual-only").forEach(el => {
+          el.classList.toggle("is-hidden", !showManual);
+        });
+        updateAutoBanner();
+      });
+    });
+
+    if (dateInput) {
+      dateInput.addEventListener("change", () => {
+        if (dateInput.value) {
+          state.testDate = dateInput.value;
+          updateAutoBanner();
+        }
+      });
+    }
 
     container.querySelectorAll(".sp-chip").forEach(btn => {
       btn.addEventListener("click", () => {
         const grp = btn.dataset.spGroup;
         const val = btn.dataset.spVal;
-        state[grp] = grp === "duration" ? Number(val) : val;
+        state[grp] = grp === "duration" || grp === "scoreBoost" ? Number(val) : val;
         container.querySelectorAll(`.sp-chip[data-sp-group="${grp}"]`).forEach(b => {
           b.classList.toggle("active", b === btn);
         });
+        if (grp === "scoreBoost") updateAutoBanner();
       });
     });
 
@@ -1016,16 +1471,13 @@
         state.includeVocab = Boolean(document.getElementById("sp-opt-vocab")?.checked);
         state.includeMissed = Boolean(document.getElementById("sp-opt-missed")?.checked);
         state.prioritizeWeak = Boolean(document.getElementById("sp-opt-weak")?.checked);
-        state.syncDashboard = Boolean(document.getElementById("sp-opt-sync")?.checked);
 
         const newPlan = generateStudyPlan(state);
         savePlan(newPlan);
-        if (state.syncDashboard && newPlan.days[0]) {
-          syncDayToDashboard(newPlan.days[0]);
-        }
         selectedDayIndex = 0;
         isEditingConfig = false;
         renderStudyPlanTab();
+        renderDashboardDailyPlan();
       });
     }
   }
@@ -1053,6 +1505,13 @@
     const activeDay = plan.days[selectedDayIndex];
     const dayMinutes = activeDay.tasks.reduce((sum, t) => sum + (t.minutes || 0), 0);
     const dayDone = activeDay.tasks.filter(t => t.done).length;
+
+    const daysLeft = plan.prefs?.testDate ? Math.max(0, diffDaysIso(todayIso, plan.prefs.testDate)) : null;
+    const boostLabel = plan.prefs?.scoreBoost ? `+${plan.prefs.scoreBoost} pts goal` : "";
+    const testMeta =
+      daysLeft !== null
+        ? ` · Test Day: ${formatShortDate(plan.prefs.testDate)} (${daysLeft}d left)`
+        : "";
 
     const daysStripHtml = plan.days
       .map((d, idx) => {
@@ -1095,10 +1554,10 @@
       <header class="page-header sp-header">
         <div>
           <h1>Study Plan</h1>
-          <p>${FOCUS_LABELS[plan.prefs?.focus] || "Balanced"} · ${plan.days.length}-day personalized roadmap</p>
+          <p>${FOCUS_LABELS[plan.prefs?.focus] || "Balanced"}${boostLabel ? " · " + boostLabel : ""}${testMeta}</p>
         </div>
         <div class="sp-header-actions">
-          <button type="button" id="sp-sync-today-btn" class="secondary-btn">📌 Send Day ${activeDay.day} to Dashboard</button>
+          <button type="button" id="sp-sync-today-btn" class="secondary-btn">📌 Pin Day ${activeDay.day} on Dashboard</button>
           <button type="button" id="sp-customize-btn" class="primary-btn">⚙️ Customize / New Plan</button>
         </div>
       </header>
@@ -1114,8 +1573,8 @@
             <div class="sp-kpi-lbl">Tasks Completed</div>
           </div>
           <div class="sp-kpi">
-            <div class="sp-kpi-val">${completedDays} / ${plan.days.length}</div>
-            <div class="sp-kpi-lbl">Days Completed</div>
+            <div class="sp-kpi-val">${daysLeft !== null ? `${daysLeft} days` : `${completedDays}/${plan.days.length}`}</div>
+            <div class="sp-kpi-lbl">${daysLeft !== null ? "Until SAT Test Day" : "Days Completed"}</div>
           </div>
           <div class="sp-kpi">
             <div class="sp-kpi-val">~${dayMinutes} min</div>
@@ -1137,7 +1596,7 @@
             <h2 class="sp-day-title">Day ${activeDay.day} · ${formatShortDate(activeDay.date)}${activeDay.date === todayIso ? " (Today)" : ""}</h2>
             <div class="sp-day-sub">${dayDone} of ${activeDay.tasks.length} tasks done · Estimated time: ~${dayMinutes} min</div>
           </div>
-          <span id="sp-sync-toast" class="sp-toast hidden">✓ Synced to Dashboard</span>
+          <span id="sp-sync-toast" class="sp-toast hidden">✓ Pinned on Dashboard</span>
         </div>
 
         <div class="sp-tasks-list">
@@ -1159,6 +1618,7 @@
         if (target) target.done = cb.checked;
         savePlan(plan);
         renderStudyPlanTab();
+        renderDashboardDailyPlan();
       });
     });
 
@@ -1180,7 +1640,9 @@
     const syncBtn = document.getElementById("sp-sync-today-btn");
     if (syncBtn) {
       syncBtn.addEventListener("click", () => {
-        syncDayToDashboard(activeDay);
+        plan.syncedDayIndex = selectedDayIndex;
+        savePlan(plan);
+        renderDashboardDailyPlan();
         const toast = document.getElementById("sp-sync-toast");
         if (toast) {
           toast.classList.remove("hidden");
@@ -1201,7 +1663,7 @@
     }
   }
 
-  /* ---------- 7. Монтирование вкладки в Sidebar и Main ---------- */
+  /* ---------- 8. Монтирование вкладки ---------- */
   function activateTab(tabName) {
     document.querySelectorAll(".nav-tab-btn").forEach(btn => {
       btn.classList.toggle("active", btn.dataset.tab === tabName);
@@ -1220,7 +1682,6 @@
     const mainContent = document.querySelector(".main-content");
     if (!sidebarNav || !mainContent) return;
 
-    // 1. Добавляем кнопку Study Plan в левое меню (после Dashboard)
     if (!sidebarNav.querySelector('.nav-tab-btn[data-tab="studyplan"]')) {
       const navBtn = document.createElement("button");
       navBtn.type = "button";
@@ -1241,7 +1702,6 @@
       });
     }
 
-    // 2. Добавляем секцию вкладки в main-content
     if (!document.getElementById("tab-studyplan")) {
       const section = document.createElement("section");
       section.id = "tab-studyplan";
@@ -1249,7 +1709,6 @@
       mainContent.appendChild(section);
     }
 
-    // 3. Страхуем переключение с нашей вкладки на остальные
     sidebarNav.querySelectorAll(".nav-tab-btn").forEach(btn => {
       if (btn.dataset.tab === "studyplan" || btn.dataset.spBound) return;
       btn.dataset.spBound = "1";
@@ -1261,10 +1720,12 @@
           spPanel.classList.remove("active");
         }
         if (spBtn) spBtn.classList.remove("active");
+        if (btn.dataset.tab === "dashboard") {
+          renderDashboardDailyPlan();
+        }
       });
     });
 
-    // Автоматически выбираем сегодняшний день, если план уже есть
     const existing = loadPlan();
     if (existing) {
       const todayIdx = existing.days.findIndex(d => d.date === getTodayIso());
@@ -1272,6 +1733,9 @@
     }
 
     renderStudyPlanTab();
+    renderDashboardDailyPlan();
+    // Повторный рендер после initDailyPlan() из dashboard.js
+    setTimeout(renderDashboardDailyPlan, 0);
   }
 
   if (document.readyState === "loading") {
