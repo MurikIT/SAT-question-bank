@@ -1883,3 +1883,23 @@ code.currency-dollar {
   font-weight: 700;
   margin-right: 6px;
 }
+/* Fix: выравнивание текста и списков в Math по левому краю */
+.math-stimulus-block {
+  text-align: left !important;
+}
+
+.math-stimulus-block ul,
+.math-stimulus-block ol {
+  text-align: left;
+  padding-left: 24px;
+  margin: 10px 0 14px;
+}
+
+.math-stimulus-block li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.math-stimulus-block li:last-child {
+  margin-bottom: 0;
+}
