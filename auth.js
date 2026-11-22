@@ -32,8 +32,21 @@ const googleProvider = new GoogleAuthProvider();
 
 let currentUser = null;
 let authReady = false;
-let syncTimer = null;
 let isRestoring = false;
+
+// Оптимизация лимитов Firestore (до 1000+ активных пользователей в день на бесплатном тарифе):
+// — Частые тики таймера (sat_study_meta_v1) синхронизируются раз в 3 минуты или при уходе со страницы
+// — Важные изменения (ответы, словарь, план) объединяются в 1 запись с задержкой 15 секунд
+// — Одинаковые данные повторно в облако не отправляются
+const IMPORTANT_SYNC_DELAY_MS = 15000;   // 15 сек для прогресса тестов / словаря / плана
+const LAZY_SYNC_DELAY_MS = 180000;       // 3 мин для счётчика времени
+const LOW_PRIORITY_KEYS = new Set(["sat_study_meta_v1"]);
+
+let importantSyncTimer = null;
+let lazySyncTimer = null;
+let hasPendingChanges = false;
+let lastSyncedSnapshot = "";
+let isSaving = false;
 
 // Временное хранилище в памяти для гостей (сбрасывается при перезагрузке страницы)
 const guestMemory = new Map();
@@ -61,6 +74,27 @@ function collectLocalProgress() {
   return data;
 }
 
+function serializeProgress(obj) {
+  const sorted = {};
+  Object.keys(obj)
+    .sort()
+    .forEach((k) => {
+      sorted[k] = obj[k];
+    });
+  return JSON.stringify(sorted);
+}
+
+function clearSyncTimers() {
+  if (importantSyncTimer) {
+    clearTimeout(importantSyncTimer);
+    importantSyncTimer = null;
+  }
+  if (lazySyncTimer) {
+    clearTimeout(lazySyncTimer);
+    lazySyncTimer = null;
+  }
+}
+
 function clearLocalProgress() {
   isRestoring = true;
   const keysToRemove = [];
@@ -72,6 +106,9 @@ function clearLocalProgress() {
   }
   keysToRemove.forEach((k) => originalRemoveItem(k));
   guestMemory.clear();
+  lastSyncedSnapshot = "";
+  hasPendingChanges = false;
+  clearSyncTimers();
   isRestoring = false;
 }
 
@@ -87,10 +124,21 @@ function hasSavedUserProgress() {
   return progressKeys.some((k) => originalGetItem(k) !== null);
 }
 
-async function saveProgressToCloud() {
+async function saveProgressToCloud(force = false) {
   if (!currentUser || isRestoring) return;
+  if (isSaving && !force) return;
+
+  const progress = collectLocalProgress();
+  const snapshot = serializeProgress(progress);
+
+  if (!force && snapshot === lastSyncedSnapshot) {
+    hasPendingChanges = false;
+    return;
+  }
+
+  clearSyncTimers();
+  isSaving = true;
   try {
-    const progress = collectLocalProgress();
     await setDoc(
       doc(db, "users", currentUser.uid),
       {
@@ -100,19 +148,53 @@ async function saveProgressToCloud() {
       },
       { merge: true }
     );
+    lastSyncedSnapshot = snapshot;
+    hasPendingChanges = false;
   } catch (err) {
     console.error("Cloud sync save error:", err);
+  } finally {
+    isSaving = false;
   }
 }
 
-function scheduleCloudSync() {
+function scheduleCloudSync(key = "") {
   if (!currentUser || isRestoring) return;
-  clearTimeout(syncTimer);
-  syncTimer = setTimeout(saveProgressToCloud, 1200);
+  hasPendingChanges = true;
+
+  if (LOW_PRIORITY_KEYS.has(key)) {
+    // Для 10-секундного таймера не сбрасываем и не форсируем запись — копим до 3 минут
+    if (!lazySyncTimer && !importantSyncTimer) {
+      lazySyncTimer = setTimeout(() => {
+        lazySyncTimer = null;
+        saveProgressToCloud();
+      }, LAZY_SYNC_DELAY_MS);
+    }
+    return;
+  }
+
+  // Для ответов, словаря и плана — объединяем быстрые клики в 1 запись через 15 сек
+  if (importantSyncTimer) clearTimeout(importantSyncTimer);
+  importantSyncTimer = setTimeout(() => {
+    importantSyncTimer = null;
+    saveProgressToCloud();
+  }, IMPORTANT_SYNC_DELAY_MS);
 }
 
+// Гарантированное сохранение при сворачивании вкладки / уходе со страницы
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "hidden" && hasPendingChanges) {
+    saveProgressToCloud();
+  }
+});
+
+window.addEventListener("pagehide", () => {
+  if (hasPendingChanges) {
+    saveProgressToCloud();
+  }
+});
+
 // Перехватываем localStorage:
-// — если пользователь вошёл в аккаунт: сохраняем в localStorage + синхронизируем с облаком
+// — если пользователь вошёл в аккаунт: сохраняем в localStorage + умная синхронизация с облаком
 // — если пользователь не вошёл (гость): держим прогресс только в RAM до перезагрузки страницы
 localStorage.getItem = function (key) {
   if (authReady && !currentUser && !isPreservedKey(key)) {
@@ -126,8 +208,12 @@ localStorage.setItem = function (key, value) {
     guestMemory.set(key, String(value));
     return;
   }
-  originalSetItem(key, value);
-  if (!isPreservedKey(key)) scheduleCloudSync();
+  const prev = originalGetItem(key);
+  const next = String(value);
+  originalSetItem(key, next);
+  if (!isPreservedKey(key) && prev !== next) {
+    scheduleCloudSync(key);
+  }
 };
 
 localStorage.removeItem = function (key) {
@@ -135,8 +221,11 @@ localStorage.removeItem = function (key) {
     guestMemory.delete(key);
     return;
   }
+  const hadKey = originalGetItem(key) !== null;
   originalRemoveItem(key);
-  if (!isPreservedKey(key)) scheduleCloudSync();
+  if (!isPreservedKey(key) && hadKey) {
+    scheduleCloudSync(key);
+  }
 };
 
 localStorage.clear = function () {
@@ -145,20 +234,26 @@ localStorage.clear = function () {
     return;
   }
   originalClear();
-  scheduleCloudSync();
+  scheduleCloudSync("");
 };
 
 async function syncOnLogin(user) {
+  const alreadySynced = sessionStorage.getItem("sat_synced_uid") === user.uid;
+
+  // Если в этой вкладке уже синхронизировались — не тратим лишнее чтение Firestore при перезагрузке
+  if (alreadySynced) {
+    lastSyncedSnapshot = serializeProgress(collectLocalProgress());
+    return;
+  }
+
   const userRef = doc(db, "users", user.uid);
   const snap = await getDoc(userRef);
-  const alreadySynced = sessionStorage.getItem("sat_synced_uid") === user.uid;
 
   if (snap.exists() && snap.data().storage) {
     const cloudStorage = snap.data().storage;
     let changed = false;
 
     isRestoring = true;
-    // Удаляем локальные ключи, которых нет в облаке (чтобы не смешались аккаунты)
     const localKeys = [];
     for (let i = 0; i < localStorage.length; i++) {
       const k = localStorage.key(i);
@@ -179,21 +274,19 @@ async function syncOnLogin(user) {
       }
     }
     guestMemory.clear();
+    lastSyncedSnapshot = serializeProgress(collectLocalProgress());
+    hasPendingChanges = false;
     isRestoring = false;
 
-    if (!alreadySynced) {
-      sessionStorage.setItem("sat_synced_uid", user.uid);
-      if (changed) {
-        window.location.reload();
-      }
+    sessionStorage.setItem("sat_synced_uid", user.uid);
+    if (changed) {
+      window.location.reload();
     }
   } else {
     // Новый аккаунт — начинаем с чистого прогресса и создаём запись в облаке
-    if (!alreadySynced) {
-      clearLocalProgress();
-      sessionStorage.setItem("sat_synced_uid", user.uid);
-      await saveProgressToCloud();
-    }
+    clearLocalProgress();
+    sessionStorage.setItem("sat_synced_uid", user.uid);
+    await saveProgressToCloud(true);
   }
 }
 
@@ -235,7 +328,7 @@ function createAuthUI() {
             <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
             <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
             <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
           </svg>
           <span>Continue with Google</span>
         </button>
@@ -389,8 +482,10 @@ function renderAuthWidget(user) {
       <button class="auth-btn secondary" id="auth-logout-btn">Sign Out</button>
     `;
     document.getElementById("auth-logout-btn").addEventListener("click", async () => {
-      clearTimeout(syncTimer);
-      await saveProgressToCloud();
+      clearSyncTimers();
+      if (hasPendingChanges) {
+        await saveProgressToCloud(true);
+      }
       clearLocalProgress();
       sessionStorage.removeItem("sat_synced_uid");
       await signOut(auth);
