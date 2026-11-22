@@ -36,6 +36,12 @@
         display: none !important;
       }
 
+      /* Запрещаем горизонтальный скроллбар в списке задач на Dashboard */
+      #daily-plan-list {
+        overflow-x: hidden !important;
+        overflow-y: auto;
+      }
+
       /* Кликабельные задачи на Dashboard */
       #daily-plan-list .daily-plan-item.sp-dash-item {
         display: flex;
@@ -45,13 +51,12 @@
         padding: 9px 11px;
         border-radius: 12px;
         cursor: pointer;
-        transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.12s ease;
+        transition: background-color 0.15s ease, border-color 0.15s ease;
       }
 
       #daily-plan-list .daily-plan-item.sp-dash-item:hover {
         border-color: #93c5fd;
         background: #eff6ff;
-        transform: translateX(2px);
       }
 
       #daily-plan-list .sp-dash-left {
