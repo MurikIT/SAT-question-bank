@@ -387,18 +387,31 @@
         }
 
         /* 6. Vocabulary и игры на телефоне */
-        .vocab-mode-tabs {
-          max-width: 100%;
-          overflow-x: auto;
-          scrollbar-width: none;
+        .vocab-header {
+          flex-direction: column !important;
+          align-items: stretch !important;
+          gap: 12px !important;
         }
-        .vocab-mode-tabs::-webkit-scrollbar {
-          display: none;
+        .vocab-header-actions {
+          width: 100% !important;
+        }
+        .vocab-mode-tabs {
+          display: grid !important;
+          grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          gap: 6px !important;
+          padding: 6px !important;
+          border-radius: 16px !important;
+          overflow: visible !important;
         }
         .vocab-mode-btn {
-          white-space: nowrap;
-          font-size: 12.5px !important;
-          padding: 6px 11px !important;
+          width: 100% !important;
+          text-align: center !important;
+          white-space: nowrap !important;
+          font-size: 13px !important;
+          padding: 8px 10px !important;
+          border-radius: 12px !important;
         }
         .blitz-options {
           grid-template-columns: 1fr !important;
