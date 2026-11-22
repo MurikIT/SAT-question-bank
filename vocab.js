@@ -104,7 +104,7 @@
   function highlightWordInExample(example, word) {
     const safeEx = escapeHtml(example || "");
     if (!safeEx || !word) return safeEx;
-    const escapedWord = word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const escapedWord = word.replace(/[. *+?^${}()|[\]\\]/g, "\\$&");
     const root = escapedWord.length > 5 ? escapedWord.slice(0, -1) : escapedWord;
     const re = new RegExp(`\\b(${root}[a-z]*)\\b`, "gi");
     return safeEx.replace(re, "<strong>$1</strong>");
@@ -113,18 +113,17 @@
   function blankWordInExample(example, word) {
     const safeEx = escapeHtml(example || "");
     if (!safeEx || !word) return safeEx;
-    const escapedWord = word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const escapedWord = word.replace(/[. *+?^${}()|[\]\\]/g, "\\$&");
     const root = escapedWord.length > 5 ? escapedWord.slice(0, -1) : escapedWord;
     const re = new RegExp(`\\b(${root}[a-z]*)\\b`, "gi");
-    const replaced = safeEx.replace(re, '<span class="blitz-blank" aria-label="blank">&nbsp;</span>');
-    return replaced;
+    return safeEx.replace(re, '<span class="blitz-blank" aria-label="blank">&nbsp;</span>');
   }
 
   /* ---------- Mode Switching ---------- */
   function switchVocabMode(mode) {
     activeMode = mode;
-    stopMatchTimer();
-    stopBlitzTimer();
+    if (typeof stopMatchTimer === "function") stopMatchTimer();
+    if (typeof stopBlitzTimer === "function") stopBlitzTimer();
 
     document.querySelectorAll("#vocab-mode-tabs .vocab-mode-btn").forEach(btn => {
       btn.classList.toggle("active", btn.dataset.vmode === mode);
@@ -140,14 +139,13 @@
     if (mode === "flashcards") {
       buildFlashcardDeck(false);
     } else if (mode === "match") {
-      showMatchStartScreen();
+      if (typeof showMatchStartScreen === "function") showMatchStartScreen();
     } else if (mode === "blitz") {
-      showBlitzStartScreen();
+      if (typeof showBlitzStartScreen === "function") showBlitzStartScreen();
     } else {
       renderVocabTab();
     }
   }
-
 
   /* ---------- Карточка статистики Vocabulary на Dashboard ---------- */
   function renderDashboardVocabCard() {
@@ -398,11 +396,15 @@
   /* ---------- Word Card Zoom Modal ---------- */
   let zoomModalOpen = false;
   let zoomCurrentWordId = null;
+  let zoomLastKnownIndex = 0;
 
   function openZoomModal(wordId) {
     const modal = document.getElementById("vocab-zoom-modal");
     if (!modal) return;
     zoomCurrentWordId = wordId;
+    const list = lastVisibleWords.length ? lastVisibleWords : getAllWords();
+    const foundIdx = list.findIndex(w => w.id === wordId);
+    if (foundIdx >= 0) zoomLastKnownIndex = foundIdx;
     zoomModalOpen = true;
     renderZoomModalContent();
     modal.classList.remove("hidden");
@@ -416,10 +418,25 @@
   }
 
   function renderZoomModalContent() {
-    const list = lastVisibleWords.length ? lastVisibleWords : getAllWords();
-    const idx = list.findIndex(w => w.id === zoomCurrentWordId);
-    const wordObj = idx >= 0 ? list[idx] : getAllWords().find(w => w.id === zoomCurrentWordId);
+    const all = getAllWords();
+    const list = lastVisibleWords.length ? lastVisibleWords : all;
+
+    let idx = list.findIndex(w => w.id === zoomCurrentWordId);
+    let wordObj = idx >= 0 ? list[idx] : null;
+
+    if (!wordObj) {
+      if (list.length > 0) {
+        idx = Math.min(Math.max(zoomLastKnownIndex, 0), list.length - 1);
+        wordObj = list[idx];
+        zoomCurrentWordId = wordObj.id;
+      } else {
+        wordObj = all.find(w => w.id === zoomCurrentWordId) || all[0];
+        idx = -1;
+      }
+    }
+
     if (!wordObj) return;
+    if (idx >= 0) zoomLastKnownIndex = idx;
 
     const st = getWordStatus(wordObj.id);
 
@@ -472,6 +489,7 @@
       elPrev.onclick = () => {
         if (idx > 0) {
           zoomCurrentWordId = list[idx - 1].id;
+          zoomLastKnownIndex = idx - 1;
           renderZoomModalContent();
         }
       };
@@ -482,6 +500,7 @@
       elNext.onclick = () => {
         if (idx >= 0 && idx < list.length - 1) {
           zoomCurrentWordId = list[idx + 1].id;
+          zoomLastKnownIndex = idx + 1;
           renderZoomModalContent();
         }
       };
@@ -563,12 +582,6 @@
 
   /* ---------- Mode 3: Match Sprint ---------- */
   let matchTimerInterval = null;
-  let matchStartTime = 0;
-  let matchSelectedWordId = null;
-  let matchSelectedDefId = null;
-  let matchMatchedCount = 0;
-  let matchTotalPairs = 6;
-  let matchCombo = 0;
 
   function stopMatchTimer() {
     if (matchTimerInterval) {
@@ -586,22 +599,12 @@
 
   function showMatchStartScreen() {
     stopMatchTimer();
-    const startScreen = document.getElementById("match-start-screen");
-    const board = document.getElementById("match-board");
-    const sub = document.getElementById("match-sub");
-    const winBanner = document.getElementById("match-win-banner");
-    const restartBtn = document.getElementById("match-restart-btn");
-    const timerEl = document.getElementById("match-timer");
-    const comboEl = document.getElementById("match-combo");
-
-    if (startScreen) startScreen.classList.remove("hidden");
-    if (board) board.classList.add("hidden");
-    if (sub) sub.classList.add("hidden");
-    if (winBanner) winBanner.classList.add("hidden");
-    if (restartBtn) restartBtn.classList.add("hidden");
-    if (timerEl) timerEl.textContent = "0.0s";
-    if (comboEl) comboEl.textContent = "0";
     updateMatchBestUI();
+    document.getElementById("match-start-screen")?.classList.remove("hidden");
+    document.getElementById("match-sub")?.classList.add("hidden");
+    document.getElementById("match-board")?.classList.add("hidden");
+    document.getElementById("match-win-banner")?.classList.add("hidden");
+    document.getElementById("match-restart-btn")?.classList.add("hidden");
   }
 
   function startMatchRound() {
@@ -617,147 +620,111 @@
     const timerEl = document.getElementById("match-timer");
     const comboEl = document.getElementById("match-combo");
 
-    if (!wordsCol || !defsCol || all.length < 4) return;
+    if (!all.length || !wordsCol || !defsCol) return;
+
     if (startScreen) startScreen.classList.add("hidden");
-    if (board) board.classList.remove("hidden");
     if (sub) sub.classList.remove("hidden");
+    if (board) board.classList.remove("hidden");
     if (restartBtn) restartBtn.classList.remove("hidden");
     if (winBanner) winBanner.classList.add("hidden");
 
-    matchSelectedWordId = null;
-    matchSelectedDefId = null;
-    matchMatchedCount = 0;
-    matchCombo = 0;
+    const pairs = shuffle(all).slice(0, Math.min(6, all.length));
+    const totalPairs = pairs.length;
+    let selectedWordId = null;
+    let selectedDefId = null;
+    let matchedCount = 0;
+    let combo = 0;
+    const startTime = performance.now();
+
     if (comboEl) comboEl.textContent = "0";
     if (timerEl) timerEl.textContent = "0.0s";
-    updateMatchBestUI();
 
-    const roundWords = shuffle(all).slice(0, Math.min(6, all.length));
-    matchTotalPairs = roundWords.length;
-
-    const leftOrder = shuffle(roundWords);
-    const rightOrder = shuffle(roundWords);
-
-    wordsCol.innerHTML = leftOrder
-      .map(
-        w => `
-        <button type="button" class="match-tile match-word-tile" data-mid="${escapeHtml(w.id)}">
-          <span class="match-word-main">${escapeHtml(w.word)}</span>
-          <span class="match-word-pos">${escapeHtml(w.pos || "")}</span>
-        </button>
-      `
-      )
-      .join("");
-
-    defsCol.innerHTML = rightOrder
-      .map(
-        w => `
-        <button type="button" class="match-tile match-def-tile" data-mid="${escapeHtml(w.id)}">
-          ${escapeHtml(w.definition)}
-        </button>
-      `
-      )
-      .join("");
-
-    matchStartTime = performance.now();
     matchTimerInterval = setInterval(() => {
-      const elapsed = (performance.now() - matchStartTime) / 1000;
-      if (timerEl) timerEl.textContent = `${elapsed.toFixed(1)}s`;
+      if (timerEl) {
+        timerEl.textContent = `${((performance.now() - startTime) / 1000).toFixed(1)}s`;
+      }
     }, 100);
 
-    wordsCol.querySelectorAll(".match-word-tile").forEach(btn => {
-      btn.addEventListener("click", () => {
-        if (btn.classList.contains("matched")) return;
-        wordsCol.querySelectorAll(".match-word-tile").forEach(b => b.classList.remove("selected"));
-        btn.classList.add("selected");
-        matchSelectedWordId = btn.dataset.mid;
-        checkMatchPair();
-      });
-    });
+    wordsCol.innerHTML = shuffle(pairs)
+      .map(item => `<button type="button" class="match-tile" data-match-word="${escapeHtml(item.id)}">${escapeHtml(item.word)}</button>`)
+      .join("");
 
-    defsCol.querySelectorAll(".match-def-tile").forEach(btn => {
-      btn.addEventListener("click", () => {
-        if (btn.classList.contains("matched")) return;
-        defsCol.querySelectorAll(".match-def-tile").forEach(b => b.classList.remove("selected"));
-        btn.classList.add("selected");
-        matchSelectedDefId = btn.dataset.mid;
-        checkMatchPair();
-      });
-    });
-  }
+    defsCol.innerHTML = shuffle(pairs)
+      .map(item => `<button type="button" class="match-tile" data-match-def="${escapeHtml(item.id)}">${escapeHtml(item.definition)}</button>`)
+      .join("");
 
-  function checkMatchPair() {
-    if (!matchSelectedWordId || !matchSelectedDefId) return;
-    const wordsCol = document.getElementById("match-words-col");
-    const defsCol = document.getElementById("match-defs-col");
-    const comboEl = document.getElementById("match-combo");
-
-    const wBtn = wordsCol?.querySelector(`.match-word-tile[data-mid="${matchSelectedWordId}"]`);
-    const dBtn = defsCol?.querySelector(`.match-def-tile[data-mid="${matchSelectedDefId}"]`);
-
-    if (matchSelectedWordId === matchSelectedDefId) {
-      matchCombo += 1;
-      matchMatchedCount += 1;
-      if (comboEl) comboEl.textContent = String(matchCombo);
-      if (wBtn) {
-        wBtn.classList.remove("selected");
-        wBtn.classList.add("matched");
+    function finishMatchIfDone() {
+      if (matchedCount < totalPairs) return;
+      stopMatchTimer();
+      const elapsed = Number(((performance.now() - startTime) / 1000).toFixed(1));
+      const prevBest = Number(localStorage.getItem(MATCH_BEST_KEY) || "0");
+      if (!prevBest || elapsed < prevBest) {
+        localStorage.setItem(MATCH_BEST_KEY, String(elapsed));
       }
-      if (dBtn) {
-        dBtn.classList.remove("selected");
-        dBtn.classList.add("matched");
+      updateMatchBestUI();
+      if (winBanner) {
+        winBanner.classList.remove("hidden");
+        winBanner.innerHTML = `<h3>Round Complete!</h3><p>Time: <strong>${elapsed.toFixed(1)}s</strong> · Best Combo: <strong>${combo}</strong></p>`;
       }
-      matchSelectedWordId = null;
-      matchSelectedDefId = null;
-
-      if (matchMatchedCount >= matchTotalPairs) {
-        stopMatchTimer();
-        const elapsed = (performance.now() - matchStartTime) / 1000;
-        const prevBest = Number(localStorage.getItem(MATCH_BEST_KEY) || "0");
-        let isNewRecord = false;
-        if (!prevBest || elapsed < prevBest) {
-          localStorage.setItem(MATCH_BEST_KEY, elapsed.toFixed(2));
-          isNewRecord = true;
-        }
-        updateMatchBestUI();
-        renderDashboardVocabCard();
-
-        const winBanner = document.getElementById("match-win-banner");
-        if (winBanner) {
-          winBanner.classList.remove("hidden");
-          winBanner.innerHTML = `
-            <h3>⚡ Round Complete in ${elapsed.toFixed(1)}s!</h3>
-            <p>${isNewRecord ? "🏆 New personal best time!" : "Great pace! Try another round to beat your record."}</p>
-            <button type="button" class="primary-btn" id="match-play-again-btn">Play Again →</button>
-          `;
-          const againBtn = document.getElementById("match-play-again-btn");
-          if (againBtn) againBtn.onclick = startMatchRound;
-        }
-      }
-    } else {
-      matchCombo = 0;
-      if (comboEl) comboEl.textContent = "0";
-      if (wBtn) wBtn.classList.add("wrong-shake");
-      if (dBtn) dBtn.classList.add("wrong-shake");
-      const prevW = wBtn;
-      const prevD = dBtn;
-      matchSelectedWordId = null;
-      matchSelectedDefId = null;
-      setTimeout(() => {
-        if (prevW) prevW.classList.remove("selected", "wrong-shake");
-        if (prevD) prevD.classList.remove("selected", "wrong-shake");
-      }, 360);
+      renderDashboardVocabCard();
     }
+
+    function checkMatchSelection() {
+      if (!selectedWordId || !selectedDefId) return;
+      const wBtn = wordsCol.querySelector(`[data-match-word="${CSS.escape(selectedWordId)}"]`);
+      const dBtn = defsCol.querySelector(`[data-match-def="${CSS.escape(selectedDefId)}"]`);
+      if (!wBtn || !dBtn) return;
+
+      if (selectedWordId === selectedDefId) {
+        wBtn.classList.remove("selected");
+        dBtn.classList.remove("selected");
+        wBtn.classList.add("matched");
+        dBtn.classList.add("matched");
+        wBtn.disabled = true;
+        dBtn.disabled = true;
+        matchedCount += 1;
+        combo += 1;
+        if (comboEl) comboEl.textContent = String(combo);
+        selectedWordId = null;
+        selectedDefId = null;
+        finishMatchIfDone();
+      } else {
+        combo = 0;
+        if (comboEl) comboEl.textContent = "0";
+        wBtn.classList.add("wrong");
+        dBtn.classList.add("wrong");
+        setTimeout(() => {
+          wBtn.classList.remove("wrong", "selected");
+          dBtn.classList.remove("wrong", "selected");
+        }, 320);
+        selectedWordId = null;
+        selectedDefId = null;
+      }
+    }
+
+    wordsCol.querySelectorAll("[data-match-word]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (btn.disabled) return;
+        wordsCol.querySelectorAll("[data-match-word]").forEach(b => b.classList.remove("selected"));
+        btn.classList.add("selected");
+        selectedWordId = btn.dataset.matchWord;
+        checkMatchSelection();
+      });
+    });
+
+    defsCol.querySelectorAll("[data-match-def]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (btn.disabled) return;
+        defsCol.querySelectorAll("[data-match-def]").forEach(b => b.classList.remove("selected"));
+        btn.classList.add("selected");
+        selectedDefId = btn.dataset.matchDef;
+        checkMatchSelection();
+      });
+    });
   }
 
   /* ---------- Mode 4: Context Blitz ---------- */
   let blitzTimerInterval = null;
-  let blitzSeconds = 60;
-  let blitzLives = 3;
-  let blitzScore = 0;
-  let blitzStreak = 0;
-  let blitzLocked = false;
-  let blitzCurrentWord = null;
 
   function stopBlitzTimer() {
     if (blitzTimerInterval) {
@@ -766,183 +733,145 @@
     }
   }
 
-  function updateBlitzHud() {
-    const elTimer = document.getElementById("blitz-timer");
-    const elLives = document.getElementById("blitz-lives");
-    const elScore = document.getElementById("blitz-score");
-    const elStreak = document.getElementById("blitz-streak");
-    const elBest = document.getElementById("blitz-best");
-
-    if (elTimer) elTimer.textContent = `${blitzSeconds}s`;
-    if (elLives) elLives.textContent = String(blitzLives);
-    if (elScore) elScore.textContent = String(blitzScore);
-    if (elStreak) elStreak.textContent = String(blitzStreak);
-    if (elBest) elBest.textContent = localStorage.getItem(BLITZ_BEST_KEY) || "0";
+  function updateBlitzBestUI() {
+    const bestEl = document.getElementById("blitz-best");
+    if (!bestEl) return;
+    const saved = localStorage.getItem(BLITZ_BEST_KEY);
+    bestEl.textContent = saved || "0";
   }
 
   function showBlitzStartScreen() {
     stopBlitzTimer();
-    const startScreen = document.getElementById("blitz-start-screen");
-    const stage = document.getElementById("blitz-stage");
-    const gameover = document.getElementById("blitz-gameover");
-    const restartBtn = document.getElementById("blitz-restart-btn");
-
-    blitzSeconds = 60;
-    blitzLives = 3;
-    blitzScore = 0;
-    blitzStreak = 0;
-    updateBlitzHud();
-
-    if (startScreen) startScreen.classList.remove("hidden");
-    if (stage) stage.classList.add("hidden");
-    if (gameover) gameover.classList.add("hidden");
-    if (restartBtn) restartBtn.classList.add("hidden");
+    updateBlitzBestUI();
+    document.getElementById("blitz-start-screen")?.classList.remove("hidden");
+    document.getElementById("blitz-stage")?.classList.add("hidden");
+    document.getElementById("blitz-gameover")?.classList.add("hidden");
+    document.getElementById("blitz-restart-btn")?.classList.add("hidden");
   }
 
   function startBlitzGame() {
     stopBlitzTimer();
-    const startScreen = document.getElementById("blitz-start-screen");
-    const stage = document.getElementById("blitz-stage");
-    const gameover = document.getElementById("blitz-gameover");
-    const restartBtn = document.getElementById("blitz-restart-btn");
-    if (startScreen) startScreen.classList.add("hidden");
-    if (stage) stage.classList.remove("hidden");
-    if (gameover) gameover.classList.add("hidden");
-    if (restartBtn) restartBtn.classList.remove("hidden");
+    const candidates = getAllWords().filter(w => w.example && String(w.example).trim().length > 10);
+    const pool = candidates.length >= 4 ? candidates : getAllWords();
+    if (!pool.length) return;
 
-    blitzSeconds = 60;
-    blitzLives = 3;
-    blitzScore = 0;
-    blitzStreak = 0;
-    blitzLocked = false;
-    updateBlitzHud();
+    document.getElementById("blitz-start-screen")?.classList.add("hidden");
+    document.getElementById("blitz-gameover")?.classList.add("hidden");
+    document.getElementById("blitz-stage")?.classList.remove("hidden");
+    document.getElementById("blitz-restart-btn")?.classList.remove("hidden");
 
-    nextBlitzQuestion();
+    let timeLeft = 60;
+    let lives = 3;
+    let score = 0;
+    let streak = 0;
+    let locked = false;
+
+    const timerEl = document.getElementById("blitz-timer");
+    const livesEl = document.getElementById("blitz-lives");
+    const scoreEl = document.getElementById("blitz-score");
+    const streakEl = document.getElementById("blitz-streak");
+    const sentenceEl = document.getElementById("blitz-sentence");
+    const optionsEl = document.getElementById("blitz-options");
+    const feedbackEl = document.getElementById("blitz-feedback");
+    const gameOverEl = document.getElementById("blitz-gameover");
+
+    updateBlitzBestUI();
+
+    function syncHud() {
+      if (timerEl) timerEl.textContent = `${timeLeft}s`;
+      if (livesEl) livesEl.textContent = String(lives);
+      if (scoreEl) scoreEl.textContent = String(score);
+      if (streakEl) streakEl.textContent = String(streak);
+    }
+
+    function endBlitz(reasonText) {
+      stopBlitzTimer();
+      locked = true;
+      const prevBest = Number(localStorage.getItem(BLITZ_BEST_KEY) || "0");
+      if (score > prevBest) {
+        localStorage.setItem(BLITZ_BEST_KEY, String(score));
+      }
+      updateBlitzBestUI();
+      document.getElementById("blitz-stage")?.classList.add("hidden");
+      if (gameOverEl) {
+        gameOverEl.classList.remove("hidden");
+        gameOverEl.innerHTML = `<h3>${escapeHtml(reasonText)}</h3><p>Final Score: <strong>${score}</strong> · Best: <strong>${localStorage.getItem(BLITZ_BEST_KEY) || score}</strong></p>`;
+      }
+      renderDashboardVocabCard();
+    }
+
+    function nextQuestion() {
+      locked = false;
+      if (feedbackEl) {
+        feedbackEl.classList.add("hidden");
+        feedbackEl.textContent = "";
+      }
+      const target = shuffle(pool)[0];
+      const distractors = shuffle(pool.filter(w => w.id !== target.id)).slice(0, 3);
+      const choices = shuffle([target, ...distractors]);
+
+      if (sentenceEl) {
+        sentenceEl.innerHTML = blankWordInExample(target.example, target.word);
+      }
+
+      if (optionsEl) {
+        optionsEl.innerHTML = choices
+          .map(c => `<button type="button" class="blitz-opt-btn" data-blitz-ans="${escapeHtml(c.id)}">${escapeHtml(c.word)}</button>`)
+          .join("");
+
+        optionsEl.querySelectorAll("[data-blitz-ans]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            if (locked) return;
+            locked = true;
+            const pickedId = btn.dataset.blitzAns;
+            const isCorrect = pickedId === target.id;
+
+            optionsEl.querySelectorAll("[data-blitz-ans]").forEach(b => {
+              b.disabled = true;
+              if (b.dataset.blitzAns === target.id) b.classList.add("correct");
+            });
+
+            if (isCorrect) {
+              streak += 1;
+              score += 10 + Math.min(streak * 2, 10);
+              if (feedbackEl) {
+                feedbackEl.className = "blitz-feedback ok";
+                feedbackEl.textContent = `✓ ${target.word} — ${target.definition}`;
+                feedbackEl.classList.remove("hidden");
+              }
+            } else {
+              btn.classList.add("wrong");
+              streak = 0;
+              lives -= 1;
+              if (feedbackEl) {
+                feedbackEl.className = "blitz-feedback err";
+                feedbackEl.textContent = `✕ Answer: ${target.word} — ${target.definition}`;
+                feedbackEl.classList.remove("hidden");
+              }
+            }
+
+            syncHud();
+
+            if (lives <= 0) {
+              setTimeout(() => endBlitz("Out of Lives!"), 650);
+            } else {
+              setTimeout(nextQuestion, 850);
+            }
+          });
+        });
+      }
+    }
+
+    syncHud();
+    nextQuestion();
 
     blitzTimerInterval = setInterval(() => {
-      blitzSeconds -= 1;
-      updateBlitzHud();
-      if (blitzSeconds <= 0) {
-        endBlitzGame("Time's up!");
+      timeLeft -= 1;
+      syncHud();
+      if (timeLeft <= 0) {
+        endBlitz("Time's Up!");
       }
     }, 1000);
-  }
-
-  function nextBlitzQuestion() {
-    const pool = getAllWords().filter(w => w.example && w.example.trim().length > 10);
-    if (pool.length < 4) return;
-
-    blitzLocked = false;
-    const target = pool[Math.floor(Math.random() * pool.length)];
-    blitzCurrentWord = target;
-
-    const distractors = shuffle(pool.filter(w => w.id !== target.id)).slice(0, 3);
-    const choices = shuffle([target, ...distractors]);
-
-    const elSentence = document.getElementById("blitz-sentence");
-    const elOptions = document.getElementById("blitz-options");
-    const elFeedback = document.getElementById("blitz-feedback");
-
-    if (elFeedback) {
-      elFeedback.classList.add("hidden");
-      elFeedback.textContent = "";
-    }
-
-    if (elSentence) {
-      elSentence.innerHTML = blankWordInExample(target.example, target.word);
-    }
-
-    if (elOptions) {
-      elOptions.innerHTML = choices
-        .map(
-          (c, i) => `
-          <button type="button" class="blitz-opt-btn" data-bid="${escapeHtml(c.id)}">
-            <span class="blitz-opt-letter">${["A", "B", "C", "D"][i]}</span>
-            <span>${escapeHtml(c.word)}</span>
-          </button>
-        `
-        )
-        .join("");
-
-      elOptions.querySelectorAll(".blitz-opt-btn").forEach(btn => {
-        btn.addEventListener("click", () => handleBlitzAnswer(btn));
-      });
-    }
-  }
-
-  function handleBlitzAnswer(clickedBtn) {
-    if (blitzLocked || !blitzCurrentWord) return;
-    blitzLocked = true;
-
-    const chosenId = clickedBtn.dataset.bid;
-    const isCorrect = chosenId === blitzCurrentWord.id;
-    const elOptions = document.getElementById("blitz-options");
-    const elFeedback = document.getElementById("blitz-feedback");
-
-    if (elOptions) {
-      elOptions.querySelectorAll(".blitz-opt-btn").forEach(btn => {
-        btn.disabled = true;
-        if (btn.dataset.bid === blitzCurrentWord.id) {
-          btn.classList.add("is-correct");
-        } else if (btn === clickedBtn && !isCorrect) {
-          btn.classList.add("is-wrong");
-        }
-      });
-    }
-
-    if (isCorrect) {
-      blitzStreak += 1;
-      const multiplier = Math.min(4, 1 + Math.floor(blitzStreak / 3));
-      blitzScore += 10 * multiplier;
-      if (elFeedback) {
-        elFeedback.className = "blitz-feedback is-ok";
-        elFeedback.textContent = `✓ Correct! +${10 * multiplier} pts · ${blitzCurrentWord.word}: ${blitzCurrentWord.definition}`;
-        elFeedback.classList.remove("hidden");
-      }
-    } else {
-      blitzStreak = 0;
-      blitzLives -= 1;
-      if (elFeedback) {
-        elFeedback.className = "blitz-feedback is-bad";
-        elFeedback.textContent = `✕ ${blitzCurrentWord.word} — ${blitzCurrentWord.definition}`;
-        elFeedback.classList.remove("hidden");
-      }
-    }
-
-    updateBlitzHud();
-
-    if (blitzLives <= 0) {
-      setTimeout(() => endBlitzGame("Out of lives!"), 800);
-    } else {
-      setTimeout(nextBlitzQuestion, isCorrect ? 650 : 1200);
-    }
-  }
-
-  function endBlitzGame(reason) {
-    stopBlitzTimer();
-    const stage = document.getElementById("blitz-stage");
-    const gameover = document.getElementById("blitz-gameover");
-    if (stage) stage.classList.add("hidden");
-
-    const prevBest = Number(localStorage.getItem(BLITZ_BEST_KEY) || "0");
-    let isNew = false;
-    if (blitzScore > prevBest) {
-      localStorage.setItem(BLITZ_BEST_KEY, String(blitzScore));
-      isNew = true;
-    }
-    updateBlitzHud();
-    renderDashboardVocabCard();
-
-    if (gameover) {
-      gameover.classList.remove("hidden");
-      gameover.innerHTML = `
-        <h3>🎯 ${escapeHtml(reason)}</h3>
-        <p>Final Score: <strong>${blitzScore}</strong> ${isNew ? "· 🏆 New High Score!" : ""}</p>
-        <button type="button" class="primary-btn" id="blitz-play-again-btn">Play Again →</button>
-      `;
-      const againBtn = document.getElementById("blitz-play-again-btn");
-      if (againBtn) againBtn.onclick = startBlitzGame;
-    }
   }
 
   /* ---------- Load vocab.json ---------- */
@@ -975,12 +904,10 @@
 
   /* ---------- Init Events ---------- */
   function initVocabEvents() {
-    // Mode switcher
     document.querySelectorAll("#vocab-mode-tabs .vocab-mode-btn").forEach(btn => {
       btn.addEventListener("click", () => switchVocabMode(btn.dataset.vmode || "bank"));
     });
 
-    // Search & Status filter
     const searchInput = document.getElementById("vocab-search-input");
     const statusPills = document.querySelectorAll("#vocab-status-pills .mod-filter-btn");
     const addToggleBtn = document.getElementById("vocab-add-toggle-btn");
@@ -1047,7 +974,6 @@
       });
     }
 
-    // Zoom Modal close
     const zoomModal = document.getElementById("vocab-zoom-modal");
     const zoomClose = document.getElementById("vz-close-btn");
     if (zoomClose) zoomClose.addEventListener("click", closeZoomModal);
@@ -1057,7 +983,6 @@
       });
     }
 
-    // Flashcards controls
     const card3d = document.getElementById("fc-card-3d");
     const fcSpeak = document.getElementById("fc-speak-btn");
     const fcPrev = document.getElementById("fc-prev-btn");
@@ -1119,7 +1044,6 @@
       });
     });
 
-    // Match & Blitz start / restart buttons
     const matchStartBtn = document.getElementById("match-start-btn");
     if (matchStartBtn) matchStartBtn.addEventListener("click", startMatchRound);
 
@@ -1132,7 +1056,6 @@
     const blitzRestart = document.getElementById("blitz-restart-btn");
     if (blitzRestart) blitzRestart.addEventListener("click", startBlitzGame);
 
-    // Keyboard shortcuts (Esc for Zoom modal, Space/Arrows for Flashcards)
     document.addEventListener("keydown", e => {
       if (zoomModalOpen) {
         if (e.key === "Escape") closeZoomModal();
