@@ -17,7 +17,27 @@
     }
   }
 
-  /* ---------- 2. Скрытие кнопки Sign In / Sync во время теста и настройки ---------- */
+  /* ---------- 2. Позиционирование #auth-widget на мобильных и скрытие во время теста ---------- */
+  function syncAuthPlacement() {
+    const widget = document.getElementById("auth-widget");
+    const sidebar = document.querySelector(".sidebar");
+    const brand = document.querySelector(".sidebar-brand");
+    if (!widget) return;
+
+    const isLoggedIn = Boolean(widget.querySelector(".auth-user-pill"));
+    widget.classList.toggle("is-logged-in", isLoggedIn);
+    document.body.classList.toggle("sat-auth-logged-in", isLoggedIn);
+
+    const isMobile = window.innerWidth <= 860;
+    if (isMobile && sidebar && brand) {
+      if (widget.parentElement !== sidebar) {
+        brand.insertAdjacentElement("afterend", widget);
+      }
+    } else if (!isMobile && widget.parentElement !== document.body) {
+      document.body.appendChild(widget);
+    }
+  }
+
   function syncAuthWidgetVisibility() {
     const testScreen = document.getElementById("test-screen");
     const setupScreen = document.getElementById("section-setup-screen");
@@ -28,26 +48,41 @@
     document.body.classList.toggle("sat-hide-auth", hideAuth);
   }
 
-  function observeScreens() {
-    const observer = new MutationObserver(syncAuthWidgetVisibility);
-    const config = { attributes: true, attributeFilter: ["class"] };
+  function observeScreensAndAuth() {
+    const screenObserver = new MutationObserver(syncAuthWidgetVisibility);
+    const classConfig = { attributes: true, attributeFilter: ["class"] };
 
     ["test-screen", "summary-screen", "menu-screen"].forEach(id => {
       const el = document.getElementById(id);
-      if (el) observer.observe(el, config);
+      if (el) screenObserver.observe(el, classConfig);
     });
 
-    // section-setup-screen создаётся динамически — отслеживаем его появление в body
+    const authContentObserver = new MutationObserver(syncAuthPlacement);
+
+    const attachAuthObserver = () => {
+      const widget = document.getElementById("auth-widget");
+      if (widget && !widget.dataset.mobileAuthObserved) {
+        widget.dataset.mobileAuthObserved = "1";
+        authContentObserver.observe(widget, { childList: true, subtree: true });
+        syncAuthPlacement();
+      }
+    };
+
     const bodyObserver = new MutationObserver(() => {
       const setupScreen = document.getElementById("section-setup-screen");
       if (setupScreen && !setupScreen.dataset.mobileObserved) {
         setupScreen.dataset.mobileObserved = "1";
-        observer.observe(setupScreen, config);
+        screenObserver.observe(setupScreen, classConfig);
       }
+      attachAuthObserver();
       syncAuthWidgetVisibility();
     });
     bodyObserver.observe(document.body, { childList: true });
 
+    window.addEventListener("resize", syncAuthPlacement);
+
+    attachAuthObserver();
+    syncAuthPlacement();
     syncAuthWidgetVisibility();
   }
 
@@ -99,7 +134,7 @@
           padding: 0 !important;
         }
 
-        /* 2. Шапка + навигация: вкладки больше не обрезаются (Dashbo / Study P / ractice M) */
+        /* 2. Шапка + навигация */
         .sidebar {
           padding: 12px 12px 8px !important;
           gap: 10px !important;
@@ -107,8 +142,12 @@
         }
 
         .sidebar-brand {
-          padding-right: 128px; /* место под Sign In / Sync справа */
+          padding-right: 124px; /* место под Sign In / Sync, когда пользователь не вошёл */
           min-height: 40px;
+        }
+
+        body.sat-auth-logged-in .sidebar-brand {
+          padding-right: 0 !important;
         }
 
         .sidebar-nav {
@@ -132,7 +171,7 @@
           flex: 0 0 auto !important;
           width: auto !important;
           min-width: max-content !important;
-          padding: 8px 13px !important;
+          padding: 8px 12px !important;
           font-size: 13px !important;
           gap: 6px !important;
           white-space: nowrap !important;
@@ -143,32 +182,60 @@
           font-size: 15px !important;
         }
 
-        /* 3. Кнопка аккаунта аккуратно выровнена в шапке */
+        /* 3. Кнопка аккаунта (когда НЕ вошёл — справа в шапке) */
         #auth-widget {
           position: absolute !important;
           top: 12px !important;
           right: 12px !important;
-          gap: 6px !important;
-          max-width: 52vw;
+          gap: 8px !important;
+          max-width: none !important;
+          z-index: 30 !important;
+        }
+
+        /* Когда ВОШЁЛ — отдельная аккуратная строка во всю ширину, чтобы Gmail был виден полностью */
+        #auth-widget.is-logged-in {
+          position: static !important;
+          width: 100% !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+          gap: 8px !important;
+          margin: 0 !important;
+        }
+
+        #auth-widget.is-logged-in .auth-user-pill {
+          flex: 1 1 auto !important;
+          min-width: 0 !important;
+          max-width: none !important;
+          display: flex !important;
+          align-items: center !important;
+          gap: 7px !important;
+          padding: 6px 11px !important;
+          font-size: 12.5px !important;
+          border-radius: 10px !important;
+        }
+
+        #auth-widget.is-logged-in .auth-sync-dot {
+          flex-shrink: 0 !important;
+        }
+
+        #auth-widget.is-logged-in .auth-user-pill > span:last-child {
+          overflow: hidden !important;
+          text-overflow: ellipsis !important;
+          white-space: nowrap !important;
+          min-width: 0 !important;
+          display: block !important;
         }
 
         #auth-widget .auth-btn {
-          padding: 7px 11px !important;
-          font-size: 12px !important;
-          border-radius: 9px !important;
-          white-space: nowrap;
+          padding: 7px 12px !important;
+          font-size: 12.5px !important;
+          border-radius: 10px !important;
+          white-space: nowrap !important;
+          flex-shrink: 0 !important;
         }
 
-        #auth-widget .auth-user-pill {
-          max-width: 110px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          padding: 5px 8px !important;
-          font-size: 11.5px !important;
-        }
-
-        /* 4. Dashboard: убираем внутренний скролл в Daily Study Plan, чтобы все задачи были видны */
+        /* 4. Dashboard: убираем внутренний скролл в Daily Study Plan */
         .main-content {
           padding: 16px 12px 28px !important;
         }
@@ -201,7 +268,7 @@
           white-space: normal !important;
         }
 
-        /* 5. Экран теста на телефоне: нормальное чтение текста без обрезки 135px */
+        /* 5. Экран теста на телефоне */
         .test-container {
           position: fixed !important;
           inset: 0 !important;
@@ -347,7 +414,7 @@
   function initMobileEnhancements() {
     updateBranding();
     injectMobileStyles();
-    observeScreens();
+    observeScreensAndAuth();
   }
 
   if (document.readyState === "loading") {
