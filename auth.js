@@ -31,19 +31,60 @@ const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
 
 let currentUser = null;
+let authReady = false;
 let syncTimer = null;
 let isRestoring = false;
 
-// --- 1. Сбор и восстановление localStorage ---
+// Временное хранилище в памяти для гостей (сбрасывается при перезагрузке страницы)
+const guestMemory = new Map();
+
+const originalGetItem = localStorage.getItem.bind(localStorage);
+const originalSetItem = localStorage.setItem.bind(localStorage);
+const originalRemoveItem = localStorage.removeItem.bind(localStorage);
+const originalClear = localStorage.clear.bind(localStorage);
+
+// Ключи, которые не относятся к прогрессу (служебные Firebase и тема оформления)
+function isPreservedKey(key) {
+  if (!key) return true;
+  return key.startsWith("firebase:") || /theme/i.test(key);
+}
+
+// --- 1. Сбор, очистка и восстановление localStorage ---
 function collectLocalProgress() {
   const data = {};
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
-    if (key && !key.startsWith("firebase:")) {
-      data[key] = localStorage.getItem(key);
+    if (key && !isPreservedKey(key)) {
+      data[key] = originalGetItem(key);
     }
   }
   return data;
+}
+
+function clearLocalProgress() {
+  isRestoring = true;
+  const keysToRemove = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && !isPreservedKey(key)) {
+      keysToRemove.push(key);
+    }
+  }
+  keysToRemove.forEach((k) => originalRemoveItem(k));
+  guestMemory.clear();
+  isRestoring = false;
+}
+
+function hasSavedUserProgress() {
+  const progressKeys = [
+    "sat_question_bank_history_v1",
+    "sat_vocab_progress_v1",
+    "sat_vocab_custom_v1",
+    "sat_vocab_match_best_v1",
+    "sat_vocab_blitz_best_v1",
+    "sat_daily_plan_v1"
+  ];
+  return progressKeys.some((k) => originalGetItem(k) !== null);
 }
 
 async function saveProgressToCloud() {
@@ -70,21 +111,39 @@ function scheduleCloudSync() {
   syncTimer = setTimeout(saveProgressToCloud, 1200);
 }
 
-const originalSetItem = localStorage.setItem.bind(localStorage);
-const originalRemoveItem = localStorage.removeItem.bind(localStorage);
-const originalClear = localStorage.clear.bind(localStorage);
+// Перехватываем localStorage:
+// — если пользователь вошёл в аккаунт: сохраняем в localStorage + синхронизируем с облаком
+// — если пользователь не вошёл (гость): держим прогресс только в RAM до перезагрузки страницы
+localStorage.getItem = function (key) {
+  if (authReady && !currentUser && !isPreservedKey(key)) {
+    return guestMemory.has(key) ? guestMemory.get(key) : null;
+  }
+  return originalGetItem(key);
+};
 
 localStorage.setItem = function (key, value) {
+  if (authReady && !currentUser && !isPreservedKey(key)) {
+    guestMemory.set(key, String(value));
+    return;
+  }
   originalSetItem(key, value);
-  if (!key.startsWith("firebase:")) scheduleCloudSync();
+  if (!isPreservedKey(key)) scheduleCloudSync();
 };
 
 localStorage.removeItem = function (key) {
+  if (authReady && !currentUser && !isPreservedKey(key)) {
+    guestMemory.delete(key);
+    return;
+  }
   originalRemoveItem(key);
-  if (!key.startsWith("firebase:")) scheduleCloudSync();
+  if (!isPreservedKey(key)) scheduleCloudSync();
 };
 
 localStorage.clear = function () {
+  if (authReady && !currentUser) {
+    guestMemory.clear();
+    return;
+  }
   originalClear();
   scheduleCloudSync();
 };
@@ -92,27 +151,49 @@ localStorage.clear = function () {
 async function syncOnLogin(user) {
   const userRef = doc(db, "users", user.uid);
   const snap = await getDoc(userRef);
+  const alreadySynced = sessionStorage.getItem("sat_synced_uid") === user.uid;
 
   if (snap.exists() && snap.data().storage) {
     const cloudStorage = snap.data().storage;
     let changed = false;
 
     isRestoring = true;
+    // Удаляем локальные ключи, которых нет в облаке (чтобы не смешались аккаунты)
+    const localKeys = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && !isPreservedKey(k)) localKeys.push(k);
+    }
+    localKeys.forEach((k) => {
+      if (!(k in cloudStorage)) {
+        originalRemoveItem(k);
+        changed = true;
+      }
+    });
+
     for (const [key, val] of Object.entries(cloudStorage)) {
-      if (localStorage.getItem(key) !== val) {
+      if (isPreservedKey(key)) continue;
+      if (originalGetItem(key) !== val) {
         originalSetItem(key, val);
         changed = true;
       }
     }
+    guestMemory.clear();
     isRestoring = false;
 
-    if (changed && sessionStorage.getItem("sat_synced_uid") !== user.uid) {
+    if (!alreadySynced) {
       sessionStorage.setItem("sat_synced_uid", user.uid);
-      window.location.reload();
+      if (changed) {
+        window.location.reload();
+      }
     }
   } else {
-    sessionStorage.setItem("sat_synced_uid", user.uid);
-    await saveProgressToCloud();
+    // Новый аккаунт — начинаем с чистого прогресса и создаём запись в облаке
+    if (!alreadySynced) {
+      clearLocalProgress();
+      sessionStorage.setItem("sat_synced_uid", user.uid);
+      await saveProgressToCloud();
+    }
   }
 }
 
@@ -126,7 +207,7 @@ function createAuthUI() {
   overlay.id = "auth-modal-overlay";
   overlay.innerHTML = `
     <div class="auth-modal">
-      <button class="auth-close" id="auth-close-btn" aria-label="Close">&times;</button>
+      <button class="auth-close" id="auth-close-btn" aria-label="Close">×</button>
       <h2 id="auth-title">Sign In</h2>
       <p class="auth-subtitle" id="auth-subtitle">Sync your SAT progress across devices</p>
 
@@ -308,14 +389,15 @@ function renderAuthWidget(user) {
       <button class="auth-btn secondary" id="auth-logout-btn">Sign Out</button>
     `;
     document.getElementById("auth-logout-btn").addEventListener("click", async () => {
+      clearTimeout(syncTimer);
       await saveProgressToCloud();
+      clearLocalProgress();
       sessionStorage.removeItem("sat_synced_uid");
       await signOut(auth);
+      window.location.reload();
     });
   } else {
-    widget.innerHTML = `
-      <button class="auth-btn" id="auth-open-btn">Sign In / Sync</button>
-    `;
+    widget.innerHTML = `<button class="auth-btn" id="auth-open-btn">Sign In / Sync</button>`;
     document.getElementById("auth-open-btn").addEventListener("click", () => {
       window.openAuthModal("login");
     });
@@ -328,9 +410,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   onAuthStateChanged(auth, async (user) => {
     currentUser = user;
+    authReady = true;
     renderAuthWidget(user);
+
     if (user) {
       await syncOnLogin(user);
+    } else {
+      sessionStorage.removeItem("sat_synced_uid");
+      const hadProgress = hasSavedUserProgress();
+      clearLocalProgress();
+      if (hadProgress) {
+        window.location.reload();
+      }
     }
   });
 });
