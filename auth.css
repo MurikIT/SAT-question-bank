@@ -262,3 +262,71 @@ body.dark .auth-user-pill,
   color: #f8fafc;
   border-color: #334155;
 }
+.auth-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 14px 0;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.auth-divider span {
+  padding: 0 10px;
+}
+
+.auth-google-btn {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #1e293b;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.2s;
+}
+
+.auth-google-btn:hover {
+  background: #f8fafc;
+}
+
+.auth-google-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+body.dark-mode .auth-divider::before,
+body.dark-mode .auth-divider::after,
+body.dark .auth-divider::before,
+body.dark .auth-divider::after,
+[data-theme="dark"] .auth-divider::before,
+[data-theme="dark"] .auth-divider::after {
+  border-color: #334155;
+}
+
+body.dark-mode .auth-google-btn,
+body.dark .auth-google-btn,
+[data-theme="dark"] .auth-google-btn {
+  background: #0f172a;
+  color: #f8fafc;
+  border-color: #334155;
+}
+
+body.dark-mode .auth-google-btn:hover,
+body.dark .auth-google-btn:hover,
+[data-theme="dark"] .auth-google-btn:hover {
+  background: #1e293b;
+}

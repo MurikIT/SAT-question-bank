@@ -4,6 +4,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
+  GoogleAuthProvider,
+  signInWithPopup,
   signOut,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
@@ -26,6 +28,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const googleProvider = new GoogleAuthProvider();
 
 let currentUser = null;
 let syncTimer = null;
@@ -36,7 +39,6 @@ function collectLocalProgress() {
   const data = {};
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
-    // Исключаем внутренние ключи Firebase, чтобы не дублировать их
     if (key && !key.startsWith("firebase:")) {
       data[key] = localStorage.getItem(key);
     }
@@ -68,7 +70,6 @@ function scheduleCloudSync() {
   syncTimer = setTimeout(saveProgressToCloud, 1200);
 }
 
-// Автоматический перехват любых сохранений в localStorage
 const originalSetItem = localStorage.setItem.bind(localStorage);
 const originalRemoveItem = localStorage.removeItem.bind(localStorage);
 const originalClear = localStorage.clear.bind(localStorage);
@@ -105,14 +106,11 @@ async function syncOnLogin(user) {
     }
     isRestoring = false;
 
-    // Если подтянулись новые данные из облака — один раз обновим страницу,
-    // чтобы Dashboard и Vocabulary сразу их отобразили
     if (changed && sessionStorage.getItem("sat_synced_uid") !== user.uid) {
       sessionStorage.setItem("sat_synced_uid", user.uid);
       window.location.reload();
     }
   } else {
-    // Первый вход нового пользователя: сохраняем его текущий локальный прогресс в облако
     sessionStorage.setItem("sat_synced_uid", user.uid);
     await saveProgressToCloud();
   }
@@ -149,6 +147,19 @@ function createAuthUI() {
         <button type="submit" class="auth-submit" id="auth-submit-btn">Sign In</button>
       </form>
 
+      <div id="auth-google-section">
+        <div class="auth-divider"><span>or</span></div>
+        <button type="button" class="auth-google-btn" id="auth-google-btn">
+          <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+          </svg>
+          <span>Continue with Google</span>
+        </button>
+      </div>
+
       <button type="button" class="auth-link" id="auth-forgot-btn">Forgot Password?</button>
       <div class="auth-message" id="auth-message"></div>
     </div>
@@ -164,6 +175,8 @@ function createAuthUI() {
   const passInput = document.getElementById("auth-password");
   const emailInput = document.getElementById("auth-email");
   const submitBtn = document.getElementById("auth-submit-btn");
+  const googleSection = document.getElementById("auth-google-section");
+  const googleBtn = document.getElementById("auth-google-btn");
   const forgotBtn = document.getElementById("auth-forgot-btn");
   const msgBox = document.getElementById("auth-message");
 
@@ -188,6 +201,8 @@ function createAuthUI() {
       tabs.style.display = "flex";
       passWrap.style.display = "block";
       passInput.required = true;
+      googleSection.style.display = "block";
+      forgotBtn.style.display = "inline-block";
       title.textContent = "Sign In";
       subtitle.textContent = "Sync your SAT progress across devices";
       submitBtn.textContent = "Sign In";
@@ -196,14 +211,17 @@ function createAuthUI() {
       tabs.style.display = "flex";
       passWrap.style.display = "block";
       passInput.required = true;
+      googleSection.style.display = "block";
+      forgotBtn.style.display = "none";
       title.textContent = "Create Account";
       subtitle.textContent = "Save your tests, dashboard & vocabulary";
       submitBtn.textContent = "Create Account";
-      forgotBtn.textContent = "Forgot Password?";
     } else {
       tabs.style.display = "none";
       passWrap.style.display = "none";
       passInput.required = false;
+      googleSection.style.display = "none";
+      forgotBtn.style.display = "inline-block";
       title.textContent = "Reset Password";
       subtitle.textContent = "Enter your email to receive a reset link";
       submitBtn.textContent = "Send Reset Email";
@@ -227,6 +245,22 @@ function createAuthUI() {
 
   overlay.addEventListener("click", (e) => {
     if (e.target === overlay) overlay.classList.remove("open");
+  });
+
+  googleBtn.addEventListener("click", async () => {
+    clearMsg();
+    googleBtn.disabled = true;
+    try {
+      await signInWithPopup(auth, googleProvider);
+      overlay.classList.remove("open");
+    } catch (err) {
+      if (err.code !== "auth/popup-closed-by-user") {
+        const cleanErr = err.code ? err.code.replace("auth/", "").replaceAll("-", " ") : err.message;
+        showMsg(`Error: ${cleanErr}`, "error");
+      }
+    } finally {
+      googleBtn.disabled = false;
+    }
   });
 
   form.addEventListener("submit", async (e) => {
