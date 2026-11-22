@@ -2149,6 +2149,54 @@ function buildMathStimulusHtml(q) {
   return parts.join("");
 }
 
+function formatRwPassage(cleanedPassage) {
+  if (!cleanedPassage) return null;
+  const text = cleanedPassage.trim();
+
+  // 1. Cross-Text Connections (Text 1 ... Text 2 ...)
+  if (/\bText\s*1\b/.test(text) && /\bText\s*2\b/.test(text)) {
+    const parts = text.split(/(?=(?:<p[^>]*>\s*)?\bText\s*2\b)/);
+    return parts
+      .map((part) => {
+        const cleaned = part
+          .trim()
+          .replace(/^(?:<p[^>]*>\s*)?(Text\s*[12])[:\s]*/i, '<span class="cross-text-label">$1</span> ');
+        return `<div class="cross-text-block">${cleaned}</div>`;
+      })
+      .join("");
+  }
+
+  // 2. Rhetorical Synthesis (While researching a topic, a student has taken the following notes:)
+  const rsMatch = text.match(/^(.*?following notes:)\s*([\s\S]+)$/i);
+  if (rsMatch) {
+    const intro = rsMatch[1].replace(/<\/?p[^>]*>/gi, "").trim();
+    const notesBody = rsMatch[2].replace(/<\/?p[^>]*>/gi, "\n").trim();
+
+    let items = [];
+    if (notesBody.includes("\n") || notesBody.includes("•") || /<li\b/i.test(notesBody)) {
+      items = notesBody
+        .replace(/<\/?(?:ul|ol)[^>]*>/gi, "")
+        .split(/\n+|•+|<li>|<\/li>/i)
+        .map((s) => s.replace(/^[-–—•\s]+/, "").trim())
+        .filter(Boolean);
+    } else {
+      const protectedText = notesBody
+        .replace(/\b(Mr|Mrs|Ms|Dr|Prof|St|Jr|Sr|vs|etc)\./g, "$1___DOT___")
+        .replace(/\b([A-Z])\./g, "$1___DOT___");
+
+      items = protectedText
+        .split(/(?<=[.!?])\s+(?=[A-Z"“‘(\d])/)
+        .map((s) => s.replace(/___DOT___/g, ".").trim())
+        .filter(Boolean);
+    }
+
+    const listHtml = items.map((item) => `<li>${item}</li>`).join("");
+    return `<p class="rs-intro">${intro}</p><ul class="rs-notes">${listHtml}</ul>`;
+  }
+
+  return null;
+}
+
 function renderPassage(q, { isMath = false, isOpenMath = false } = {}) {
   const workspace = document.querySelector(".bluebook-workspace");
   const hlBar = document.getElementById("rw-highlighter-bar");
@@ -2191,8 +2239,12 @@ function renderPassage(q, { isMath = false, isOpenMath = false } = {}) {
 
   if (typeof rawPassage === "string" && rawPassage.trim()) {
     const cleanedPassage = replaceBlurryMathImagesWithLatex(cleanScrapedMathText(rawPassage));
-    const hasHtml = /<[a-z][\s\S]*>/i.test(cleanedPassage);
-    if (hasHtml) {
+    const specialHtml = formatRwPassage(cleanedPassage);
+
+    if (specialHtml) {
+      passageEl.style.whiteSpace = "normal";
+      passageEl.innerHTML = specialHtml;
+    } else if (/<[a-z][\s\S]*>/i.test(cleanedPassage)) {
       passageEl.style.whiteSpace = "normal";
       passageEl.innerHTML = cleanedPassage;
     } else {

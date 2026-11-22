@@ -1849,4 +1849,37 @@ code.currency-dollar {
   z-index: 10;
   cursor: grabbing;
 }
+/* Оформление Rhetorical Synthesis (список заметок) */
+.rs-intro {
+  margin: 0 0 12px 0;
+}
 
+.rs-notes {
+  margin: 0;
+  padding-left: 20px;
+  list-style-type: disc;
+}
+
+.rs-notes li {
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.rs-notes li:last-child {
+  margin-bottom: 0;
+}
+
+/* Оформление Cross-Text Connections (Text 1 и Text 2) */
+.cross-text-block {
+  margin-bottom: 18px;
+  line-height: 1.65;
+}
+
+.cross-text-block:last-child {
+  margin-bottom: 0;
+}
+
+.cross-text-label {
+  font-weight: 700;
+  margin-right: 6px;
+}
