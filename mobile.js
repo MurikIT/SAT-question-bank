@@ -31,6 +31,43 @@
     }
   }
 
+  function syncMobileAuthPlacement() {
+    const widget = document.getElementById("auth-widget");
+    if (!widget) return;
+
+    const mobile = isMobileViewport();
+    const isLoggedIn = Boolean(
+      widget.querySelector(".auth-user-pill") || widget.querySelector("#auth-logout-btn")
+    );
+
+    if (mobile && isLoggedIn) {
+      const brand = document.querySelector(".sidebar .sidebar-brand");
+      if (brand && widget.previousElementSibling !== brand) {
+        brand.insertAdjacentElement("afterend", widget);
+      }
+      if (!widget.classList.contains("is-mobile-inline")) {
+        widget.classList.add("is-mobile-inline");
+      }
+      if (widget.classList.contains("is-mobile-floating")) {
+        widget.classList.remove("is-mobile-floating");
+      }
+    } else {
+      if (widget.parentElement !== document.body) {
+        document.body.appendChild(widget);
+      }
+      if (widget.classList.contains("is-mobile-inline")) {
+        widget.classList.remove("is-mobile-inline");
+      }
+      if (mobile) {
+        if (!widget.classList.contains("is-mobile-floating")) {
+          widget.classList.add("is-mobile-floating");
+        }
+      } else if (widget.classList.contains("is-mobile-floating")) {
+        widget.classList.remove("is-mobile-floating");
+      }
+    }
+  }
+
   function enhanceMobilePassages() {
     if (!isMobileViewport()) return;
     const targets = document.querySelectorAll(
@@ -54,9 +91,11 @@
     const setAppVh = () => {
       const rawH = window.visualViewport ? window.visualViewport.height : window.innerHeight;
       const vh = Math.round(rawH * 0.01 * 100) / 100;
-      if (vh === lastVh) return;
-      lastVh = vh;
-      document.documentElement.style.setProperty("--app-vh", `${vh}px`);
+      if (vh !== lastVh) {
+        lastVh = vh;
+        document.documentElement.style.setProperty("--app-vh", `${vh}px`);
+      }
+      syncMobileAuthPlacement();
     };
     setAppVh();
 
@@ -71,6 +110,7 @@
       rafId = requestAnimationFrame(() => {
         rafId = null;
         syncBodyScrollLock();
+        syncMobileAuthPlacement();
         if (isMobileViewport()) {
           enhanceMobilePassages();
         }
@@ -101,7 +141,12 @@
       if (navOrStepBtn && isMobileViewport()) {
         setTimeout(() => {
           enhanceMobilePassages();
-          window.scrollTo({ top: 0, behavior: "instant" });
+          const testContainer = document.querySelector(".test-container");
+          if (testContainer && !testContainer.classList.contains("hidden")) {
+            testContainer.scrollTop = 0;
+          } else {
+            window.scrollTo({ top: 0, behavior: "instant" });
+          }
         }, 50);
       }
       scheduleSync();
@@ -112,5 +157,6 @@
     initMobileViewportFixes();
     enhanceMobilePassages();
     syncBodyScrollLock();
+    syncMobileAuthPlacement();
   });
 })();

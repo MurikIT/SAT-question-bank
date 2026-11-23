@@ -623,17 +623,23 @@
 }
 
 .blitz-opt-btn.is-correct,
-.blitz-opt-btn.is-correct:disabled {
-  background: #dcfce7;
-  border-color: #16a34a;
-  color: #166534;
+.blitz-opt-btn.is-correct:disabled,
+.blitz-opt-btn.correct,
+.blitz-opt-btn.correct:disabled {
+  background: #dcfce7 !important;
+  border-color: #16a34a !important;
+  color: #166534 !important;
+  opacity: 1 !important;
 }
 
 .blitz-opt-btn.is-wrong,
-.blitz-opt-btn.is-wrong:disabled {
-  background: #fee2e2;
-  border-color: #dc2626;
-  color: #991b1b;
+.blitz-opt-btn.is-wrong:disabled,
+.blitz-opt-btn.wrong,
+.blitz-opt-btn.wrong:disabled {
+  background: #fee2e2 !important;
+  border-color: #dc2626 !important;
+  color: #991b1b !important;
+  opacity: 1 !important;
 }
 
 .blitz-feedback {
@@ -643,13 +649,15 @@
   font-weight: 600;
 }
 
-.blitz-feedback.is-ok {
+.blitz-feedback.is-ok,
+.blitz-feedback.ok {
   background: #ecfdf5;
   border: 1px solid #86efac;
   color: #166534;
 }
 
-.blitz-feedback.is-bad {
+.blitz-feedback.is-bad,
+.blitz-feedback.err {
   background: #fef2f2;
   border: 1px solid #fca5a5;
   color: #991b1b;
@@ -705,18 +713,24 @@ body.dark-theme .blitz-opt-btn:hover:not(:disabled) {
 
 body.dark-theme .match-tile.matched,
 body.dark-theme .blitz-opt-btn.is-correct,
-body.dark-theme .blitz-opt-btn.is-correct:disabled {
-  background: #14532d;
-  border-color: #22c55e;
-  color: #dcfce7;
+body.dark-theme .blitz-opt-btn.is-correct:disabled,
+body.dark-theme .blitz-opt-btn.correct,
+body.dark-theme .blitz-opt-btn.correct:disabled {
+  background: #14532d !important;
+  border-color: #22c55e !important;
+  color: #dcfce7 !important;
+  opacity: 1 !important;
 }
 
 body.dark-theme .match-tile.wrong-shake,
 body.dark-theme .blitz-opt-btn.is-wrong,
-body.dark-theme .blitz-opt-btn.is-wrong:disabled {
-  background: #7f1d1d;
-  border-color: #ef4444;
-  color: #fee2e2;
+body.dark-theme .blitz-opt-btn.is-wrong:disabled,
+body.dark-theme .blitz-opt-btn.wrong,
+body.dark-theme .blitz-opt-btn.wrong:disabled {
+  background: #7f1d1d !important;
+  border-color: #ef4444 !important;
+  color: #fee2e2 !important;
+  opacity: 1 !important;
 }
 
 body.dark-theme .blitz-opt-letter {
@@ -733,9 +747,8 @@ body.dark-theme .fc-back-word {
   margin-bottom: 12px;
 }
 
-/* Явная кнопка Open Vocabulary -> в карточке Vocabulary Progress */
-#dash-open-vocab-btn,
-.dashboard-vocab-card .history-action-btn {
+/* Кнопка Open Vocabulary -> в карточке Vocabulary Progress */
+#dash-open-vocab-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -753,117 +766,192 @@ body.dark-theme .fc-back-word {
 }
 
 #dash-open-flashcards-btn {
-  display: none;
+  display: none !important;
 }
 
+/* ==========================================================================
+   MOBILE LAYOUT FIXES (<= 860px)
+   ========================================================================== */
 @media (max-width: 860px) {
-  /* Не фиксируем поверх меню/кнопок — плашка аккаунта остаётся обычным потоком под шапкой */
-  #auth-widget,
-  .auth-widget,
-  [data-auth-widget] {
-    position: static;
-    width: 100%;
-    max-width: 100%;
-    margin: 8px 0 6px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
+  /* 1. Компактная шапка и компактное меню под телефон */
+  .sidebar {
+    padding: 10px 12px 8px !important;
+    gap: 8px !important;
   }
 
-  /* Меню вкладок: аккуратный горизонтальный скролл без обрезания слов до половины буквы */
-  .nav-tabs,
-  .header-nav,
-  [role="tablist"] {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
+  .sidebar-brand {
+    padding: 0 !important;
+    gap: 10px !important;
+  }
+
+  .brand-logo {
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 10px !important;
+    font-size: 12px !important;
+    flex-shrink: 0;
+  }
+
+  .brand-title {
+    font-size: 15px !important;
+  }
+
+  .brand-sub {
+    font-size: 11px !important;
+  }
+
+  .sidebar-nav {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
     -webkit-overflow-scrolling: touch;
-    gap: 8px;
-    padding: 6px 4px;
+    gap: 6px !important;
+    padding: 2px 0 !important;
     scrollbar-width: none;
   }
 
-  .nav-tabs::-webkit-scrollbar,
-  .header-nav::-webkit-scrollbar,
-  [role="tablist"]::-webkit-scrollbar {
+  .sidebar-nav::-webkit-scrollbar {
     display: none;
   }
 
-  .nav-tab-btn,
-  [role="tab"] {
-    flex: 0 0 auto;
-    white-space: nowrap;
-    padding: 8px 14px;
-    font-size: 13.5px;
+  .sidebar-nav .nav-tab-btn {
+    width: auto !important;
+    flex: 0 0 auto !important;
+    white-space: nowrap !important;
+    padding: 7px 11px !important;
+    font-size: 12.5px !important;
+    gap: 6px !important;
+    border-radius: 10px !important;
+    line-height: 1.2 !important;
   }
 
-  /* Сам блок вопроса — цельный, без внутреннего скролла внутри карточки, при этом страница скроллится нормально */
-  .test-container,
-  .question-panel,
+  .sidebar-nav .nav-tab-btn .nav-icon {
+    font-size: 14px !important;
+  }
+
+  /* 2. Виджет авторизации:
+     - В гостевом режиме (is-mobile-floating) плавает сверху справа при скролле
+     - После входа (is-mobile-inline) статично стоит под SAT Tutor и синей иконкой */
+  #auth-widget.is-mobile-floating {
+    position: fixed !important;
+    top: max(10px, env(safe-area-inset-top)) !important;
+    right: 12px !important;
+    bottom: auto !important;
+    left: auto !important;
+    z-index: 9998 !important;
+    width: auto !important;
+    margin: 0 !important;
+  }
+
+  #auth-widget.is-mobile-inline {
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    margin: 2px 0 2px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    z-index: auto !important;
+  }
+
+  #auth-widget.is-mobile-inline .auth-user-pill {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12.5px;
+    padding: 6px 10px;
+  }
+
+  #auth-widget.is-mobile-inline .auth-btn {
+    flex-shrink: 0;
+    padding: 6px 12px;
+    font-size: 12.5px;
+  }
+
+  /* 3. Question Bank / Practice: сам экран вопроса скроллится целиком, а блоки текста и вопроса без внутреннего скролла */
+  .test-container {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100dvh !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 10px 12px 92px !important;
+  }
+
+  .bluebook-workspace {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+  }
+
   .passage-panel,
+  .question-panel,
   .question-card,
   .passage-card {
-    max-height: none;
-    height: auto;
-    overflow: visible;
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
   }
 
-  .test-body,
-  .workspace-body {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    overflow: visible;
-    height: auto;
-  }
-
-  /* Полная видимость и удобные тапы во вкладке Vocabulary и мини-играх */
+  /* 4. Полная видимость вкладок и мини-игр Vocabulary */
   #tab-vocab,
   #tab-vocab .vocab-view,
   #tab-vocab .vocab-view:not(.hidden) {
-    overflow: visible;
-    height: auto;
-    min-height: auto;
-    display: block;
+    overflow: visible !important;
+    height: auto !important;
+    min-height: auto !important;
+    display: block !important;
   }
 
   #vocab-mode-tabs {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    border-radius: 16px;
-    gap: 6px;
-    padding: 6px;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    border-radius: 16px !important;
+    gap: 6px !important;
+    padding: 6px !important;
   }
 
   #vocab-mode-tabs .vocab-mode-btn {
     flex: 1 1 calc(50% - 6px);
     min-width: 120px;
-    min-height: 42px;
+    min-height: 40px;
     text-align: center;
     justify-content: center;
   }
 
   .match-board,
   .blitz-options {
-    grid-template-columns: 1fr;
-    max-height: none;
-    overflow: visible;
+    grid-template-columns: 1fr !important;
+    max-height: none !important;
+    overflow: visible !important;
   }
 
   .match-tile,
   .blitz-opt-btn {
-    min-height: 48px;
-    padding: 14px 16px;
+    min-height: 46px;
+    padding: 12px 14px;
   }
 
   .fc-stage {
-    min-height: auto;
-    padding-bottom: 16px;
+    min-height: auto !important;
+    padding-bottom: 16px !important;
   }
 
   .fc-card-3d {
-    height: auto;
+    height: auto !important;
     min-height: 340px;
   }
 }
