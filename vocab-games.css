@@ -39,10 +39,11 @@
   min-height: 0;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .vocab-view.hidden {
-  display: none;
+  display: none !important;
 }
 
 .vocab-card.is-zoomable {
@@ -69,21 +70,38 @@
 }
 
 /* Word Zoom Modal */
+@keyframes vocabBackdropFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes vocabCardZoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.84) translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
 .vocab-zoom-backdrop {
   position: fixed;
   inset: 0;
   background: rgba(15, 23, 42, 0.52);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
   z-index: 1200;
+  animation: vocabBackdropFade 0.2s ease;
 }
 
 .vocab-zoom-backdrop.hidden {
-  display: none;
+  display: none !important;
 }
 
 .vocab-zoom-card {
@@ -96,6 +114,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  animation: vocabCardZoomIn 0.26s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .vz-top-row {
@@ -138,6 +157,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .vz-close-btn:hover {
@@ -297,9 +317,9 @@
 }
 
 .fc-speak {
-  width: 38px;
-  height: 38px;
-  font-size: 17px;
+  width: 38px !important;
+  height: 38px !important;
+  font-size: 17px !important;
 }
 
 .fc-status-badge {
@@ -435,6 +455,7 @@
 .match-board {
   flex: 1;
   min-height: 0;
+  overflow-y: auto;
   display: grid;
   grid-template-columns: minmax(210px, 0.8fr) minmax(300px, 1.4fr);
   gap: 16px;
@@ -742,8 +763,9 @@ body.dark-theme .fc-back-word {
   color: #60a5fa;
 }
 
+/* Карточка статистики Vocabulary на Dashboard */
 .dashboard-vocab-card {
-  margin-top: 18px;
+  margin-top: 18px !important;
   margin-bottom: 12px;
 }
 
@@ -765,8 +787,280 @@ body.dark-theme .fc-back-word {
   box-shadow: 0 2px 8px rgba(37, 99, 235, 0.22);
 }
 
+#dash-open-vocab-btn:hover {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+}
+
 #dash-open-flashcards-btn {
   display: none !important;
+}
+
+/* ==========================================================================
+   МОДАЛКА ВЫБОРА МОДУЛЕЙ (Module 1 / Module 2 / 2 Modules Adaptive)
+   ========================================================================== */
+.module-length-card {
+  width: min(460px, 100%);
+}
+
+.mod-len-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.mod-len-option-btn {
+  width: 100%;
+  text-align: left;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 2px solid #e2e8f0;
+  background: #f8fafc;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: transform 0.16s ease, border-color 0.16s ease, background-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.mod-len-option-btn:hover {
+  border-color: #93c5fd;
+  background: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.08);
+}
+
+.mod-len-option-btn.is-primary {
+  border-color: #bfdbfe;
+  background: #eff6ff;
+}
+
+.mod-len-option-btn.is-primary:hover {
+  border-color: #2563eb;
+  background: #dbeafe;
+}
+
+.mod-len-opt-title {
+  font-size: 15.5px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.mod-len-opt-sub {
+  font-size: 13px;
+  color: #64748b;
+}
+
+body.dark-theme .mod-len-option-btn {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.dark-theme .mod-len-option-btn:hover {
+  background: #273549;
+  border-color: #60a5fa;
+}
+
+body.dark-theme .mod-len-option-btn.is-primary {
+  background: #172554;
+  border-color: #1d4ed8;
+}
+
+body.dark-theme .mod-len-option-btn.is-primary:hover {
+  background: #1e3a8a;
+  border-color: #60a5fa;
+}
+
+body.dark-theme .mod-len-opt-title {
+  color: #f8fafc;
+}
+
+body.dark-theme .mod-len-opt-sub {
+  color: #94a3b8;
+}
+
+/* Галочки выбора модулей */
+.mod-len-top-pills {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.mod-len-top-pills .mod-trans-pill {
+  margin-bottom: 0;
+}
+
+.mod-mode-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #1e293b;
+  border: 1px solid #cbd5e1;
+}
+
+.mod-mode-badge.is-both {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #86efac;
+}
+
+.mod-mode-badge.is-empty {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #fca5a5;
+}
+
+.mod-len-check-card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 2px solid #e2e8f0;
+  background: #f8fafc;
+  cursor: pointer;
+  user-select: none;
+  transition: border-color 0.16s ease, background-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.mod-len-check-card:hover {
+  border-color: #93c5fd;
+  background: #ffffff;
+}
+
+.mod-len-check-card.is-checked {
+  border-color: #2563eb;
+  background: #eff6ff;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.08);
+}
+
+.mod-len-check-card input[type="checkbox"] {
+  width: 19px;
+  height: 19px;
+  accent-color: #2563eb;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.mod-len-check-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+body.dark-theme .mod-mode-badge {
+  background: #1e293b;
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
+body.dark-theme .mod-mode-badge.is-both {
+  background: #14532d;
+  color: #dcfce7;
+  border-color: #22c55e;
+}
+
+body.dark-theme .mod-mode-badge.is-empty {
+  background: #7f1d1d;
+  color: #fee2e2;
+  border-color: #ef4444;
+}
+
+body.dark-theme .mod-len-check-card {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.dark-theme .mod-len-check-card:hover {
+  background: #273549;
+  border-color: #60a5fa;
+}
+
+body.dark-theme .mod-len-check-card.is-checked {
+  background: #172554;
+  border-color: #3b82f6;
+}
+
+/* ==========================================================================
+   DARK MODE: ИСПРАВЛЕНИЕ КОНТРАСТНОСТИ ТЕКСТА (SETUP, SELECTS, TABLES)
+   ========================================================================== */
+body.dark-theme .setup-screen {
+  background: #0b1120;
+  color: #f8fafc;
+}
+
+body.dark-theme .setup-label,
+body.dark-theme .setup-pool-info strong {
+  color: #f8fafc;
+}
+
+body.dark-theme .setup-pool-info {
+  color: #cbd5e1;
+}
+
+body.dark-theme .setup-pill {
+  background: #172554;
+  border-color: #1d4ed8;
+  color: #93c5fd;
+}
+
+body.dark-theme .setup-select,
+body.dark-theme .setup-select option {
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+body.dark-theme .setup-chip-btn {
+  background: #1e293b;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+body.dark-theme .setup-chip-btn.active {
+  background: #2563eb;
+  border-color: #3b82f6;
+  color: #ffffff;
+}
+
+body.dark-theme .picker-header,
+body.dark-theme .mod-trans-stats strong,
+body.dark-theme .adaptive-score-label,
+body.dark-theme .game-result-card p {
+  color: #e2e8f0;
+}
+
+body.dark-theme .spr-table th {
+  background: #0f172a;
+  color: #f8fafc;
+  border-color: #334155;
+}
+
+body.dark-theme .spr-table td {
+  background: #1e293b;
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
+body.dark-theme .spr-table code {
+  background: #0f172a;
+  color: #93c5fd;
+}
+
+body.dark-theme .fc-counter,
+body.dark-theme .fc-pos,
+body.dark-theme .vz-pos,
+body.dark-theme .vz-label,
+body.dark-theme .game-sub,
+body.dark-theme .match-word-pos {
+  color: #94a3b8;
 }
 
 /* ==========================================================================
@@ -905,14 +1199,19 @@ body.dark-theme .fc-back-word {
     overflow: visible !important;
   }
 
-  /* 4. Полная видимость вкладок и мини-игр Vocabulary */
-  #tab-vocab,
-  #tab-vocab .vocab-view,
-  #tab-vocab .vocab-view:not(.hidden) {
+  /* 4. Полная видимость вкладок и мини-игр Vocabulary ТОЛЬКО когда открыта вкладка Vocabulary */
+  #tab-vocab.active:not(.hidden) {
     overflow: visible !important;
     height: auto !important;
     min-height: auto !important;
-    display: block !important;
+  }
+
+  #tab-vocab.active:not(.hidden) .vocab-view:not(.hidden) {
+    overflow: visible !important;
+    height: auto !important;
+    min-height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
 
   #vocab-mode-tabs {
@@ -953,5 +1252,11 @@ body.dark-theme .fc-back-word {
   .fc-card-3d {
     height: auto !important;
     min-height: 340px;
+  }
+
+  /* 5. Аккуратный вид модалки выбора модулей на телефоне */
+  .mod-len-check-card {
+    padding: 12px 14px;
+    gap: 12px;
   }
 }
