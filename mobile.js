@@ -15,8 +15,14 @@
     return selectors.some(sel => Boolean(document.querySelector(sel)));
   }
 
+  let lastLockedState = null;
+
   function syncBodyScrollLock() {
-    if (hasAnyModalOpen()) {
+    const locked = hasAnyModalOpen();
+    if (locked === lastLockedState) return;
+    lastLockedState = locked;
+
+    if (locked) {
       document.body.classList.add("mobile-modal-open");
       document.body.style.overflow = "hidden";
     } else {
@@ -44,22 +50,43 @@
   }
 
   function initMobileViewportFixes() {
-    // Обновляем переменную --app-vh для корректной высоты на мобильных браузерах
+    // Обновляем переменную --app-vh только при реальном изменении высоты
+    let lastVh = null;
     const setAppVh = () => {
-      const h = window.visualViewport ? window.visualViewport.height : window.innerHeight;
-      document.documentElement.style.setProperty("--app-vh", `${h * 0.01}px`);
+      const rawH = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+      const vh = Math.round(rawH * 0.01 * 100) / 100;
+      if (vh === lastVh) return;
+      lastVh = vh;
+      document.documentElement.style.setProperty("--app-vh", `${vh}px`);
     };
     setAppVh();
+
     window.addEventListener("resize", setAppVh, { passive: true });
     if (window.visualViewport) {
       window.visualViewport.addEventListener("resize", setAppVh, { passive: true });
     }
 
-    // Следим за открытием/закрытием модалок, чтобы не прокручивался фон
-    const observer = new MutationObserver(() => {
-      syncBodyScrollLock();
-      enhanceMobilePassages();
+    // Безопасный наблюдатель за модалками (без каскада мутаций на каждый чих)
+    let rafId = null;
+    const scheduleSync = () => {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        syncBodyScrollLock();
+        if (isMobileViewport()) {
+          enhanceMobilePassages();
+        }
+      });
+    };
+
+    const observer = new MutationObserver(mutations => {
+      // Игнорируем изменения, вызванные самим mobile.js на body
+      const hasRelevantChange = mutations.some(m => m.target !== document.body);
+      if (hasRelevantChange) {
+        scheduleSync();
+      }
     });
+
     observer.observe(document.body, {
       attributes: true,
       childList: true,
@@ -69,7 +96,10 @@
 
     // При переключении вопросов или вкладок возвращаем прокрутку вверх на мобильных
     document.addEventListener("click", e => {
-      const navOrStepBtn = e.target.closest(
+      const targetEl = e.target && e.target.closest ? e.target : null;
+      if (!targetEl) return;
+
+      const navOrStepBtn = targetEl.closest(
         ".nav-tab-btn, #prev-btn, #next-btn, .q-square-btn, .start-btn, .module-start-btn, .topic-mini-card"
       );
       if (navOrStepBtn && isMobileViewport()) {
@@ -81,7 +111,7 @@
           }
         }, 60);
       }
-      setTimeout(syncBodyScrollLock, 20);
+      scheduleSync();
     });
   }
 
