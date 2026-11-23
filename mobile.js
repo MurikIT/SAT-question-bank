@@ -101,10 +101,6 @@
       if (navOrStepBtn && isMobileViewport()) {
         setTimeout(() => {
           enhanceMobilePassages();
-          const testContainer = document.querySelector(".test-container");
-          if (testContainer && !testContainer.classList.contains("hidden")) {
-            testContainer.scrollTop = 0;
-          }
           window.scrollTo({ top: 0, behavior: "instant" });
         }, 50);
       }

@@ -39,7 +39,6 @@
   min-height: 0;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .vocab-view.hidden {
@@ -436,7 +435,6 @@
 .match-board {
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
   display: grid;
   grid-template-columns: minmax(210px, 0.8fr) minmax(300px, 1.4fr);
   gap: 16px;
@@ -735,6 +733,7 @@ body.dark-theme .fc-back-word {
   margin-bottom: 12px;
 }
 
+/* Явная кнопка Open Vocabulary -> в карточке Vocabulary Progress */
 #dash-open-vocab-btn,
 .dashboard-vocab-card .history-action-btn {
   display: inline-flex;
@@ -753,25 +752,57 @@ body.dark-theme .fc-back-word {
   box-shadow: 0 2px 8px rgba(37, 99, 235, 0.22);
 }
 
+#dash-open-flashcards-btn {
+  display: none;
+}
+
 @media (max-width: 860px) {
+  /* Не фиксируем поверх меню/кнопок — плашка аккаунта остаётся обычным потоком под шапкой */
   #auth-widget,
   .auth-widget,
   [data-auth-widget] {
-    position: fixed;
-    top: max(8px, env(safe-area-inset-top));
-    right: 10px;
-    left: auto;
-    z-index: 9998;
-    max-width: calc(100vw - 20px);
+    position: static;
+    width: 100%;
+    max-width: 100%;
+    margin: 8px 0 6px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
   }
 
-  body {
-    padding-top: 52px;
+  /* Меню вкладок: аккуратный горизонтальный скролл без обрезания слов до половины буквы */
+  .nav-tabs,
+  .header-nav,
+  [role="tablist"] {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 8px;
+    padding: 6px 4px;
+    scrollbar-width: none;
   }
 
+  .nav-tabs::-webkit-scrollbar,
+  .header-nav::-webkit-scrollbar,
+  [role="tablist"]::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-tab-btn,
+  [role="tab"] {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    padding: 8px 14px;
+    font-size: 13.5px;
+  }
+
+  /* Сам блок вопроса — цельный, без внутреннего скролла внутри карточки, при этом страница скроллится нормально */
   .test-container,
   .question-panel,
-  .passage-panel {
+  .passage-panel,
+  .question-card,
+  .passage-card {
     max-height: none;
     height: auto;
     overflow: visible;
@@ -786,6 +817,7 @@ body.dark-theme .fc-back-word {
     height: auto;
   }
 
+  /* Полная видимость и удобные тапы во вкладке Vocabulary и мини-играх */
   #tab-vocab,
   #tab-vocab .vocab-view,
   #tab-vocab .vocab-view:not(.hidden) {
