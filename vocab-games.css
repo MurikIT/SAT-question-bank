@@ -652,24 +652,16 @@
   justify-content: center;
 }
 
-.blitz-opt-btn.is-correct,
-.blitz-opt-btn.is-correct:disabled,
-.blitz-opt-btn.correct,
-.blitz-opt-btn.correct:disabled {
-  background: #dcfce7 !important;
-  border-color: #16a34a !important;
-  color: #166534 !important;
-  opacity: 1 !important;
+.blitz-opt-btn.is-correct {
+  background: #dcfce7;
+  border-color: #16a34a;
+  color: #166534;
 }
 
-.blitz-opt-btn.is-wrong,
-.blitz-opt-btn.is-wrong:disabled,
-.blitz-opt-btn.wrong,
-.blitz-opt-btn.wrong:disabled {
-  background: #fee2e2 !important;
-  border-color: #dc2626 !important;
-  color: #991b1b !important;
-  opacity: 1 !important;
+.blitz-opt-btn.is-wrong {
+  background: #fee2e2;
+  border-color: #dc2626;
+  color: #991b1b;
 }
 
 .blitz-feedback {
@@ -679,15 +671,13 @@
   font-weight: 600;
 }
 
-.blitz-feedback.is-ok,
-.blitz-feedback.ok {
+.blitz-feedback.is-ok {
   background: #ecfdf5;
   border: 1px solid #86efac;
   color: #166534;
 }
 
-.blitz-feedback.is-bad,
-.blitz-feedback.err {
+.blitz-feedback.is-bad {
   background: #fef2f2;
   border: 1px solid #fca5a5;
   color: #991b1b;
@@ -744,25 +734,17 @@ body.dark-theme .blitz-opt-btn:hover:not(:disabled) {
 }
 
 body.dark-theme .match-tile.matched,
-body.dark-theme .blitz-opt-btn.is-correct,
-body.dark-theme .blitz-opt-btn.is-correct:disabled,
-body.dark-theme .blitz-opt-btn.correct,
-body.dark-theme .blitz-opt-btn.correct:disabled {
-  background: #14532d !important;
-  border-color: #22c55e !important;
-  color: #dcfce7 !important;
-  opacity: 1 !important;
+body.dark-theme .blitz-opt-btn.is-correct {
+  background: #14532d;
+  border-color: #22c55e;
+  color: #dcfce7;
 }
 
 body.dark-theme .match-tile.wrong-shake,
-body.dark-theme .blitz-opt-btn.is-wrong,
-body.dark-theme .blitz-opt-btn.is-wrong:disabled,
-body.dark-theme .blitz-opt-btn.wrong,
-body.dark-theme .blitz-opt-btn.wrong:disabled {
-  background: #7f1d1d !important;
-  border-color: #ef4444 !important;
-  color: #fee2e2 !important;
-  opacity: 1 !important;
+body.dark-theme .blitz-opt-btn.is-wrong {
+  background: #7f1d1d;
+  border-color: #ef4444;
+  color: #fee2e2;
 }
 
 body.dark-theme .blitz-opt-letter {
@@ -785,11 +767,13 @@ body.dark-theme .fc-back-word {
   }
 }
 
+
 /* Карточка статистики Vocabulary на Dashboard */
 .dashboard-vocab-card {
   margin-top: 18px !important;
   margin-bottom: 12px;
 }
+
 
 /* Модалка выбора: 1 модуль или 2 модуля вместе */
 .module-length-card {
@@ -872,6 +856,7 @@ body.dark-theme .mod-len-opt-title {
 body.dark-theme .mod-len-opt-sub {
   color: #94a3b8;
 }
+
 
 /* Галочки выбора модулей (Module 1 / Module 2 / 2 Modules Adaptive) */
 .mod-len-top-pills {
@@ -981,7 +966,6 @@ body.dark-theme .mod-len-check-card.is-checked {
   background: #172554;
   border-color: #3b82f6;
 }
-
 /* ==========================================================================
    DARK MODE: ИСПРАВЛЕНИЕ КОНТРАСТНОСТИ ТЕКСТА (SETUP, SELECTS, TABLES)
    ========================================================================== */
