@@ -67,13 +67,49 @@
   }
 
   /* ---------- Home Page (Лендинг с кнопкой Get Started -> Sign Up) ---------- */
-  function isUserLoggedIn() {
+  const AUTH_HINT_KEY = "sat_was_logged_in_v1";
+  let manualHomeOpen = false;
+
+  function getAuthState() {
     const widget = document.getElementById("auth-widget");
-    if (!widget) return false;
-    return Boolean(widget.querySelector(".auth-user-pill") || widget.querySelector("#auth-logout-btn"));
+    if (!widget || widget.children.length === 0) return "pending";
+    if (widget.querySelector(".auth-user-pill") || widget.querySelector("#auth-logout-btn")) {
+      return "logged-in";
+    }
+    if (widget.querySelector("#auth-open-btn")) {
+      return "guest";
+    }
+    return "pending";
   }
 
-  function hideHomePage(markDismissed = false) {
+  function updateHomeButtonsForAuthState(state) {
+    const loggedIn = state === "logged-in";
+    const signInBtn = document.getElementById("home-signin-btn");
+    const navStartBtn = document.getElementById("home-nav-start-btn");
+    const heroStartBtn = document.getElementById("home-get-started-btn");
+    const guestBtn = document.getElementById("home-guest-btn");
+    const bottomStartBtn = document.getElementById("home-bottom-start-btn");
+
+    if (signInBtn) signInBtn.classList.toggle("hidden", loggedIn);
+    if (navStartBtn) {
+      navStartBtn.textContent = loggedIn ? "Open Dashboard →" : "Get Started";
+      navStartBtn.dataset.action = loggedIn ? "enter-app" : "signup";
+    }
+    if (heroStartBtn) {
+      heroStartBtn.textContent = loggedIn ? "Open Dashboard →" : "Get Started →";
+      heroStartBtn.dataset.action = loggedIn ? "enter-app" : "signup";
+    }
+    if (guestBtn) {
+      guestBtn.classList.toggle("hidden", loggedIn);
+    }
+    if (bottomStartBtn) {
+      bottomStartBtn.textContent = loggedIn ? "Return to Dashboard →" : "Get Started Free →";
+      bottomStartBtn.dataset.action = loggedIn ? "enter-app" : "signup";
+    }
+  }
+
+  function hideHomePage(markDismissed = false, pushAppHistory = false) {
+    manualHomeOpen = false;
     const overlay = document.getElementById("sat-home-page");
     if (overlay) overlay.classList.add("hidden");
     document.body.classList.remove("home-page-open");
@@ -82,12 +118,27 @@
         sessionStorage.setItem(HOME_DISMISSED_KEY, "1");
       } catch (e) {}
     }
+    if (pushAppHistory && window.location.hash !== "#app") {
+      try {
+        window.history.pushState({ view: "app" }, "", "#app");
+      } catch (e) {}
+    }
   }
 
-  function showHomePage() {
+  function showHomePage(isManual = false, pushHomeHistory = false) {
+    if (isManual) manualHomeOpen = true;
     const overlay = document.getElementById("sat-home-page");
-    if (overlay) overlay.classList.remove("hidden");
+    if (overlay) {
+      overlay.classList.remove("hidden");
+      overlay.scrollTop = 0;
+    }
     document.body.classList.add("home-page-open");
+    updateHomeButtonsForAuthState(getAuthState());
+    if (pushHomeHistory && window.location.hash !== "#home") {
+      try {
+        window.history.pushState({ view: "home" }, "", "#home");
+      } catch (e) {}
+    }
   }
 
   function initHomePage() {
@@ -107,7 +158,7 @@
         </div>
         <div class="sat-home-nav-actions">
           <button type="button" class="sat-home-signin-btn" id="home-signin-btn">Sign In</button>
-          <button type="button" class="sat-home-cta-sm" id="home-nav-start-btn">Get Started</button>
+          <button type="button" class="sat-home-cta-sm" id="home-nav-start-btn" data-action="signup">Get Started</button>
         </div>
       </header>
 
@@ -119,7 +170,7 @@
             Practice with thousands of realistic Reading &amp; Writing and Math questions, adaptive Bluebook-style modules, interactive vocabulary games, and detailed step-by-step explanations — synced across all your devices.
           </p>
           <div class="sat-home-hero-actions">
-            <button type="button" class="sat-home-cta-primary" id="home-get-started-btn">Get Started →</button>
+            <button type="button" class="sat-home-cta-primary" id="home-get-started-btn" data-action="signup">Get Started →</button>
             <button type="button" class="sat-home-cta-secondary" id="home-guest-btn">Try without account</button>
           </div>
           <div class="sat-home-stats">
@@ -164,7 +215,7 @@
         <section class="sat-home-bottom-cta">
           <h2>Ready to boost your SAT score?</h2>
           <p>Create your free account in seconds to save your progress and unlock full cloud sync.</p>
-          <button type="button" class="sat-home-cta-primary" id="home-bottom-start-btn">Get Started Free →</button>
+          <button type="button" class="sat-home-cta-primary" id="home-bottom-start-btn" data-action="signup">Get Started Free →</button>
         </section>
       </main>
     `;
@@ -189,43 +240,110 @@
       }
     };
 
+    const handlePrimaryAction = btn => {
+      if (btn.dataset.action === "enter-app") {
+        hideHomePage(true, true);
+      } else {
+        openSignUp();
+      }
+    };
+
     ["home-get-started-btn", "home-nav-start-btn", "home-bottom-start-btn"].forEach(id => {
       const btn = document.getElementById(id);
-      if (btn) btn.addEventListener("click", openSignUp);
+      if (btn) btn.addEventListener("click", () => handlePrimaryAction(btn));
     });
 
     const signInBtn = document.getElementById("home-signin-btn");
     if (signInBtn) signInBtn.addEventListener("click", openSignIn);
 
     const guestBtn = document.getElementById("home-guest-btn");
-    if (guestBtn) guestBtn.addEventListener("click", () => hideHomePage(true));
+    if (guestBtn) {
+      guestBtn.addEventListener("click", () => hideHomePage(true, true));
+    }
 
-    // Показываем Home Page только гостям, если они ещё не нажали "Try without account"
-    let dismissed = false;
-    try {
-      dismissed = sessionStorage.getItem(HOME_DISMISSED_KEY) === "1";
-    } catch (e) {}
+    // Клик по логотипу "SAT Tutor" в сайдбаре возвращает на Home Page
+    const sidebarBrand = document.querySelector(".sidebar .sidebar-brand");
+    if (sidebarBrand) {
+      sidebarBrand.classList.add("is-home-link");
+      sidebarBrand.title = "Go to Home Page";
+      sidebarBrand.setAttribute("role", "button");
+      sidebarBrand.setAttribute("tabindex", "0");
+      sidebarBrand.addEventListener("click", () => showHomePage(true, true));
+      sidebarBrand.addEventListener("keydown", e => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          showHomePage(true, true);
+        }
+      });
+    }
 
-    const syncHomeVisibility = () => {
-      if (isUserLoggedIn()) {
-        hideHomePage(false);
-      } else if (!dismissed) {
-        showHomePage();
+    // Поддержка кнопки "Назад" / "Вперёд" в браузере
+    window.addEventListener("popstate", () => {
+      const h = window.location.hash;
+      if (h === "#home" || (h === "" && getAuthState() === "guest")) {
+        showHomePage(true, false);
+      } else {
+        hideHomePage(false, false);
+      }
+    });
+
+    let authResolvedOnce = false;
+
+    const handleAuthStateChange = () => {
+      const state = getAuthState();
+      if (state === "pending") return;
+
+      updateHomeButtonsForAuthState(state);
+
+      if (state === "logged-in") {
+        try {
+          localStorage.setItem(AUTH_HINT_KEY, "1");
+        } catch (e) {}
+        // Если пользователь только что вошёл с Home Page (или при старте), скрываем Home Page
+        if (!manualHomeOpen || !authResolvedOnce) {
+          hideHomePage(false, false);
+        }
+        authResolvedOnce = true;
+        return;
+      }
+
+      if (state === "guest") {
+        try {
+          localStorage.removeItem(AUTH_HINT_KEY);
+        } catch (e) {}
+
+        if (!authResolvedOnce) {
+          authResolvedOnce = true;
+          let dismissed = false;
+          try {
+            dismissed = sessionStorage.getItem(HOME_DISMISSED_KEY) === "1";
+          } catch (e) {}
+
+          if (window.location.hash === "#home" || (!dismissed && window.location.hash !== "#app")) {
+            showHomePage(false, false);
+          }
+        }
       }
     };
 
-    // Даём auth.js долю секунды определить состояние входа, чтобы не мигать у залогиненных
-    setTimeout(syncHomeVisibility, 250);
+    const attachAuthObserver = widget => {
+      const obs = new MutationObserver(handleAuthStateChange);
+      obs.observe(widget, { childList: true, subtree: true });
+      handleAuthStateChange();
+    };
 
-    // Автоматически скрываем Home Page, как только пользователь войдёт/зарегистрируется
-    const authWidget = document.getElementById("auth-widget");
-    if (authWidget) {
-      const authObs = new MutationObserver(() => {
-        if (isUserLoggedIn()) {
-          hideHomePage(false);
+    const existingWidget = document.getElementById("auth-widget");
+    if (existingWidget) {
+      attachAuthObserver(existingWidget);
+    } else {
+      const bodyObs = new MutationObserver(() => {
+        const w = document.getElementById("auth-widget");
+        if (w) {
+          bodyObs.disconnect();
+          attachAuthObserver(w);
         }
       });
-      authObs.observe(authWidget, { childList: true, subtree: true });
+      bodyObs.observe(document.body, { childList: true });
     }
   }
 

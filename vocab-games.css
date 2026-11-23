@@ -1609,3 +1609,25 @@ body.dark-theme .sat-home-cta-secondary {
     grid-template-columns: 1fr;
   }
 }
+/* Home Page: hide global #auth-widget & clickable brand */
+body.home-page-open #auth-widget {
+  display: none !important;
+}
+
+.sat-home-page .hidden {
+  display: none !important;
+}
+
+.sidebar-brand.is-home-link {
+  cursor: pointer;
+  border-radius: 12px;
+  transition: background-color 0.16s ease;
+}
+
+.sidebar-brand.is-home-link:hover {
+  background: #f1f5f9;
+}
+
+body.dark-theme .sidebar-brand.is-home-link:hover {
+  background: #1e293b;
+}
