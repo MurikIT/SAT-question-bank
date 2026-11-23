@@ -2288,13 +2288,30 @@ function cleanMergedExplanation(exp) {
 function formatExplanation(exp, correctIndex = 0) {
   const cleaned = cleanMergedExplanation(exp, correctIndex);
   if (!cleaned) return "No explanation provided.";
-  if (/<p[\s>]/i.test(cleaned)) {
-    return cleaned;
+
+  let html = cleaned;
+
+  // Разбиваем слипшиеся предложения перед Choice A–D / Answer A–D / Option A–D на отдельные абзацы
+  html = html.replace(
+    /([^\n>])(\s*)((?:Choice|Answer|Option)\s+[A-D]\b(?:\s+is\b|\s+are\b|[:.,]))/gi,
+    "$1\n\n$3"
+  );
+
+  // Делаем жирным "Choice A/B/C/D", "Answer A/B/C/D", "Option A/B/C/D"
+  html = html.replace(
+    /\b((?:Choice|Answer|Option)\s+[A-D])\b/gi,
+    '<strong class="exp-choice-label">$1</strong>'
+  );
+
+  if (/<p[\s>]/i.test(html)) {
+    return html.replace(/\n{2,}/g, '</p><p class="exp-line">');
   }
-  const lines = cleaned
+
+  const lines = html
     .split(/\n+/)
     .map(s => s.trim())
     .filter(Boolean);
+
   return lines.map(line => `<p class="exp-line">${line}</p>`).join("");
 }
 

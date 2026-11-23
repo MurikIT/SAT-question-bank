@@ -1,6 +1,8 @@
 (function () {
   const STUDY_META_KEY = "sat_study_meta_v1";
   const DAILY_PLAN_KEY = "sat_daily_plan_v1";
+  const ACTIVE_TAB_KEY = "sat_active_tab_v1";
+  const HOME_DISMISSED_KEY = "sat_home_dismissed_v1";
 
   function getTodayKey() {
     const d = new Date();
@@ -15,34 +17,224 @@
     return `${h}h ${m}m`;
   }
 
-  /* ---------- Переключение вкладок слева ---------- */
-  function switchTab(tabName) {
+  /* ---------- Переключение вкладок слева + сохранение при обновлении ---------- */
+  function switchTab(tabName, persist = true) {
+    if (!tabName) tabName = "dashboard";
+    const targetPanel = document.getElementById(`tab-${tabName}`);
+    const resolvedTab = targetPanel ? tabName : "dashboard";
+
     document.querySelectorAll(".nav-tab-btn").forEach(btn => {
-      btn.classList.toggle("active", btn.dataset.tab === tabName);
+      const isMatch = btn.dataset.tab === resolvedTab;
+      btn.classList.toggle("active", isMatch);
+      btn.setAttribute("aria-selected", String(isMatch));
     });
+
     document.querySelectorAll(".tab-panel").forEach(panel => {
-      panel.classList.toggle("hidden", panel.id !== `tab-${tabName}`);
-      panel.classList.toggle("active", panel.id === `tab-${tabName}`);
+      const isTarget = panel.id === `tab-${resolvedTab}`;
+      panel.classList.toggle("hidden", !isTarget);
+      panel.classList.toggle("active", isTarget);
     });
+
+    if (persist) {
+      try {
+        localStorage.setItem(ACTIVE_TAB_KEY, resolvedTab);
+      } catch (e) {}
+    }
+
+    if (resolvedTab === "qbank") {
+      renderQuestionBankUI();
+    }
   }
 
   function initTabs() {
     document.querySelectorAll(".nav-tab-btn").forEach(btn => {
-      btn.addEventListener("click", () => switchTab(btn.dataset.tab));
+      btn.addEventListener("click", () => switchTab(btn.dataset.tab, true));
     });
 
     document.querySelectorAll("[data-goto-tab]").forEach(btn => {
-      btn.addEventListener("click", () => switchTab(btn.dataset.gotoTab));
+      btn.addEventListener("click", () => switchTab(btn.dataset.gotoTab, true));
     });
+
+    let savedTab = "dashboard";
+    try {
+      const stored = localStorage.getItem(ACTIVE_TAB_KEY);
+      if (stored && document.getElementById(`tab-${stored}`)) {
+        savedTab = stored;
+      }
+    } catch (e) {}
+
+    switchTab(savedTab, false);
   }
 
-  /* ---------- Время посещения и стрик ---------- */
+  /* ---------- Home Page (Лендинг с кнопкой Get Started -> Sign Up) ---------- */
+  function isUserLoggedIn() {
+    const widget = document.getElementById("auth-widget");
+    if (!widget) return false;
+    return Boolean(widget.querySelector(".auth-user-pill") || widget.querySelector("#auth-logout-btn"));
+  }
+
+  function hideHomePage(markDismissed = false) {
+    const overlay = document.getElementById("sat-home-page");
+    if (overlay) overlay.classList.add("hidden");
+    document.body.classList.remove("home-page-open");
+    if (markDismissed) {
+      try {
+        sessionStorage.setItem(HOME_DISMISSED_KEY, "1");
+      } catch (e) {}
+    }
+  }
+
+  function showHomePage() {
+    const overlay = document.getElementById("sat-home-page");
+    if (overlay) overlay.classList.remove("hidden");
+    document.body.classList.add("home-page-open");
+  }
+
+  function initHomePage() {
+    if (document.getElementById("sat-home-page")) return;
+
+    const homeEl = document.createElement("div");
+    homeEl.id = "sat-home-page";
+    homeEl.className = "sat-home-page hidden";
+    homeEl.innerHTML = `
+      <header class="sat-home-nav">
+        <div class="sat-home-brand">
+          <div class="brand-logo">SAT</div>
+          <div>
+            <div class="sat-home-brand-title">SAT Tutor</div>
+            <div class="sat-home-brand-sub">Digital SAT Study Workspace</div>
+          </div>
+        </div>
+        <div class="sat-home-nav-actions">
+          <button type="button" class="sat-home-signin-btn" id="home-signin-btn">Sign In</button>
+          <button type="button" class="sat-home-cta-sm" id="home-nav-start-btn">Get Started</button>
+        </div>
+      </header>
+
+      <main class="sat-home-main">
+        <section class="sat-home-hero">
+          <span class="sat-home-badge">100% Free Digital SAT Prep</span>
+          <h1 class="sat-home-title">Everything you need to score 1500+ on the Digital SAT</h1>
+          <p class="sat-home-lead">
+            Practice with thousands of realistic Reading &amp; Writing and Math questions, adaptive Bluebook-style modules, interactive vocabulary games, and detailed step-by-step explanations — synced across all your devices.
+          </p>
+          <div class="sat-home-hero-actions">
+            <button type="button" class="sat-home-cta-primary" id="home-get-started-btn">Get Started →</button>
+            <button type="button" class="sat-home-cta-secondary" id="home-guest-btn">Try without account</button>
+          </div>
+          <div class="sat-home-stats">
+            <div class="sat-home-stat">
+              <strong>3,700+</strong>
+              <span>SAT Questions</span>
+            </div>
+            <div class="sat-home-stat">
+              <strong>1,860+</strong>
+              <span>High-Yield Vocab Words</span>
+            </div>
+            <div class="sat-home-stat">
+              <strong>2-Module</strong>
+              <span>Adaptive Practice Tests</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="sat-home-features">
+          <div class="sat-home-feature-card">
+            <div class="sat-home-feat-icon">📚</div>
+            <h3>Full Question Bank</h3>
+            <p>Filter Reading &amp; Writing and Math questions by domain, subtopic, and difficulty. Built-in Desmos graphing calculator and SAT reference sheet included.</p>
+          </div>
+          <div class="sat-home-feature-card">
+            <div class="sat-home-feat-icon">⚡</div>
+            <h3>Adaptive Practice Modules</h3>
+            <p>Take timed 2-module tests that mirror the real Digital SAT format — Module 2 adapts automatically based on your Module 1 performance.</p>
+          </div>
+          <div class="sat-home-feature-card">
+            <div class="sat-home-feat-icon">🧠</div>
+            <h3>SAT Vocabulary &amp; Games</h3>
+            <p>Master essential SAT words using 3D Flashcards, Match Sprint, and Context Blitz with instant audio pronunciation and progress tracking.</p>
+          </div>
+          <div class="sat-home-feature-card">
+            <div class="sat-home-feat-icon">📈</div>
+            <h3>Smart Analytics &amp; Cloud Sync</h3>
+            <p>Track accuracy by topic, drill your missed questions in one click, build a daily study plan, and keep your progress synced between phone and desktop.</p>
+          </div>
+        </section>
+
+        <section class="sat-home-bottom-cta">
+          <h2>Ready to boost your SAT score?</h2>
+          <p>Create your free account in seconds to save your progress and unlock full cloud sync.</p>
+          <button type="button" class="sat-home-cta-primary" id="home-bottom-start-btn">Get Started Free →</button>
+        </section>
+      </main>
+    `;
+
+    document.body.appendChild(homeEl);
+
+    const openSignUp = () => {
+      if (typeof window.openAuthModal === "function") {
+        window.openAuthModal("register");
+      } else {
+        const authBtn = document.getElementById("auth-open-btn");
+        if (authBtn) authBtn.click();
+      }
+    };
+
+    const openSignIn = () => {
+      if (typeof window.openAuthModal === "function") {
+        window.openAuthModal("login");
+      } else {
+        const authBtn = document.getElementById("auth-open-btn");
+        if (authBtn) authBtn.click();
+      }
+    };
+
+    ["home-get-started-btn", "home-nav-start-btn", "home-bottom-start-btn"].forEach(id => {
+      const btn = document.getElementById(id);
+      if (btn) btn.addEventListener("click", openSignUp);
+    });
+
+    const signInBtn = document.getElementById("home-signin-btn");
+    if (signInBtn) signInBtn.addEventListener("click", openSignIn);
+
+    const guestBtn = document.getElementById("home-guest-btn");
+    if (guestBtn) guestBtn.addEventListener("click", () => hideHomePage(true));
+
+    // Показываем Home Page только гостям, если они ещё не нажали "Try without account"
+    let dismissed = false;
+    try {
+      dismissed = sessionStorage.getItem(HOME_DISMISSED_KEY) === "1";
+    } catch (e) {}
+
+    const syncHomeVisibility = () => {
+      if (isUserLoggedIn()) {
+        hideHomePage(false);
+      } else if (!dismissed) {
+        showHomePage();
+      }
+    };
+
+    // Даём auth.js долю секунды определить состояние входа, чтобы не мигать у залогиненных
+    setTimeout(syncHomeVisibility, 250);
+
+    // Автоматически скрываем Home Page, как только пользователь войдёт/зарегистрируется
+    const authWidget = document.getElementById("auth-widget");
+    if (authWidget) {
+      const authObs = new MutationObserver(() => {
+        if (isUserLoggedIn()) {
+          hideHomePage(false);
+        }
+      });
+      authObs.observe(authWidget, { childList: true, subtree: true });
+    }
+  }
+
+  /* ---------- Время посещения и стрик (без Visits) ---------- */
   function loadStudyMeta() {
     const today = getTodayKey();
     let meta = {
       lastVisitDate: today,
       streak: 1,
-      visits: 0,
       totalSeconds: 0,
       todayDate: today,
       todaySeconds: 0
@@ -69,9 +261,17 @@
     }
 
     meta.lastVisitDate = today;
-    meta.visits = (meta.visits || 0) + 1;
     localStorage.setItem(STUDY_META_KEY, JSON.stringify(meta));
     return meta;
+  }
+
+  function removeVisitsCardFromDashboard() {
+    const elVisits = document.getElementById("dash-visits-count");
+    if (!elVisits) return;
+    const card = elVisits.closest(".activity-stat, .stat-card, .history-kpi, div");
+    if (card && card.parentElement) {
+      card.remove();
+    }
   }
 
   function renderStudyMeta(meta) {
@@ -81,20 +281,20 @@
 
     const elToday = document.getElementById("dash-today-time");
     const elTotal = document.getElementById("dash-total-time");
-    const elVisits = document.getElementById("dash-visits-count");
     const elStreakBadge = document.getElementById("dash-streak-badge");
     const elSideTime = document.getElementById("sidebar-today-time");
     const elSideStreak = document.getElementById("sidebar-streak");
 
     if (elToday) elToday.textContent = todayStr;
     if (elTotal) elTotal.textContent = totalStr;
-    if (elVisits) elVisits.textContent = String(meta.visits);
     if (elStreakBadge) elStreakBadge.textContent = `🔥 ${streakLabel} streak`;
     if (elSideTime) elSideTime.textContent = todayStr;
     if (elSideStreak) elSideStreak.textContent = streakLabel;
   }
 
   function initStudyTracker() {
+    removeVisitsCardFromDashboard();
+
     const dateLabel = document.getElementById("dashboard-date-label");
     if (dateLabel) {
       const formatted = new Date().toLocaleDateString("en-US", {
@@ -329,8 +529,7 @@
     });
   }
 
-
-  /* ---------- Question Bank: счётчики, Smart Practice, 8 доменов и поиск по ID ---------- */
+  /* ---------- Question Bank: счётчики, Smart Practice, 8 доменов ---------- */
   function renderQuestionBankUI() {
     if (typeof window.getQuestionBankStats !== "function") return;
     const stats = window.getQuestionBankStats();
@@ -464,7 +663,6 @@
     renderQuestionBankUI();
   }
 
-
   /* ---------- Тёмная тема (Dark Mode) ---------- */
   const THEME_STORAGE_KEY = "sat_theme_v1";
 
@@ -514,5 +712,6 @@
     initDailyPlan();
     initPracticeModules();
     initQuestionBankEnhancements();
+    initHomePage();
   });
 })();
