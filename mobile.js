@@ -50,7 +50,6 @@
   }
 
   function initMobileViewportFixes() {
-    // Обновляем переменную --app-vh только при реальном изменении высоты
     let lastVh = null;
     const setAppVh = () => {
       const rawH = window.visualViewport ? window.visualViewport.height : window.innerHeight;
@@ -66,7 +65,6 @@
       window.visualViewport.addEventListener("resize", setAppVh, { passive: true });
     }
 
-    // Безопасный наблюдатель за модалками (без каскада мутаций на каждый чих)
     let rafId = null;
     const scheduleSync = () => {
       if (rafId !== null) return;
@@ -80,7 +78,6 @@
     };
 
     const observer = new MutationObserver(mutations => {
-      // Игнорируем изменения, вызванные самим mobile.js на body
       const hasRelevantChange = mutations.some(m => m.target !== document.body);
       if (hasRelevantChange) {
         scheduleSync();
@@ -94,7 +91,6 @@
       attributeFilter: ["class"]
     });
 
-    // При переключении вопросов или вкладок возвращаем прокрутку вверх на мобильных
     document.addEventListener("click", e => {
       const targetEl = e.target && e.target.closest ? e.target : null;
       if (!targetEl) return;
@@ -109,7 +105,8 @@
           if (testContainer && !testContainer.classList.contains("hidden")) {
             testContainer.scrollTop = 0;
           }
-        }, 60);
+          window.scrollTo({ top: 0, behavior: "instant" });
+        }, 50);
       }
       scheduleSync();
     });
