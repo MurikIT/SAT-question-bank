@@ -1631,3 +1631,91 @@ body.home-page-open #auth-widget {
 body.dark-theme .sidebar-brand.is-home-link:hover {
   background: #1e293b;
 }
+/* Home Page Footer & Contact Email */
+.sat-home-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding-top: 22px;
+  border-top: 1px solid #cbd5e1;
+  font-size: 13.5px;
+  color: #64748b;
+}
+
+.sat-home-footer-left strong {
+  color: #0f172a;
+}
+
+.sat-home-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.sat-home-email-link {
+  color: #2563eb;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.sat-home-email-link:hover {
+  text-decoration: underline;
+}
+
+.sat-home-copy-btn {
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.sat-home-copy-btn:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.sat-home-copy-btn.is-copied {
+  background: #dcfce7;
+  border-color: #16a34a;
+  color: #166534;
+}
+
+body.dark-theme .sat-home-footer {
+  border-color: #1f2937;
+  color: #94a3b8;
+}
+
+body.dark-theme .sat-home-footer-left strong {
+  color: #f8fafc;
+}
+
+body.dark-theme .sat-home-email-link {
+  color: #60a5fa;
+}
+
+body.dark-theme .sat-home-copy-btn {
+  background: #1e293b;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+body.dark-theme .sat-home-copy-btn.is-copied {
+  background: #14532d;
+  border-color: #22c55e;
+  color: #dcfce7;
+}
+
+@media (max-width: 860px) {
+  .sat-home-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

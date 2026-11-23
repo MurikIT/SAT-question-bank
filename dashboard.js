@@ -217,6 +217,17 @@
           <p>Create your free account in seconds to save your progress and unlock full cloud sync.</p>
           <button type="button" class="sat-home-cta-primary" id="home-bottom-start-btn" data-action="signup">Get Started Free →</button>
         </section>
+
+        <footer class="sat-home-footer">
+          <div class="sat-home-footer-left">
+            <strong>SAT Tutor</strong> · Free Digital SAT Study Workspace
+          </div>
+          <div class="sat-home-footer-right">
+            <span>Questions or feedback?</span>
+            <a href="mailto:info@sattutor.az" class="sat-home-email-link">info@sattutor.az</a>
+            <button type="button" class="sat-home-copy-btn" id="home-copy-email-btn" title="Copy email address">Copy</button>
+          </div>
+        </footer>
       </main>
     `;
 
@@ -259,6 +270,23 @@
     const guestBtn = document.getElementById("home-guest-btn");
     if (guestBtn) {
       guestBtn.addEventListener("click", () => hideHomePage(true, true));
+    }
+
+    const copyEmailBtn = document.getElementById("home-copy-email-btn");
+    if (copyEmailBtn) {
+      copyEmailBtn.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText("info@sattutor.az");
+          copyEmailBtn.textContent = "Copied!";
+          copyEmailBtn.classList.add("is-copied");
+          setTimeout(() => {
+            copyEmailBtn.textContent = "Copy";
+            copyEmailBtn.classList.remove("is-copied");
+          }, 1800);
+        } catch (e) {
+          window.location.href = "mailto:info@sattutor.az";
+        }
+      });
     }
 
     // Клик по логотипу "SAT Tutor" в сайдбаре возвращает на Home Page
